@@ -1,0 +1,19 @@
+{
+  "name": "nightride",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Voice-first night dispatcher for cyclists, walkers and skaters who get stuck after dark.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "dev": "node --watch --env-file-if-exists=.env server/index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.22.3",
+    "multer": "^2.5.0"
+  }
+}

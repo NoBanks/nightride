@@ -1,0 +1,139 @@
+/* Night rules: black background, one amber accent, thumb-sized targets. */
+:root {
+  --bg: #000;
+  --panel: #111;
+  --line: #2a2a2a;
+  --text: #e8e2d6;
+  --dim: #8a8478;
+  --amber: #ffb000;
+  --red: #c4141c;
+  --tap: 64px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 18px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+button, input, textarea { font: inherit; color: inherit; }
+
+.bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: max(12px, env(safe-area-inset-top)) 16px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 800; letter-spacing: 0.12em; color: var(--amber); }
+.status { margin-left: auto; display: flex; align-items: center; gap: 8px; color: var(--dim); }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.dot.on { background: var(--amber); }
+.badge {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+  border: 1px solid var(--amber); color: var(--amber);
+  padding: 2px 6px; border-radius: 4px; vertical-align: middle;
+}
+
+.lowbat {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 16px; background: #2a1d00; color: var(--amber);
+}
+.lowbat[hidden] { display: none; }
+
+main { padding: 16px; padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+.screen { display: none; flex-direction: column; gap: 14px; min-height: calc(100dvh - 90px); }
+.screen.active { display: flex; }
+h2 { margin: 0; font-size: 24px; }
+.label { margin: 0; color: var(--dim); font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; }
+.hint { margin: 0; color: var(--dim); text-align: center; }
+
+.btn {
+  min-height: var(--tap); padding: 0 18px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+  cursor: pointer; touch-action: manipulation;
+}
+.btn:active { border-color: var(--amber); }
+.btn.wide { width: 100%; background: var(--amber); color: #000; font-weight: 700; border: 0; }
+.btn.ghost { background: transparent; color: var(--text); font-weight: 400; border: 1px solid var(--line); }
+.btn.small { min-height: 48px; }
+.back {
+  align-self: flex-start; min-height: 48px; padding: 0 4px;
+  background: none; border: 0; color: var(--dim); cursor: pointer;
+}
+.back::before { content: "< "; }
+.link { background: none; border: 0; color: var(--amber); min-height: 48px; cursor: pointer; text-decoration: underline; }
+
+/* Home */
+#home { align-items: center; justify-content: center; }
+.talk {
+  position: relative; width: min(62vw, 260px); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, #1d1600, #000 70%);
+  border: 3px solid var(--amber); color: var(--amber);
+  font-weight: 800; font-size: 22px; letter-spacing: 0.08em;
+  cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.talk-ring { position: absolute; inset: -3px; border-radius: 50%; border: 3px solid var(--amber); opacity: 0; }
+.talk.recording { background: var(--amber); color: #000; }
+.talk.recording .talk-ring { animation: pulse 1.2s ease-out infinite; }
+@keyframes pulse { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.25); opacity: 0; } }
+.quick { display: grid; grid-template-columns: 1fr; gap: 10px; width: 100%; max-width: 420px; }
+.type-instead { width: 100%; max-width: 420px; color: var(--dim); }
+.type-instead summary { min-height: 48px; display: flex; align-items: center; cursor: pointer; }
+.row, #typeForm { display: flex; gap: 8px; }
+input[type=text], textarea {
+  flex: 1; min-width: 0; min-height: 48px; padding: 10px 12px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+}
+textarea { width: 100%; resize: vertical; }
+
+/* Listening */
+.transcript { margin: 0; font-size: 24px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 12px; }
+.card[hidden] { display: none; }
+.lane { margin: 0; color: var(--amber); font-weight: 800; letter-spacing: 0.1em; }
+.say { margin: 0; font-size: 20px; }
+
+/* Fix it */
+.cam { position: relative; width: 100%; aspect-ratio: 3 / 4; max-height: 55dvh; background: #050505; border-radius: 16px; overflow: hidden; }
+.cam video, .cam canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cam video { object-fit: cover; }
+.cam-msg { position: absolute; left: 0; right: 0; bottom: 12px; margin: 0; text-align: center; color: var(--dim); }
+.part-tag {
+  position: absolute; top: 12px; left: 12px; margin: 0; padding: 4px 10px;
+  background: var(--amber); color: #000; font-weight: 700; border-radius: 8px;
+}
+.part-tag[hidden] { display: none; }
+.problem { margin: 0; font-size: 20px; }
+.sheet { display: grid; gap: 10px; margin-top: auto; }
+.step { margin: 0; font-size: 22px; }
+#steps[hidden] { display: none; }
+
+/* Nearby */
+.place { display: grid; gap: 4px; padding: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; color: inherit; text-decoration: none; min-height: var(--tap); }
+.place + .place { margin-top: 10px; }
+.place strong { font-size: 20px; }
+.place .open { color: var(--amber); font-size: 14px; }
+.place .why { color: var(--dim); }
+
+/* Share */
+#people, #riderReplies { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+#people li { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--panel); border-radius: 12px; }
+#people li button { background: none; border: 0; color: var(--dim); min-height: 40px; cursor: pointer; }
+
+/* Riders */
+.ridermap { width: 100%; aspect-ratio: 1; background: #050505; border: 1px solid var(--line); border-radius: 16px; }
+#riderReplies li { padding: 10px 12px; background: var(--panel); border-radius: 12px; }
+
+/* Emergency */
+.emergency {
+  position: fixed; inset: 0; z-index: 10; background: var(--red);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 24px;
+}
+.emergency[hidden] { display: none; }
+.call911 {
+  width: 100%; max-width: 420px; padding: 32px 0; text-align: center;
+  background: #fff; color: var(--red); font-size: 36px; font-weight: 900; border-radius: 20px; text-decoration: none;
+}
+.close { background: none; border: 0; color: #fff; min-height: 48px; text-decoration: underline; cursor: pointer; }

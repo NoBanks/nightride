@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>NIGHTRIDE</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="bar">
+    <span class="brand">NIGHTRIDE</span>
+    <span id="demoBadge" class="badge" hidden>DEMO DATA</span>
+    <span class="status">
+      <span id="locDot" class="dot" title="Location"></span>
+      <span id="battery">--%</span>
+    </span>
+  </header>
+
+  <div id="lowBattery" class="lowbat" hidden>
+    Low battery. Tell your people first.
+    <button data-go="share" class="btn small">Tell my people</button>
+  </div>
+
+  <main>
+    <!-- 1. Home -->
+    <section id="home" class="screen active">
+      <p class="hint" id="talkHint">Hold the button and tell me what happened.</p>
+      <button id="talk" class="talk" aria-label="Hold to talk">
+        <span class="talk-ring"></span>
+        <span class="talk-label">HOLD<br>TO TALK</span>
+      </button>
+      <div class="quick">
+        <button class="btn" data-go="fix">Fix my ride</button>
+        <button class="btn" data-go="nearby">Get me somewhere</button>
+        <button class="btn" data-go="share">Tell my people</button>
+      </div>
+      <details class="type-instead">
+        <summary>Can't talk? Type instead</summary>
+        <form id="typeForm">
+          <input id="typeText" type="text" placeholder="My chain snapped on Bear Valley Rd" autocomplete="off">
+          <button class="btn small" type="submit">Send</button>
+        </form>
+      </details>
+      <button class="link" data-go="riders">Night riders nearby</button>
+    </section>
+
+    <!-- 2. Listening / dispatch -->
+    <section id="listen" class="screen">
+      <button class="back" data-go="home">Back</button>
+      <p class="label">You said</p>
+      <p id="transcript" class="transcript">...</p>
+      <div id="dispatchCard" class="card" hidden>
+        <p id="laneName" class="lane"></p>
+        <p id="laneSay" class="say"></p>
+        <button id="laneGo" class="btn wide">Go</button>
+      </div>
+    </section>
+
+    <!-- 3. Fix it -->
+    <section id="fix" class="screen">
+      <button class="back" data-go="home">Back</button>
+      <div class="cam">
+        <video id="camVideo" playsinline muted autoplay></video>
+        <canvas id="overlay"></canvas>
+        <p id="partTag" class="part-tag" hidden></p>
+        <p id="camMsg" class="cam-msg">Point the camera at the problem.</p>
+      </div>
+      <p id="problem" class="problem"></p>
+      <div class="sheet">
+        <button id="scan" class="btn wide">Show NIGHTRIDE the problem</button>
+        <div id="steps" hidden>
+          <p class="label" id="stepCount"></p>
+          <p class="step" id="stepText"></p>
+          <button id="nextStep" class="btn wide">Next</button>
+        </div>
+        <button class="btn ghost wide" data-go="nearby">Can't fix it</button>
+      </div>
+    </section>
+
+    <!-- 4. Get me somewhere -->
+    <section id="nearby" class="screen">
+      <button class="back" data-go="home">Back</button>
+      <h2>Open near you</h2>
+      <div id="places"></div>
+    </section>
+
+    <!-- 5. Tell my people -->
+    <section id="share" class="screen">
+      <button class="back" data-go="home">Back</button>
+      <h2>Tell my people</h2>
+      <p class="label">Message</p>
+      <textarea id="shareText" rows="5"></textarea>
+      <p class="label">My people</p>
+      <ul id="people"></ul>
+      <form id="addPerson" class="row">
+        <input id="personName" type="text" placeholder="Add a name" autocomplete="off">
+        <button class="btn small" type="submit">Add</button>
+      </form>
+      <button id="sendShare" class="btn wide">Send</button>
+      <p id="shareStatus" class="hint"></p>
+    </section>
+
+    <!-- 6. Night riders nearby (simulated) -->
+    <section id="riders" class="screen">
+      <button class="back" data-go="home">Back</button>
+      <h2>Night riders nearby <span class="badge">SIMULATED</span></h2>
+      <canvas id="riderMap" class="ridermap"></canvas>
+      <p id="riderCount" class="hint"></p>
+      <button id="askRiders" class="btn wide">Ask for help</button>
+      <ul id="riderReplies"></ul>
+    </section>
+  </main>
+
+  <!-- Emergency: full screen, one action. NIGHTRIDE never calls anyone itself. -->
+  <div id="emergency" class="emergency" hidden>
+    <a class="call911" href="tel:911">Call 911</a>
+    <button id="closeEmergency" class="close">Close</button>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
