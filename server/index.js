@@ -1,8 +1,15 @@
 import express from "express";
 import multer from "multer";
 import { fileURLToPath } from "node:url";
+import { existsSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
 import { cannedDispatch } from "./dispatch.js";
 import * as canned from "./canned.js";
+
+// Keys live outside the repo (and outside OneDrive) in ~/.nightride/.env.
+const SECRETS = join(homedir(), ".nightride", ".env");
+if (existsSync(SECRETS)) process.loadEnvFile(SECRETS);
 
 const app = express();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
