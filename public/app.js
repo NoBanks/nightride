@@ -21,16 +21,39 @@ async function postJSON(url, body) {
   if (!r.ok) throw new Error(`${url} ${r.status}`);
   return r.json();
 }
-async function postFile(url, field, blob, filename, extra = {}) {
+// entries: [name, value, filename?]
+async function postForm(url, entries) {
   const fd = new FormData();
-  fd.append(field, blob, filename);
-  for (const [k, v] of Object.entries(extra)) fd.append(k, v);
+  for (const [k, v, filename] of entries) if (v != null) filename ? fd.append(k, v, filename) : fd.append(k, v);
   const r = await fetch(url, { method: "POST", body: fd });
   if (!r.ok) throw new Error(`${url} ${r.status}`);
   return r.json();
 }
 
 fetch("/api/health").then((r) => r.json()).then((h) => { $("demoBadge").hidden = h.mode !== "canned"; }).catch(() => {});
+
+// ---------- voice replies (on-device, free) ----------
+const VOICE_KEY = "nightride.voice";
+let voiceOn = (() => { try { return localStorage.getItem(VOICE_KEY) !== "off"; } catch { return true; } })();
+function renderVoice() {
+  $("voiceToggle").textContent = voiceOn ? "Voice on" : "Voice off";
+  $("voiceToggle").setAttribute("aria-pressed", String(voiceOn));
+}
+$("voiceToggle").addEventListener("click", () => {
+  voiceOn = !voiceOn;
+  try { localStorage.setItem(VOICE_KEY, voiceOn ? "on" : "off"); } catch {}
+  if (!voiceOn && "speechSynthesis" in window) speechSynthesis.cancel();
+  renderVoice();
+});
+renderVoice();
+
+function speak(text) {
+  if (!voiceOn || !text || !("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = 0.95;
+  speechSynthesis.speak(u);
+}
 
 // ---------- battery + location ----------
 async function watchBattery() {
@@ -114,7 +137,8 @@ async function onTalkStop() {
   $("transcript").textContent = "...";
   $("dispatchCard").hidden = true;
   try {
-    const { text } = await postFile("/api/transcribe", "audio", blob, `talk.${extFor(type)}`);
+    const { text } = await postForm("/api/transcribe", [["audio", blob, `talk.${extFor(type)}`]]);
+    if (!text) throw new Error("no speech");
     await handleText(text);
   } catch {
     $("transcript").textContent = "I couldn't hear that. Try again, or type it.";
@@ -152,6 +176,7 @@ async function handleText(text) {
   $("laneGo").textContent = ui.label;
   $("laneGo").onclick = () => go(ui.go);
   $("dispatchCard").hidden = false;
+  speak(d.say);
 }
 
 $("closeEmergency").addEventListener("click", () => {
@@ -206,22 +231,34 @@ function recordClip(stream, ms) {
   });
 }
 
+// A still for the vision model, scaled down so it uploads fast on one bar of signal.
+function grabFrame(video, max = 768) {
+  const s = Math.min(1, max / Math.max(video.videoWidth, video.videoHeight));
+  const c = document.createElement("canvas");
+  c.width = Math.round(video.videoWidth * s);
+  c.height = Math.round(video.videoHeight * s);
+  c.getContext("2d").drawImage(video, 0, 0, c.width, c.height);
+  return new Promise((resolve) => c.toBlob(resolve, "image/jpeg", 0.82));
+}
+
 $("scan").addEventListener("click", async () => {
   if (!cam) return startCamera();
   const btn = $("scan");
   btn.disabled = true;
   btn.textContent = "Hold steady...";
   try {
+    const frame = await grabFrame($("camVideo"));
     const clip = await recordClip(cam, 2500);
     btn.textContent = "Looking...";
     const filename = `clip.${extFor(clip.type)}`;
-    const look = await postFile("/api/look", "clip", clip, filename);
+    const look = await postForm("/api/look", [["clip", clip, filename], ["frame", frame, "frame.jpg"], ["said", state.lastText]]);
     state.look = look;
     state.step = 0;
     $("problem").textContent = look.problem;
-    const masks = await postFile("/api/track", "clip", clip, filename, { part: look.part });
+    speak(look.problem);
+    const masks = await postForm("/api/track", [["clip", clip, filename], ["part", look.part]]);
     playMasks(masks);
-    showStep();
+    showStep(false);
     btn.hidden = true;
   } catch {
     $("camMsg").textContent = "That didn't work. Try again.";
@@ -274,18 +311,22 @@ function playMasks({ part, fps, frames }) {
   anim = requestAnimationFrame(draw);
 }
 
-function showStep() {
-  const steps = state.look.steps;
+// say=false on the first step so it doesn't talk over the problem summary.
+function showStep(say = true) {
+  const { steps, prevent } = state.look;
   $("steps").hidden = false;
+  let text;
   if (state.step >= steps.length) {
     $("stepCount").textContent = "Done";
-    $("stepText").textContent = "Spin the wheel once more and ride safe.";
+    text = prevent ? `Nice work. Next time: ${prevent}` : "Nice work. Spin it once more and ride safe.";
     $("nextStep").textContent = "Home";
-    return;
+  } else {
+    $("stepCount").textContent = `Step ${state.step + 1} of ${steps.length}`;
+    text = steps[state.step];
+    $("nextStep").textContent = "Next";
   }
-  $("stepCount").textContent = `Step ${state.step + 1} of ${steps.length}`;
-  $("stepText").textContent = steps[state.step];
-  $("nextStep").textContent = "Next";
+  $("stepText").textContent = text;
+  if (say) speak(text);
 }
 $("nextStep").addEventListener("click", () => {
   if (state.step >= state.look.steps.length) return go("home");

@@ -14,6 +14,8 @@ export const LOOK = {
     "Put a little air in the new tube, tuck it in, and push the tire bead back on with your thumbs.",
     "Pump it up, put the wheel back, close the brake. Spin it once to check.",
   ],
+  fixable: true,
+  prevent: "Thorns cause most flats out here. Puncture-resistant tire inserts or tire sealant stop most of them.",
 };
 
 // Mask format used by the client overlay: per frame, a list of rings in 0..1
