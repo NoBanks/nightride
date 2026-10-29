@@ -4,13 +4,14 @@ import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { cannedDispatch, isEmergency } from "./dispatch.js";
+import { cannedDispatch, isEmergency, emergencySay } from "./dispatch.js";
 import * as canned from "./canned.js";
 import * as prompts from "./prompts.js";
 import { sparkReady, sparkJSON, sparkTranscribe, imagePart } from "./spark.js";
 import { toWav } from "./audio.js";
 import * as closeCalls from "./closecalls.js";
 import { placesNear, rank } from "./places.js";
+import * as playbook from "./playbook.js";
 
 // Keys live outside the repo (and outside OneDrive) in ~/.nightride/.env.
 const SECRETS = join(homedir(), ".nightride", ".env");
@@ -60,27 +61,42 @@ app.post("/api/dispatch", async (req, res) => {
   const { text, battery } = req.body || {};
   if (!text || typeof text !== "string") return res.status(400).json({ error: "no text" });
   // Emergency words never reach the model.
-  if (isEmergency(text)) return res.json({ lane: "emergency", say: "Call 911 now.", source: "guard" });
+  if (isEmergency(text)) return res.json({ lane: "emergency", say: emergencySay(text), source: "guard" });
   const time = new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
   const context = `Rider says: "${str(text, 1000)}"\nLocal time: ${time}.${Number.isFinite(battery) ? ` Phone battery: ${Math.round(battery * 100)}%.` : ""}`;
-  res.json(await live("dispatch", async () => {
+  const d = await live("dispatch", async () => {
     const d = await sparkJSON(prompts.DISPATCH, context, { maxTokens: 1500 });
     return { lane: LANES.has(d.lane) ? d.lane : "ride", say: str(d.say, 240) || "I hear you. Here's what's open near you.", why: str(d.why, 120) };
-  }, cannedDispatch(text)));
+  }, cannedDispatch(text));
+  // Matching a verified card costs no tokens: plain keywords against the rider's words.
+  const [card] = playbook.match(text, playbook.LANE_CATEGORIES[d.lane]);
+  res.json({ ...d, card: playbook.publicCard(card) || null });
 });
+
+app.get("/api/playbook", (_req, res) => res.json({ cards: playbook.cards.map(playbook.publicCard) }));
 
 app.post("/api/look", upload.fields([{ name: "clip", maxCount: 1 }, { name: "frame", maxCount: 1 }]), async (req, res) => {
   const frame = req.files?.frame?.[0];
   if (!frame && !req.files?.clip) return res.status(400).json({ error: "no clip or frame" });
   const said = str(req.body?.said, 500);
+  const fixCategories = ["repair", "ebike"];
+  // Without the model, the rider's own words still pick a verified card.
+  const [saidCard] = playbook.match(said, fixCategories);
+  const fallback = saidCard
+    ? { problem: saidCard.title, part: canned.LOOK.part, fixable: true, card: playbook.publicCard(saidCard), steps: saidCard.steps, prevent: saidCard.prevent || "" }
+    : canned.LOOK;
   res.json(await live("look", async () => {
     if (!frame) throw new Error("no frame");
     const content = [{ type: "text", text: said ? `The rider said: "${said}"` : "What is wrong here?" }, imagePart(frame.buffer, frame.mimetype)];
-    const d = await sparkJSON(prompts.LOOK, content, { maxTokens: 3000 });
+    const menu = playbook.menu(fixCategories);
+    const d = await sparkJSON(menu ? prompts.lookWithPlaybook(menu) : prompts.LOOK, content, { maxTokens: 3000 });
+    const base = { problem: str(d.problem, 160), part: str(d.part, 40) || "bicycle", fixable: d.fixable !== false };
+    const card = playbook.getCard(d.card);
+    if (card) return { ...base, card: playbook.publicCard(card), steps: card.steps, prevent: card.prevent || "" };
     const steps = Array.isArray(d.steps) ? d.steps.map((s) => str(s, 200)).filter(Boolean).slice(0, 8) : [];
-    if (!steps.length) throw new Error("no steps");
-    return { problem: str(d.problem, 160), part: str(d.part, 40) || "bicycle", fixable: d.fixable !== false, steps, prevent: str(d.prevent, 240) };
-  }, canned.LOOK));
+    if (!steps.length && base.fixable) throw new Error("no card and no steps");
+    return { ...base, card: null, steps, prevent: str(d.prevent, 240) };
+  }, fallback));
 });
 
 app.post("/api/track", upload.single("clip"), (req, res) => {

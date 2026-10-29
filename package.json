@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node --env-file-if-exists=.env server/index.js",
-    "dev": "node --watch --env-file-if-exists=.env server/index.js"
+    "dev": "node --watch --env-file-if-exists=.env server/index.js",
+    "test": "node --test"
   },
   "license": "MIT",
   "dependencies": {

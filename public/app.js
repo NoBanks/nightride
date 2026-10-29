@@ -174,7 +174,9 @@ async function handleText(text) {
   $("dispatchCard").hidden = true;
   const d = await postJSON("/api/dispatch", { text, location: state.location, battery: state.battery });
   if (d.lane === "emergency") {
+    $("emergencySay").textContent = d.say;
     $("emergency").hidden = false;
+    speak(d.say);
     return;
   }
   state.lane = d.lane;
@@ -183,8 +185,45 @@ async function handleText(text) {
   $("laneSay").textContent = d.say;
   $("laneGo").textContent = ui.label;
   $("laneGo").onclick = () => go(ui.go);
+  // A verified card that matches their words, one tap away.
+  $("laneCard").hidden = !d.card;
+  if (d.card) {
+    $("laneCard").textContent = `What to do: ${d.card.title}`;
+    $("laneCard").onclick = () => showGuide(d.card);
+  }
   $("dispatchCard").hidden = false;
   speak(d.say);
+}
+
+// ---------- playbook card ----------
+function sourceLinks(sources) {
+  return sources.map((s) => {
+    const a = document.createElement("a");
+    a.href = s.url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = s.org;
+    return a;
+  });
+}
+
+function showGuide(card) {
+  go("guide");
+  $("guideTag").textContent = `Verified playbook · ${card.confidence}`;
+  $("guideTitle").textContent = card.title;
+  $("guideSummary").textContent = card.summary;
+  const li = (text) => Object.assign(document.createElement("li"), { textContent: text });
+  $("guideSteps").replaceChildren(...card.steps.map(li));
+  $("guideWarnings").replaceChildren(...card.warnings.map(li));
+  $("guidePrevent").textContent = card.prevent ? `Next time: ${card.prevent}` : "";
+  $("guideSources").replaceChildren(...card.sources.map((s) => {
+    const item = document.createElement("li");
+    const [a] = sourceLinks([s]);
+    a.textContent = `${s.org}: ${s.title}`;
+    item.append(a);
+    return item;
+  }));
+  speak(card.summary);
 }
 
 $("closeEmergency").addEventListener("click", () => {
@@ -222,6 +261,7 @@ function resetFix() {
   c.getContext("2d").clearRect(0, 0, c.width, c.height);
   $("partTag").hidden = true;
   $("problem").textContent = "";
+  $("stepSource").textContent = "";
   $("steps").hidden = true;
   $("scan").hidden = false;
 }
@@ -263,6 +303,12 @@ $("scan").addEventListener("click", async () => {
     state.look = look;
     state.step = 0;
     $("problem").textContent = look.problem;
+    // Say where the steps came from: a cited card, or the model on its own.
+    if (look.card) {
+      $("stepSource").replaceChildren("Verified playbook · Source: ", ...sourceLinks(look.card.sources).flatMap((a, i) => (i ? [", ", a] : [a])));
+    } else {
+      $("stepSource").textContent = "AI steps, not verified. Stop if anything feels unsafe.";
+    }
     speak(look.problem);
     const masks = await postForm("/api/track", [["clip", clip, filename], ["part", look.part]]);
     playMasks(masks);

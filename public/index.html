@@ -52,6 +52,19 @@
       </div>
     </section>
 
+    <!-- One verified playbook card, with its sources -->
+    <section id="guide" class="screen">
+      <button class="back" data-go="home">Back</button>
+      <p id="guideTag" class="label"></p>
+      <h2 id="guideTitle"></h2>
+      <p id="guideSummary" class="say"></p>
+      <ol id="guideSteps" class="guide-steps"></ol>
+      <ul id="guideWarnings" class="guide-warn"></ul>
+      <p id="guidePrevent" class="hint"></p>
+      <p class="label">Sources</p>
+      <ul id="guideSources" class="guide-src"></ul>
+    </section>
+
     <!-- Close call map -->
     <section id="map" class="screen">
       <button class="back" data-go="home">Back</button>
@@ -71,6 +84,7 @@
         <p id="laneName" class="lane"></p>
         <p id="laneSay" class="say"></p>
         <button id="laneGo" class="btn wide">Go</button>
+        <button id="laneCard" class="btn ghost wide" hidden></button>
       </div>
     </section>
 
@@ -90,6 +104,7 @@
           <p class="label" id="stepCount"></p>
           <p class="step" id="stepText"></p>
           <button id="nextStep" class="btn wide">Next</button>
+          <p id="stepSource" class="source"></p>
         </div>
         <button class="btn ghost wide" data-go="nearby">Can't fix it</button>
       </div>
@@ -144,6 +159,7 @@
 
   <!-- Emergency: full screen, one action. NIGHTRIDE never calls anyone itself. -->
   <div id="emergency" class="emergency" hidden>
+    <p id="emergencySay" class="emergency-say"></p>
     <a class="call911" href="tel:911">Call 911</a>
     <button id="closeEmergency" class="close">Close</button>
   </div>

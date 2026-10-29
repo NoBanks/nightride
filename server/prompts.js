@@ -11,6 +11,17 @@ Reply with ONLY this JSON: {"lane":"fix|ride|safe","say":"...","why":"..."}
 "say" is what you speak to them: at most 25 words, short sentences, calm, the single next action first. Example: "Got it. Flat on the rear. You can fix this in about ten minutes. Point the camera at the back wheel."
 "why" is one short phrase for the log.`;
 
+// With a playbook, the model only names the problem and picks a verified card; it writes
+// steps itself only when no card fits (fewer tokens, nothing invented when a card exists).
+export const lookWithPlaybook = (menu) => `You are NIGHTRIDE's repair eye. The photo is from a rider's phone, often at night, often blurry.
+Name the most likely problem with their bike, e-bike, scooter or skates and the visible part involved.
+Then pick the ONE playbook card below that fits best. These cards hold verified, sourced repair steps.
+Playbook cards (id: title):
+${menu}
+If a card fits, reply with ONLY: {"problem":"at most 15 words","part":"2 to 4 word noun phrase, like rear tire","fixable":true,"card":"card-id"}
+If no card fits, set "card": null and add "steps": 4 to 7 roadside steps (each at most 20 words; no water, no workshop, phone light only) and "prevent": one tip using generic product types, never brand names.
+If you cannot see a bike part at all, set "card": null, "fixable": false, and use "problem" to say what to point the camera at.`;
+
 export const LOOK = `You are NIGHTRIDE's repair eye. The photo is from a rider's phone, often at night, often blurry.
 Find the most likely problem with their bike, scooter or skates and the part involved, then give roadside repair steps a tired person can follow with basic tools (tire levers, spare tube or patch kit, pump, multitool).
 They are on a dark roadside: no water, no workshop, phone light only. To find a leak, pump a little air and listen or feel for it; a spare tube is faster than a patch.

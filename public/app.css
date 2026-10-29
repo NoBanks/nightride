@@ -131,6 +131,14 @@ textarea { width: 100%; resize: vertical; }
 .ridermap { width: 100%; aspect-ratio: 1; background: #050505; border: 1px solid var(--line); border-radius: 16px; }
 #riderReplies li { padding: 10px 12px; background: var(--panel); border-radius: 12px; }
 
+/* Playbook */
+.source { margin: 0; color: var(--dim); font-size: 13px; }
+.source a, .guide-src a { color: var(--dim); }
+.guide-steps { margin: 0; padding-left: 26px; display: grid; gap: 10px; font-size: 19px; }
+.guide-warn { margin: 0; padding: 12px 12px 12px 30px; display: grid; gap: 6px; background: #2a1d00; color: var(--amber); border-radius: 12px; }
+.guide-warn:empty { display: none; }
+.guide-src { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; color: var(--dim); }
+
 /* Close calls */
 .btn.closecall { background: #1d1600; border: 2px solid var(--amber); color: var(--amber); font-weight: 800; letter-spacing: 0.12em; }
 .btn.closecall.done { background: var(--amber); color: #000; }
@@ -161,4 +169,5 @@ textarea { width: 100%; resize: vertical; }
   width: 100%; max-width: 420px; padding: 32px 0; text-align: center;
   background: #fff; color: var(--red); font-size: 36px; font-weight: 900; border-radius: 20px; text-decoration: none;
 }
+.emergency-say { margin: 0; color: #fff; font-size: 26px; font-weight: 800; text-align: center; }
 .close { background: none; border: 0; color: #fff; min-height: 48px; text-decoration: underline; cursor: pointer; }
