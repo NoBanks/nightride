@@ -2,6 +2,8 @@
 
 **Built for the worst hour. Works at every hour.**
 
+**Demo video:** https://youtu.be/rWvFvOLHeZI  ·  **Receipts (every claim, its test, its code):** [RECEIPTS.md](RECEIPTS.md)
+
 **Live:** https://nightride.nohumannearby.com (open it on a phone; Add to Home Screen installs it, and it keeps working with no signal)
 
 A voice-first night dispatcher for people who are not in a car: cyclists, e-bike riders, walkers, skaters.
@@ -69,7 +71,8 @@ OpenStreetMap. Keys stay on the server, outside the repo.
 ```
 npm install
 npm start          # http://localhost:8787
-npm test
+npm test           # unit tests
+npm run test:live  # end-to-end against the live site
 ```
 
 Put keys in `~/.nightride/.env` (see `.env.example`). Without a key every route answers from canned data.

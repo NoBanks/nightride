@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node --env-file-if-exists=.env server/index.js",
     "dev": "node --watch --env-file-if-exists=.env server/index.js",
-    "test": "node --test"
+    "test": "node --test",
+    "test:live": "node e2e/live.mjs"
   },
   "license": "MIT",
   "dependencies": {
