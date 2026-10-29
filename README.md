@@ -2,7 +2,7 @@
 
 **Built for the worst hour. Works at every hour.**
 
-**Live:** https://nightride.traidedefi.com (open it on a phone; Add to Home Screen installs it, and it keeps working with no signal)
+**Live:** https://nightride.nohumannearby.com (open it on a phone; Add to Home Screen installs it, and it keeps working with no signal)
 
 A voice-first night dispatcher for people who are not in a car: cyclists, e-bike riders, walkers, skaters.
 When something goes wrong after dark (a flat, a snapped chain, an e-bike that cuts out miles from home,
