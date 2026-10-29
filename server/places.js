@@ -2,12 +2,24 @@
 // Overpass can take most of a minute, so results are cached per ~1 km area and the
 // client warms the cache as soon as it has a location.
 import OpeningHours from "opening_hours";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 
 const ENDPOINTS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"];
 const UA = "NIGHTRIDE/0.1 (hackathon prototype; github.com/NoBanks/nightride)";
-const TTL = 15 * 60 * 1000;
-const cache = new Map();   // "lat,lng" (2 decimals) -> { at, places }
+// Places barely change; hours are re-checked on every request, so a day-old list is fine.
+const TTL = 24 * 60 * 60 * 1000;
+const DIR = fileURLToPath(new URL("../data", import.meta.url));
+const FILE = join(DIR, "places-cache.json");
+// "lat,lng" (2 decimals) -> { at, places }; kept on disk so a restart doesn't mean another minute-long lookup.
+const cache = new Map(existsSync(FILE) ? Object.entries(JSON.parse(readFileSync(FILE, "utf8"))) : []);
 const inflight = new Map(); // same key -> Promise
+
+function saveCache() {
+  mkdirSync(DIR, { recursive: true });
+  writeFileSync(FILE, JSON.stringify(Object.fromEntries(cache)));
+}
 
 const KINDS = {
   bicycle: { label: "Bike shop", why: "Tubes, tools, and people who fix bikes." },
@@ -70,6 +82,7 @@ export async function placesNear(lat, lng) {
       .then((els) => {
         const places = els.map(toPlace).filter(Boolean);
         cache.set(key, { at: Date.now(), places });
+        saveCache();
         return places;
       })
       .finally(() => inflight.delete(key)));
@@ -98,10 +111,10 @@ function miles(aLat, aLng, bLat, bLng) {
 }
 
 // Top 3 for this lane, never a closed place. Score in "miles of detour": each mile counts,
-// each step down the lane's priority list adds one, and unknown hours add 1.5.
+// each step down the lane's priority list adds one, and unknown hours add 2.
 export function rank(places, lane, lat, lng, now = new Date()) {
   const order = PRIORITY[lane] || PRIORITY.ride;
-  const score = (p) => p.miles + order.indexOf(p.kind) + (p.open ? 0 : 1.5);
+  const score = (p) => p.miles + order.indexOf(p.kind) + (p.open ? 0 : 2);
   return places
     .filter((p) => order.includes(p.kind))
     .map((p) => ({ ...p, ...openState(p.hours, now), miles: miles(lat, lng, p.lat, p.lng) }))

@@ -93,8 +93,13 @@ app.post("/api/nearby", async (req, res) => {
   if (!location || !Number.isFinite(location.lat) || !Number.isFinite(location.lng)) {
     return res.json({ places: canned.nearby(), source: "canned" });
   }
+  // A rider can't wait a minute: answer within 12 s and let the lookup keep filling the cache.
+  const lookup = placesNear(location.lat, location.lng);
+  lookup.catch(() => {});
+  const slow = new Promise((resolve) => setTimeout(resolve, 12000, null));
   try {
-    const all = await placesNear(location.lat, location.lng);
+    const all = await Promise.race([lookup, slow]);
+    if (!all) return res.json({ places: canned.nearby(), source: "pending" });
     const places = rank(all, lane, location.lat, location.lng);
     if (!places.length) throw new Error("nothing open nearby in OpenStreetMap");
     res.json({ places, source: "openstreetmap" });

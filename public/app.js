@@ -371,12 +371,23 @@ function placeCard(p) {
   return a;
 }
 
-async function loadNearby() {
+let nearbyRetry = 0;
+async function loadNearby(tries = 0) {
   const box = $("places");
-  box.textContent = "Looking...";
+  clearTimeout(nearbyRetry);
+  if (!tries) box.textContent = "Looking for places open right now...";
   try {
-    const { places } = await postJSON("/api/nearby", { location: state.location, lane: state.lane || "ride" });
-    box.replaceChildren(...places.map(placeCard));
+    const { places, source } = await postJSON("/api/nearby", { location: state.location, lane: state.lane || "ride" });
+    const cards = places.map(placeCard);
+    if (source === "pending") {
+      // General ideas now; the real list replaces them when the map lookup finishes.
+      const note = document.createElement("p");
+      note.className = "hint";
+      note.textContent = "Still finding places open right now. Meanwhile:";
+      cards.unshift(note);
+      if (tries < 6 && $("nearby").classList.contains("active")) nearbyRetry = setTimeout(() => loadNearby(tries + 1), 8000);
+    }
+    box.replaceChildren(...cards);
   } catch {
     box.textContent = "Couldn't load places. Check your signal.";
   }
