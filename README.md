@@ -54,7 +54,8 @@ harasses you, how to report dangerous roads in Apple Valley, desert heat and win
 - Words like "hit me", "bleeding", "can't breathe", "following me" go straight to a full-screen **Call 911**
   button before any model sees them.
 - Battery smoke, fire or swelling: "Move away from the battery. Call 911."
-- No medical advice, ever. NIGHTRIDE never calls anyone by itself.
+- No medical advice, ever. NIGHTRIDE never calls anyone by itself: the Call 911 button opens the
+  phone's own dialer with 911 filled in, and the rider presses call. NIGHTRIDE is not an emergency service.
 - Locked in by tests: `npm test`.
 
 ## Free and light

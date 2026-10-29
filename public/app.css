@@ -176,4 +176,5 @@ textarea { width: 100%; resize: vertical; }
   background: #fff; color: var(--red); font-size: 36px; font-weight: 900; border-radius: 20px; text-decoration: none;
 }
 .emergency-say { margin: 0; color: #fff; font-size: 26px; font-weight: 800; text-align: center; }
+.emergency-note { margin: 0; max-width: 420px; color: #ffe2e2; font-size: 14px; text-align: center; }
 .close { background: none; border: 0; color: #fff; min-height: 48px; text-decoration: underline; cursor: pointer; }
