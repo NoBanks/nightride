@@ -25,6 +25,9 @@ const LANES = new Set(["fix", "ride", "safe"]);
 app.set("trust proxy", "loopback"); // behind a local tunnel, req.ip is the rider's address
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(fileURLToPath(new URL("../public", import.meta.url))));
+// The phone runs the same emergency guard and card matching when there's no signal.
+app.use("/shared", express.static(fileURLToPath(new URL("../shared", import.meta.url))));
+app.get("/shared/dispatch.js", (_req, res) => res.type("text/javascript").sendFile(fileURLToPath(new URL("./dispatch.js", import.meta.url))));
 
 // Runs the model when a key is set; on any failure the rider still gets an answer.
 async function live(name, run, fallback) {

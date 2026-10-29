@@ -1,5 +1,18 @@
+import { cannedDispatch } from "/shared/dispatch.js";
+import { matchCards, LANE_CATEGORIES } from "/shared/match.js";
+
 const $ = (id) => document.getElementById(id);
-const state = { battery: null, location: null, lastText: "", look: null, step: 0 };
+const state = { battery: null, location: null, lastText: "", look: null, step: 0, cards: [] };
+
+// ---------- offline: app + playbook saved on the phone ----------
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {});
+const showOffline = () => { $("offline").hidden = navigator.onLine; };
+addEventListener("online", showOffline);
+addEventListener("offline", showOffline);
+showOffline();
+
+// The service worker keeps the last copy, so this works with no signal too.
+fetch("/api/playbook").then((r) => r.json()).then(({ cards }) => { state.cards = cards; renderPlaybook(); }).catch(() => {});
 
 // ---------- screens ----------
 function go(name) {
@@ -148,7 +161,11 @@ async function onTalkStop() {
     if (!text) throw new Error("no speech");
     await handleText(text);
   } catch {
-    $("transcript").textContent = "I couldn't hear that. Try again, or type it.";
+    // Hearing needs the AI; with no signal, typing still works offline.
+    $("transcript").textContent = navigator.onLine
+      ? "I couldn't hear that. Try again, or type it."
+      : "No signal, so I can't hear you right now. Type it on the home screen and I'll use the saved playbook.";
+    if (!navigator.onLine) document.querySelector(".type-instead").open = true;
   }
 }
 
@@ -158,7 +175,7 @@ $("typeForm").addEventListener("submit", async (e) => {
   if (!text) return;
   $("typeText").value = "";
   go("listen");
-  try { await handleText(text); } catch { $("transcript").textContent = "No signal. Try again."; }
+  await handleText(text);
 });
 
 // ---------- 2. dispatch ----------
@@ -172,7 +189,18 @@ async function handleText(text) {
   state.lastText = text;
   $("transcript").textContent = `"${text}"`;
   $("dispatchCard").hidden = true;
-  const d = await postJSON("/api/dispatch", { text, location: state.location, battery: state.battery });
+  let d;
+  try {
+    d = await postJSON("/api/dispatch", { text, location: state.location, battery: state.battery });
+  } catch {
+    // No signal: the same emergency guard and card matching run right here on the phone.
+    d = cannedDispatch(text);
+    if (d.lane !== "emergency") {
+      const [card] = matchCards(state.cards, text, LANE_CATEGORIES[d.lane]);
+      d.card = card || null;
+      d.say = card ? `No signal. Here's the saved playbook card: ${card.title}.` : "No signal. Open the playbook for saved steps.";
+    }
+  }
   if (d.lane === "emergency") {
     $("emergencySay").textContent = d.say;
     $("emergency").hidden = false;
@@ -193,6 +221,21 @@ async function handleText(text) {
   }
   $("dispatchCard").hidden = false;
   speak(d.say);
+}
+
+// ---------- playbook: every card, grouped ----------
+const CATEGORY_NAMES = { repair: "Fix the bike", ebike: "E-bike and battery", safety: "Staying safe", law: "California law", report: "Reporting", desert: "Desert conditions" };
+function renderPlaybook() {
+  const groups = {};
+  for (const c of state.cards) (groups[c.category] ||= []).push(c);
+  $("playbookList").replaceChildren(...Object.keys(CATEGORY_NAMES).filter((k) => groups[k]).flatMap((k) => [
+    Object.assign(document.createElement("h3"), { textContent: CATEGORY_NAMES[k] }),
+    ...groups[k].map((card) => {
+      const b = Object.assign(document.createElement("button"), { className: "btn", type: "button", textContent: card.title });
+      b.addEventListener("click", () => showGuide(card));
+      return b;
+    }),
+  ]));
 }
 
 // ---------- playbook card ----------
@@ -315,6 +358,11 @@ $("scan").addEventListener("click", async () => {
     showStep(false);
     btn.hidden = true;
   } catch {
+    if (!navigator.onLine) {
+      // The camera needs the AI to see; the saved repair cards don't.
+      go("playbook");
+      return;
+    }
     $("camMsg").textContent = "That didn't work. Try again.";
   } finally {
     btn.disabled = false;

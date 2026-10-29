@@ -139,6 +139,10 @@ textarea { width: 100%; resize: vertical; }
 .guide-warn:empty { display: none; }
 .guide-src { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; color: var(--dim); }
 
+.pb-list { display: grid; gap: 8px; }
+.pb-list h3 { margin: 14px 0 2px; font-size: 13px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; }
+.pb-list .btn { text-align: left; }
+
 /* Close calls */
 .btn.closecall { background: #1d1600; border: 2px solid var(--amber); color: var(--amber); font-weight: 800; letter-spacing: 0.12em; }
 .btn.closecall.done { background: var(--amber); color: #000; }
