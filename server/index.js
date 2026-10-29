@@ -10,6 +10,7 @@ import * as prompts from "./prompts.js";
 import { sparkReady, sparkJSON, sparkTranscribe, imagePart } from "./spark.js";
 import { toWav } from "./audio.js";
 import * as closeCalls from "./closecalls.js";
+import { placesNear, rank } from "./places.js";
 
 // Keys live outside the repo (and outside OneDrive) in ~/.nightride/.env.
 const SECRETS = join(homedir(), ".nightride", ".env");
@@ -43,7 +44,7 @@ const str = (v, max) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 app.get("/api/health", (_req, res) => res.json({
   ok: true,
   mode: sparkReady() ? "live" : "canned",
-  demo: ["track", "nearby"], // still canned: SAM 3.1 waits on Meta API credits; places next
+  demo: ["track"], // still canned: SAM 3.1 waits on Meta API credits
 }));
 
 app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
@@ -87,8 +88,20 @@ app.post("/api/track", upload.single("clip"), (req, res) => {
   res.json({ ...canned.track(req.body?.part), source: "canned" });
 });
 
-app.post("/api/nearby", (_req, res) => {
-  res.json({ places: canned.nearby(), source: "canned" });
+app.post("/api/nearby", async (req, res) => {
+  const { location, lane } = req.body || {};
+  if (!location || !Number.isFinite(location.lat) || !Number.isFinite(location.lng)) {
+    return res.json({ places: canned.nearby(), source: "canned" });
+  }
+  try {
+    const all = await placesNear(location.lat, location.lng);
+    const places = rank(all, lane, location.lat, location.lng);
+    if (!places.length) throw new Error("nothing open nearby in OpenStreetMap");
+    res.json({ places, source: "openstreetmap" });
+  } catch (e) {
+    console.warn(`nearby: fallback: ${e.message}`);
+    res.json({ places: canned.nearby(), source: "fallback" });
+  }
 });
 
 // One report per device address every 20 s, so a stuck button can't flood the map.

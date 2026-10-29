@@ -72,7 +72,13 @@ async function watchBattery() {
 function watchLocation() {
   if (!navigator.geolocation) return;
   navigator.geolocation.watchPosition(
-    (p) => { state.location = { lat: p.coords.latitude, lng: p.coords.longitude }; $("locDot").classList.add("on"); },
+    (p) => {
+      const first = !state.location;
+      state.location = { lat: p.coords.latitude, lng: p.coords.longitude };
+      $("locDot").classList.add("on");
+      // Warm the server's places cache now; the free map lookup can take most of a minute.
+      if (first) postJSON("/api/nearby", { location: state.location, lane: "ride" }).catch(() => {});
+    },
     () => $("locDot").classList.remove("on"),
     { enableHighAccuracy: true, maximumAge: 30000 },
   );
@@ -171,6 +177,7 @@ async function handleText(text) {
     $("emergency").hidden = false;
     return;
   }
+  state.lane = d.lane;
   const ui = LANE_UI[d.lane] || LANE_UI.ride;
   $("laneName").textContent = ui.name;
   $("laneSay").textContent = d.say;
@@ -346,14 +353,17 @@ function mapsUrl(query) {
 function placeCard(p) {
   const a = document.createElement("a");
   a.className = "place";
-  a.href = mapsUrl(p.query);
+  // Real places get bike directions; canned ones fall back to a map search.
+  a.href = Number.isFinite(p.lat)
+    ? `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}&travelmode=bicycling`
+    : mapsUrl(p.query);
   a.target = "_blank";
   a.rel = "noopener";
   const name = document.createElement("strong");
   name.textContent = p.name;
   const open = document.createElement("span");
   open.className = "open";
-  open.textContent = p.open;
+  open.textContent = [p.open, p.kind, Number.isFinite(p.miles) ? `${p.miles} mi` : ""].filter(Boolean).join(" · ");
   const why = document.createElement("span");
   why.className = "why";
   why.textContent = p.why;
@@ -365,7 +375,7 @@ async function loadNearby() {
   const box = $("places");
   box.textContent = "Looking...";
   try {
-    const { places } = await postJSON("/api/nearby", { location: state.location, need: state.lastText });
+    const { places } = await postJSON("/api/nearby", { location: state.location, lane: state.lane || "ride" });
     box.replaceChildren(...places.map(placeCard));
   } catch {
     box.textContent = "Couldn't load places. Check your signal.";
