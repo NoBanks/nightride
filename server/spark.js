@@ -2,7 +2,11 @@
 const URL_ = "https://inference.baseten.co/v1/chat/completions";
 const MODEL = "meta-models/muse-spark-open-1026";
 
-export const sparkReady = () => Boolean(process.env.BASETEN_API_KEY);
+// SPARK=off keeps the key loaded but answers from canned data (saves credit while building).
+export const sparkReady = () => Boolean(process.env.BASETEN_API_KEY) && process.env.SPARK !== "off";
+
+// Running token count for this server process, to watch the free credit.
+export const usage = { calls: 0, prompt: 0, completion: 0 };
 
 async function chat(messages, { maxTokens = 2000, timeoutMs = 25000 } = {}) {
   const r = await fetch(URL_, {
@@ -13,7 +17,12 @@ async function chat(messages, { maxTokens = 2000, timeoutMs = 25000 } = {}) {
     signal: AbortSignal.timeout(timeoutMs),
   });
   if (!r.ok) throw new Error(`spark ${r.status}: ${(await r.text()).slice(0, 200)}`);
-  const text = (await r.json()).choices?.[0]?.message?.content;
+  const j = await r.json();
+  usage.calls += 1;
+  usage.prompt += j.usage?.prompt_tokens || 0;
+  usage.completion += j.usage?.completion_tokens || 0;
+  console.log(`spark tokens: +${j.usage?.prompt_tokens}/${j.usage?.completion_tokens} | total ${usage.calls} calls, ${usage.prompt + usage.completion} tokens`);
+  const text = j.choices?.[0]?.message?.content;
   if (!text) throw new Error("spark: empty answer (reasoning used the whole budget)");
   return text.trim();
 }
