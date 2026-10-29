@@ -26,7 +26,7 @@ button, input, textarea { font: inherit; color: inherit; }
   padding: max(12px, env(safe-area-inset-top)) 12px 12px;
   border-bottom: 1px solid var(--line);
 }
-.brand { font-weight: 800; letter-spacing: 0.12em; color: var(--amber); }
+.brand { font-weight: 800; letter-spacing: 0.08em; color: var(--amber); }
 .voice {
   margin-left: auto; min-height: 40px; padding: 0 8px; white-space: nowrap;
   background: none; border: 1px solid var(--line); border-radius: 10px; color: var(--dim); font-size: 13px; cursor: pointer;
