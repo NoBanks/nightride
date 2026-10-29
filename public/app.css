@@ -149,6 +149,8 @@ textarea { width: 100%; resize: vertical; }
   border-top: 2px solid var(--amber); border-radius: 18px 18px 0 0;
 }
 .ccsheet[hidden] { display: none; }
+.cclaw { margin: 0; color: var(--text); font-size: 15px; }
+.cclaw a { color: var(--amber); }
 .cctags { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .cctags .btn { font-size: 16px; }
 .ccmap { width: 100%; flex: 1; min-height: 320px; border-radius: 16px; border: 1px solid var(--line); background: #050505; }
