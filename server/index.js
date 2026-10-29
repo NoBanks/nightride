@@ -29,9 +29,29 @@ app.use(express.static(fileURLToPath(new URL("../public", import.meta.url))));
 app.use("/shared", express.static(fileURLToPath(new URL("../shared", import.meta.url))));
 app.get("/shared/dispatch.js", (_req, res) => res.type("text/javascript").sendFile(fileURLToPath(new URL("./dispatch.js", import.meta.url))));
 
+// The free model credit has to last through judging, so a public link can't be allowed to
+// drain it: each visitor gets a few model calls per hour, and the whole app a daily ceiling.
+// Past either limit the rider still gets the playbook answer, just without the model.
+const PER_VISITOR_HOUR = Number(process.env.SPARK_PER_HOUR) || 40;
+const PER_DAY = Number(process.env.SPARK_PER_DAY) || 800;
+const visitorCalls = new Map(); // ip -> timestamps in the last hour
+let day = { date: "", calls: 0 };
+
+function allowModel(ip) {
+  const now = Date.now(), today = new Date().toISOString().slice(0, 10);
+  if (day.date !== today) day = { date: today, calls: 0 };
+  const recent = (visitorCalls.get(ip) || []).filter((t) => now - t < 3600000);
+  if (recent.length >= PER_VISITOR_HOUR || day.calls >= PER_DAY) return false;
+  recent.push(now);
+  visitorCalls.set(ip, recent);
+  day.calls += 1;
+  return true;
+}
+
 // Runs the model when a key is set; on any failure the rider still gets an answer.
-async function live(name, run, fallback) {
+async function live(name, run, fallback, ip = "") {
   if (!sparkReady()) return { ...fallback, source: "canned" };
+  if (!allowModel(ip)) return { ...fallback, source: "limit" };
   const t0 = Date.now();
   try {
     const out = await run();
@@ -57,7 +77,7 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
     const text = str(await sparkTranscribe(await toWav(req.file.buffer)), 1000);
     if (!text) throw new Error("no speech");
     return { text };
-  }, sparkReady() ? { text: "" } : { text: canned.TRANSCRIPT }));
+  }, sparkReady() ? { text: "" } : { text: canned.TRANSCRIPT }, req.ip));
 });
 
 app.post("/api/dispatch", async (req, res) => {
@@ -70,7 +90,7 @@ app.post("/api/dispatch", async (req, res) => {
   const d = await live("dispatch", async () => {
     const d = await sparkJSON(prompts.DISPATCH, context, { maxTokens: 1500 });
     return { lane: LANES.has(d.lane) ? d.lane : "ride", say: str(d.say, 240) || "I hear you. Here's what's open near you.", why: str(d.why, 120) };
-  }, cannedDispatch(text));
+  }, cannedDispatch(text), req.ip);
   // Matching a verified card costs no tokens: plain keywords against the rider's words.
   const [card] = playbook.match(text, playbook.LANE_CATEGORIES[d.lane]);
   res.json({ ...d, card: playbook.publicCard(card) || null });
@@ -99,7 +119,7 @@ app.post("/api/look", upload.fields([{ name: "clip", maxCount: 1 }, { name: "fra
     const steps = Array.isArray(d.steps) ? d.steps.map((s) => str(s, 200)).filter(Boolean).slice(0, 8) : [];
     if (!steps.length && base.fixable) throw new Error("no card and no steps");
     return { ...base, card: null, steps, prevent: str(d.prevent, 240) };
-  }, fallback));
+  }, fallback, req.ip));
 });
 
 app.post("/api/track", upload.single("clip"), (req, res) => {
