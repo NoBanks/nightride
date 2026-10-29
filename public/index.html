@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#000000">
   <title>NIGHTRIDE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
   <link rel="stylesheet" href="app.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 </head>
 <body>
   <header class="bar">
@@ -32,6 +34,7 @@
         <span class="talk-label">HOLD<br>TO TALK</span>
       </button>
       <div class="quick">
+        <button id="closeCall" class="btn closecall">CLOSE CALL</button>
         <button class="btn" data-go="fix">Fix my ride</button>
         <button class="btn" data-go="nearby">Get me somewhere</button>
         <button class="btn" data-go="share">Tell my people</button>
@@ -43,7 +46,20 @@
           <button class="btn small" type="submit">Send</button>
         </form>
       </details>
-      <button class="link" data-go="riders">Night riders nearby</button>
+      <div class="links">
+        <button class="link" data-go="map">Close call map</button>
+        <button class="link" data-go="riders">Night riders nearby</button>
+      </div>
+    </section>
+
+    <!-- Close call map -->
+    <section id="map" class="screen">
+      <button class="back" data-go="home">Back</button>
+      <h2>Close calls</h2>
+      <p id="mapSummary" class="hint"></p>
+      <div id="ccMap" class="ccmap"></div>
+      <a class="btn ghost wide center" href="/api/closecalls.csv" download>Download for the city (CSV)</a>
+      <p class="hint small">Every dot is a rider who tapped CLOSE CALL. Spots are rounded to about a block. No names, no accounts.</p>
     </section>
 
     <!-- 2. Listening / dispatch -->
@@ -112,6 +128,19 @@
       <ul id="riderReplies"></ul>
     </section>
   </main>
+
+  <!-- After a close call is logged: optional one-tap detail, then it gets out of the way. -->
+  <div id="ccSheet" class="ccsheet" hidden>
+    <p id="ccLogged" class="lane">CLOSE CALL LOGGED</p>
+    <p class="hint">What happened? (optional)</p>
+    <div class="cctags">
+      <button class="btn" data-tag="too close">Passed too close</button>
+      <button class="btn" data-tag="ran off road">Ran me off the road</button>
+      <button class="btn" data-tag="yelled or threw">Yelled or threw something</button>
+      <button class="btn" data-tag="almost hit">Almost hit me</button>
+    </div>
+    <button id="ccSkip" class="btn ghost wide">Skip</button>
+  </div>
 
   <!-- Emergency: full screen, one action. NIGHTRIDE never calls anyone itself. -->
   <div id="emergency" class="emergency" hidden>

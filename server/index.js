@@ -9,6 +9,7 @@ import * as canned from "./canned.js";
 import * as prompts from "./prompts.js";
 import { sparkReady, sparkJSON, sparkTranscribe, imagePart } from "./spark.js";
 import { toWav } from "./audio.js";
+import * as closeCalls from "./closecalls.js";
 
 // Keys live outside the repo (and outside OneDrive) in ~/.nightride/.env.
 const SECRETS = join(homedir(), ".nightride", ".env");
@@ -19,6 +20,7 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 
 const PORT = Number(process.env.PORT) || 8787;
 const LANES = new Set(["fix", "ride", "safe"]);
 
+app.set("trust proxy", "loopback"); // behind a local tunnel, req.ip is the rider's address
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(fileURLToPath(new URL("../public", import.meta.url))));
 
@@ -87,6 +89,31 @@ app.post("/api/track", upload.single("clip"), (req, res) => {
 
 app.post("/api/nearby", (_req, res) => {
   res.json({ places: canned.nearby(), source: "canned" });
+});
+
+// One report per device address every 20 s, so a stuck button can't flood the map.
+const lastReport = new Map();
+app.post("/api/closecall", (req, res) => {
+  const { lat, lng } = req.body || {};
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) {
+    return res.status(400).json({ error: "no location" });
+  }
+  const now = Date.now();
+  if (now - (lastReport.get(req.ip) || 0) < 20000) return res.status(429).json({ error: "already logged" });
+  lastReport.set(req.ip, now);
+  res.json(closeCalls.add(lat, lng));
+});
+
+app.post("/api/closecall/:id/tag", (req, res) => {
+  const call = closeCalls.setTag(req.params.id, req.body?.tag);
+  if (!call) return res.status(400).json({ error: "bad id or tag" });
+  res.json(call);
+});
+
+app.get("/api/closecalls", (_req, res) => res.json({ calls: closeCalls.all(), tags: closeCalls.TAGS }));
+
+app.get("/api/closecalls.csv", (_req, res) => {
+  res.type("text/csv").attachment("nightride-close-calls.csv").send(closeCalls.csv());
 });
 
 // No model here: builds the message the rider sends from their own phone.

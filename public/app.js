@@ -8,6 +8,7 @@ function go(name) {
   if (name === "nearby") loadNearby();
   if (name === "share") prepareShare();
   if (name === "riders") drawRiders();
+  if (name === "map") loadMap().catch(() => { $("mapSummary").textContent = "Couldn't load the map. Check your signal."; });
   window.scrollTo(0, 0);
 }
 document.addEventListener("click", (e) => {
@@ -430,6 +431,96 @@ $("sendShare").addEventListener("click", async () => {
     // Rider closed the share sheet.
   }
 });
+
+// ---------- close calls: one tap while riding, details optional ----------
+function currentLocation(timeout = 8000) {
+  if (state.location) return Promise.resolve(state.location);
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) return reject(new Error("no geolocation"));
+    navigator.geolocation.getCurrentPosition(
+      (p) => resolve({ lat: p.coords.latitude, lng: p.coords.longitude }),
+      reject,
+      { enableHighAccuracy: true, timeout },
+    );
+  });
+}
+
+let ccId = null, ccTimer = 0;
+const openCcSheet = () => { $("ccSheet").hidden = false; clearTimeout(ccTimer); ccTimer = setTimeout(closeCcSheet, 12000); };
+const closeCcSheet = () => { $("ccSheet").hidden = true; clearTimeout(ccTimer); };
+
+$("closeCall").addEventListener("click", async () => {
+  const btn = $("closeCall");
+  if (btn.disabled) return;
+  btn.disabled = true;
+  btn.textContent = "LOGGING...";
+  try {
+    const call = await postJSON("/api/closecall", await currentLocation());
+    ccId = call.id;
+    navigator.vibrate?.(80);
+    btn.classList.add("done");
+    btn.textContent = "LOGGED";
+    speak("Close call logged.");
+    openCcSheet();
+  } catch (e) {
+    btn.textContent = /429/.test(String(e.message)) ? "ALREADY LOGGED" : "TURN ON LOCATION";
+  } finally {
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.classList.remove("done");
+      btn.textContent = "CLOSE CALL";
+    }, 4000);
+  }
+});
+
+$("ccSheet").addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-tag]");
+  if (!b || !ccId) return;
+  closeCcSheet();
+  try { await postJSON(`/api/closecall/${ccId}/tag`, { tag: b.dataset.tag }); } catch {}
+});
+$("ccSkip").addEventListener("click", closeCcSheet);
+
+let ccMap = null, ccLayer = null;
+async function loadMap() {
+  if (!window.L) {
+    $("mapSummary").textContent = "The map needs a signal to load.";
+    return;
+  }
+  const { calls } = await (await fetch("/api/closecalls")).json();
+  if (!ccMap) {
+    ccMap = L.map("ccMap", { zoomControl: false });
+    // Free OpenStreetMap tiles, darkened in CSS for night eyes.
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "&copy; OpenStreetMap contributors",
+    }).addTo(ccMap);
+    ccLayer = L.layerGroup().addTo(ccMap);
+  }
+  ccLayer.clearLayers();
+
+  // Reports on the same rounded spot stack into one bigger dot: that's a hotspot.
+  const spots = new Map();
+  for (const c of calls) {
+    const k = `${c.lat},${c.lng}`;
+    spots.set(k, [...(spots.get(k) || []), c]);
+  }
+  for (const [k, list] of spots) {
+    const [lat, lng] = k.split(",").map(Number);
+    L.circleMarker([lat, lng], {
+      radius: 6 + Math.min(14, list.length * 3), color: "#ffb000", weight: 2, fillColor: "#ffb000", fillOpacity: 0.35,
+    }).bindPopup(`${list.length} close call${list.length > 1 ? "s" : ""}`).addTo(ccLayer);
+  }
+
+  const center = state.location ? [state.location.lat, state.location.lng]
+    : calls.length ? [calls.at(-1).lat, calls.at(-1).lng] : [34.5008, -117.1859];
+  ccMap.setView(center, 13);
+  setTimeout(() => ccMap.invalidateSize(), 50);
+  const worst = Math.max(0, ...[...spots.values()].map((l) => l.length));
+  $("mapSummary").textContent = calls.length
+    ? `${calls.length} close call${calls.length > 1 ? "s" : ""} logged. Worst spot: ${worst} report${worst > 1 ? "s" : ""}.`
+    : "No close calls yet. Tap CLOSE CALL on the home screen when a driver comes too close.";
+}
 
 // ---------- 6. night riders nearby (simulated for the demo) ----------
 const SIM_RIDERS = [

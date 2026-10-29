@@ -22,21 +22,21 @@ body {
 button, input, textarea { font: inherit; color: inherit; }
 
 .bar {
-  display: flex; align-items: center; gap: 10px;
-  padding: max(12px, env(safe-area-inset-top)) 16px 12px;
+  display: flex; align-items: center; gap: 8px;
+  padding: max(12px, env(safe-area-inset-top)) 12px 12px;
   border-bottom: 1px solid var(--line);
 }
 .brand { font-weight: 800; letter-spacing: 0.12em; color: var(--amber); }
 .voice {
-  margin-left: auto; min-height: 40px; padding: 0 10px;
-  background: none; border: 1px solid var(--line); border-radius: 10px; color: var(--dim); font-size: 14px; cursor: pointer;
+  margin-left: auto; min-height: 40px; padding: 0 8px; white-space: nowrap;
+  background: none; border: 1px solid var(--line); border-radius: 10px; color: var(--dim); font-size: 13px; cursor: pointer;
 }
 .voice[aria-pressed="true"] { color: var(--amber); border-color: var(--amber); }
-.status { margin-left: 8px; display: flex; align-items: center; gap: 8px; color: var(--dim); }
+.status { margin-left: 6px; flex-shrink: 0; font-size: 15px; display: flex; align-items: center; gap: 8px; color: var(--dim); }
 .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
 .dot.on { background: var(--amber); }
 .badge {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+  white-space: nowrap; font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
   border: 1px solid var(--amber); color: var(--amber);
   padding: 2px 6px; border-radius: 4px; vertical-align: middle;
 }
@@ -130,6 +130,26 @@ textarea { width: 100%; resize: vertical; }
 /* Riders */
 .ridermap { width: 100%; aspect-ratio: 1; background: #050505; border: 1px solid var(--line); border-radius: 16px; }
 #riderReplies li { padding: 10px 12px; background: var(--panel); border-radius: 12px; }
+
+/* Close calls */
+.btn.closecall { background: #1d1600; border: 2px solid var(--amber); color: var(--amber); font-weight: 800; letter-spacing: 0.12em; }
+.btn.closecall.done { background: var(--amber); color: #000; }
+.links { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+.ccsheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 9; display: grid; gap: 10px;
+  padding: 18px 16px max(18px, env(safe-area-inset-bottom)); background: var(--panel);
+  border-top: 2px solid var(--amber); border-radius: 18px 18px 0 0;
+}
+.ccsheet[hidden] { display: none; }
+.cctags { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cctags .btn { font-size: 16px; }
+.ccmap { width: 100%; flex: 1; min-height: 320px; border-radius: 16px; border: 1px solid var(--line); background: #050505; }
+.center { display: flex; align-items: center; justify-content: center; text-decoration: none; }
+.hint.small { font-size: 13px; }
+.leaflet-container { background: #050505; font: inherit; }
+.leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.75) contrast(0.9); }
+.leaflet-control-attribution.leaflet-control { background: rgba(0, 0, 0, 0.6); color: var(--dim); font-size: 10px; }
+.leaflet-control-attribution a { color: var(--dim); }
 
 /* Emergency */
 .emergency {
