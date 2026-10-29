@@ -1,0 +1,727 @@
+[
+  {
+    "id": "repair-flat-rear-tube",
+    "title": "Flat rear tire (inner tube)",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["flat", "puncture", "rear tire", "back tire", "tube", "hiss", "tire is soft", "rim on the ground"],
+    "summary": "Take the rear wheel out, find what caused the flat, and put in your spare tube. Removing the rear wheel means getting it past the chain and derailleur.",
+    "steps": [
+      "Get well off the road. Turn your phone light on and set it facing the wheel.",
+      "Shift to the smallest rear cog so the chain has the most slack.",
+      "Rim brakes: open the brake quick-release so the tire can pass the pads.",
+      "Derailleur has a small on/off clutch lever? Switch it off first.",
+      "Lay the bike on its left side, the side without the chain.",
+      "Open the quick-release lever, or unscrew the thru-axle and pull it out.",
+      "Swing the derailleur back, then guide the wheel out of the frame and clear of the chain.",
+      "Disc brakes: do not squeeze the brake lever while the wheel is out.",
+      "Let all the air out. Remove the valve nut if there is one.",
+      "Squeeze both tire edges into the middle of the rim to make slack.",
+      "Hook tire levers under one tire edge and work around until it pops off. Never use a knife or screwdriver.",
+      "Pull the tube out, starting across from the valve.",
+      "Run your fingers slowly around the inside of the tire to find the thorn or glass. Remove it.",
+      "Check that the rim tape covers every spoke hole.",
+      "Put a little air in the spare so it holds its shape.",
+      "Push the valve straight through the rim hole, then tuck the tube into the tire.",
+      "Roll the tire edge back on with your thumbs. Use levers only as a last resort.",
+      "Look all the way around: no tube showing between tire and rim.",
+      "Pump a little, check the tire line sits evenly both sides, then pump to the sidewall pressure.",
+      "Put the smallest cog into the chain and seat the axle fully in the frame slots.",
+      "Close the axle firmly, close the rim brake release, spin the wheel, and test the brake."
+    ],
+    "warnings": [
+      "Do not stand the bike upright with the rear wheel out. It can damage the derailleur.",
+      "If the tire line bulges above the rim while pumping, let the air out and reseat it.",
+      "If the hole is two side-by-side slits, the tire was too low and pinched the tube. Pump it higher.",
+      "If you never find what caused the flat, the new tube will likely go flat too. Keep checking the tire.",
+      "Hub motor e-bike? Use the hub motor wheel card instead; the motor cable must be unplugged first."
+    ],
+    "prevent": "Check tire pressure before every ride; low pressure causes pinch flats.",
+    "sources": [
+      {"org": "Park Tool", "title": "Wheel Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/wheel-removal-and-installation", "supports": "Shifting for slack, rim brake release, clutch derailleur off/locked, laying bike on non-drive side, not standing bike without rear wheel, opening QR/thru-axle, pivoting derailleur and guiding wheel out and back in, not squeezing hydraulic lever with wheel out, seating hub, re-engaging brake release."},
+      {"org": "Park Tool", "title": "Tire and Tube Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/tire-and-tube-removal-and-installation", "supports": "Deflating, valve nut, pushing beads to center, tire levers and no sharp tools, removing tube from opposite valve, inspecting tire inside and rim strip, pre-inflating tube, valve straight, seating beads by hand, checking bead, low-pressure bead-line check and deflate if bulging, inflating; double slits indicate rim pinch."},
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Find the cause of the flat before installing the spare tube."},
+      {"org": "Sheldon Brown (Harris Cyclery)", "title": "What Every Cyclist Should Know About Flat Tires", "url": "https://www.sheldonbrown.com/flats.html", "supports": "Pinch flats show two holes and are mostly caused by low pressure; check tire for embedded thorns or glass."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "All steps matched Park Tool; added clutch-derailleur step, don't-stand-bike-upright and bulging-bead warnings, and low-pressure bead check before full inflation (all from Park)."}
+  },
+  {
+    "id": "repair-flat-front-tube",
+    "title": "Flat front tire (inner tube)",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["flat", "puncture", "front tire", "front wheel", "tube", "hiss", "soft tire"],
+    "summary": "The front wheel is the easier one: no chain to deal with. Remove it, find the cause, swap in the spare tube.",
+    "steps": [
+      "Get well off the road and set your phone light facing the wheel.",
+      "Rim brakes: open the brake quick-release so the tire clears the pads.",
+      "Open the quick-release lever and loosen its nut a few turns, or pull out the thru-axle.",
+      "Lift the bike and guide the wheel down out of the fork.",
+      "Disc brakes: do not squeeze the brake lever while the wheel is out.",
+      "Let all the air out and remove any valve nut.",
+      "Squeeze the tire edges into the rim center, then lever one edge off. No sharp tools.",
+      "Pull the tube out and feel slowly around the inside of the tire for the sharp object.",
+      "Put a little air in the spare, set the valve straight, and tuck the tube in.",
+      "Thumb the tire edge back on, then check no tube is pinched under it.",
+      "Pump a little, check the tire line sits evenly both sides, then pump to the sidewall pressure.",
+      "Set the wheel back with the bike standing on the ground so the axle seats fully.",
+      "Close the axle firmly, close any rim brake release, spin the wheel, and test the brake."
+    ],
+    "warnings": [
+      "A front wheel that is not clamped tight can come out. Use the axle check card before riding.",
+      "If the tire line bulges above the rim while pumping, let the air out and reseat it.",
+      "If the tire itself is cut and the tube bulges through, use the sidewall boot card."
+    ],
+    "prevent": "Squeeze both tires before you leave; they should feel firm and match the sidewall pressure.",
+    "sources": [
+      {"org": "Park Tool", "title": "Wheel Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/wheel-removal-and-installation", "supports": "Brake release, opening QR/thru-axle, guiding front wheel out, hydraulic lever warning, installing front wheel with bike on ground so axle seats, re-engaging brake release."},
+      {"org": "Park Tool", "title": "Tire and Tube Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/tire-and-tube-removal-and-installation", "supports": "Deflate, levers, no sharp objects, inspect inside of tire, pre-inflate tube, valve straight, seat beads, check for pinched tube, low-pressure bead check, inflate."},
+      {"org": "Sheldon Brown and John Allen", "title": "Bicycle Quick-Releases", "url": "https://www.sheldonbrown.com/skewers.html", "supports": "Adjusting nut must be set with the lever open; nut position sets clamping (basis for loosening the nut to clear the fork tips)."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Steps match Park Tool; added 'loosen QR nut a few turns' (most front forks have tabs that stop the wheel dropping out) and the low-pressure bead check/bulge warning from Park."}
+  },
+  {
+    "id": "repair-find-puncture-no-water",
+    "title": "Find the hole in a tube without water",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["can't find the hole", "where is the leak", "find puncture", "no water", "slow leak", "patch"],
+    "summary": "Pump the tube up big and use your lips or ear to find the leak. Where the hole sits tells you where to look on the tire.",
+    "steps": [
+      "Pump the loose tube up until it is about twice its normal width.",
+      "Hold it close to your lips or ear and rotate it slowly all the way around.",
+      "Feel for a cool puff or listen for a hiss. Wet lips feel it better.",
+      "Mark the spot around the hole, not right on it.",
+      "Hold the tube next to the tire with the valve at the valve hole.",
+      "Hole on the outer side of the tube: check that spot on the tire for glass or a thorn.",
+      "Hole on the inner side: check the rim tape and spoke holes there.",
+      "Valve leaking? A drop of spit on the valve will bubble if it is the valve."
+    ],
+    "warnings": [
+      "Do not put the tube back until you have removed what caused the hole."
+    ],
+    "prevent": "Carry a patch kit even when you carry a spare tube, in case you flat twice.",
+    "sources": [
+      {"org": "Park Tool", "title": "How to Patch a Tire and Tube", "url": "https://www.parktool.com/en-us/blog/repair-help/inner-tube-repair", "supports": "Overinflate to about twice width; use lips or ear around the circumference to feel or hear air; mark around the hole, not close to it."},
+      {"org": "Sheldon Brown (Harris Cyclery)", "title": "What Every Cyclist Should Know About Flat Tires", "url": "https://www.sheldonbrown.com/flats.html", "supports": "Wet lips are more sensitive; spit test on valve; hole location outer side means check tire, inner side means check rim tape; carry patch kit as well as spare."},
+      {"org": "Park Tool", "title": "Tire and Tube Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/tire-and-tube-removal-and-installation", "supports": "Hole on inside edge of tube points to rim problem; inspect tire for debris."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "Every step confirmed against Park Tool patch/tire pages and Sheldon Brown flats page; no changes."}
+  },
+  {
+    "id": "repair-patch-tube",
+    "title": "Patch a tube on the roadside",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["patch", "patch kit", "no spare tube", "second flat", "glueless patch"],
+    "summary": "If you have no spare tube left, patch the hole. A stick-on patch is a get-home fix; replace the tube soon.",
+    "steps": [
+      "Find and mark the hole using the find-the-puncture card.",
+      "Lightly rough up the area around the hole with the kit's sandpaper. Do not dig grooves.",
+      "Wipe it clean and let it dry.",
+      "Stick-on patch: peel the backing, touching only the edges.",
+      "Center the patch over the hole and press hard, rolling the tube under your fingers.",
+      "Glue patch: spread a thin glue layer wider than the patch and let it dry several minutes.",
+      "Press the glue patch on firmly for about a minute, especially the edges.",
+      "Check all patch edges are stuck down.",
+      "Do not test-inflate the patched tube outside the tire. Put it back in, then pump up."
+    ],
+    "warnings": [
+      "Stick-on patches are temporary. Replace the tube when you get home.",
+      "Stick-on patches do not work on tubeless tires. Use a plug instead."
+    ],
+    "prevent": "Replace a used spare tube right away so your kit is always complete.",
+    "sources": [
+      {"org": "Park Tool", "title": "How to Patch a Tire and Tube", "url": "https://www.parktool.com/en-us/blog/repair-help/inner-tube-repair", "supports": "Light sanding without grooving, cleaning and drying, pre-glued patch handling and pressing, no test inflation outside tire, temporary nature, thin glue layer and drying time, pressing over a minute, checking edges, not for tubeless."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "All steps and warnings confirmed against Park Tool inner-tube repair page; no changes."}
+  },
+  {
+    "id": "repair-tubeless-plug",
+    "title": "Tubeless tire puncture: plug it",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["tubeless", "sealant spraying", "plug", "bacon strip", "sealant won't seal", "tubeless flat"],
+    "summary": "Small holes often seal by themselves with sealant. If the hole keeps leaking, push a tire plug in with a plug tool, then re-inflate.",
+    "steps": [
+      "Find the hole: look for sealant bubbling or spraying from the tread.",
+      "Pull out the thorn, nail or glass if it is still stuck in the tire.",
+      "Push the plug tool's ridged fork in and out of the hole to clean it up.",
+      "Thread one plug through the fork until it hangs halfway.",
+      "Push the tool into the hole. The plug folds in half.",
+      "Stop when about a quarter inch of plug ends still sticks out.",
+      "Hold the plug ends against the tire, using the tool's retainer if it has one, then pull out.",
+      "Pump the tire back up and watch the plug to see if it holds.",
+      "Still leaking from a big hole? Add a second plug the same way."
+    ],
+    "warnings": [
+      "A plug is temporary. Replace the tire soon.",
+      "Plugs only work on tubeless tires with sealant inside, not tubes.",
+      "A long rip will not plug. Put a spare tube in instead."
+    ],
+    "prevent": "Top up tubeless sealant on a regular schedule; dried-out sealant cannot seal holes.",
+    "sources": [
+      {"org": "Park Tool", "title": "TPT-1 Tubeless Tire Plug Tool instructions (Park Tool PDF, distributor-hosted copy)", "url": "https://platformmedia.grofa.com/file/4003135_Parktool_TPT-1_instructions-DE.pdf", "supports": "Locate puncture and remove object, ream with knurled fork, load plug halfway, insert until about 0.25 in. shows, hold retainer and withdraw tool, re-inflate to test, multiple plugs for large holes, temporary repair."},
+      {"org": "Park Tool", "title": "TPT-1 Tubeless Tire Plug Tool", "url": "https://www.parktool.com/en-int/product/tubeless-tire-plug-tool-tpt-1", "supports": "Plug works with sealant, for tubeless only, not inner tubes; small punctures and cuts."},
+      {"org": "SRAM (Zipp)", "title": "Zipp - Tubeless Troubleshooting", "url": "https://www.sram.com/en/service/articles/zipp---tubeless-troubleshooting", "supports": "Sealant seals small punctures; plugs and tubes listed as roadside repair options."},
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Sealant plugs small holes but a rip needs the spare tube."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "PDF text extracted and all 9 Park steps matched; reworded step 7 because Park says hold the tool's retainer, not the plug by hand."}
+  },
+  {
+    "id": "repair-tubeless-to-tube",
+    "title": "Tubeless won't hold: put a tube in",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["tubeless", "rip", "burp", "tire came off rim", "plug failed", "sealant everywhere"],
+    "summary": "When a tubeless tire is ripped or will not seal, a regular spare tube gets you home. Remove the tubeless valve first.",
+    "steps": [
+      "Take the wheel off using the front or rear flat card.",
+      "Let any air out, then unscrew the valve nut and push the tubeless valve out of the rim.",
+      "Lever one tire edge off. Wipe out loose sealant if you can.",
+      "Feel inside the tire for thorns and remove them so they don't pop the tube.",
+      "Put a little air in the tube, set its valve through the rim hole, and tuck it in.",
+      "Seat the tire edge, check no tube is pinched, then pump to the sidewall pressure."
+    ],
+    "warnings": [
+      "If a tubeless tire burps air on a hard hit, re-inflate right away; it gets harder to seat when low.",
+      "Some tubeless rims set a low maximum pressure. Do not exceed what is printed on the rim or tire."
+    ],
+    "prevent": "Leave tubeless valve nuts finger-tight so you can remove them on the roadside.",
+    "sources": [
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Rip needs the spare tube; fix a burp right away because low pressure makes reseating hard."},
+      {"org": "SRAM (Zipp)", "title": "Zipp - Tubeless Troubleshooting", "url": "https://www.sram.com/en/service/articles/zipp---tubeless-troubleshooting", "supports": "Tubes can be used in tubeless setups; road rims carry a maximum pressure (73 psi for Zipp hookless)."},
+      {"org": "SRAM (Zipp)", "title": "Ride Essentials", "url": "https://www.sram.com/en/zipp/learn/zipp-wheels-welcome-guide/ride-essentials", "supports": "Hand-tighten valve nuts; overtightened nut is hard to remove when a tube is needed."},
+      {"org": "Park Tool", "title": "Tire and Tube Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/tire-and-tube-removal-and-installation", "supports": "Removing valve nut, levering bead, inspecting tire inside, pre-inflating tube, seating bead, inflating."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "Confirmed against Park on-the-ride, Park tire page and both SRAM/Zipp pages; no changes."}
+  },
+  {
+    "id": "repair-sidewall-cut-boot",
+    "title": "Cut in the tire: boot it",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["sidewall cut", "tire slashed", "gash", "tube bulging", "boot", "tire torn", "dollar bill"],
+    "summary": "A cut tire lets the tube bulge out and burst. Cover the cut from inside with a boot, then use a tube. It is only a get-home fix.",
+    "steps": [
+      "Find the cut. Feel inside the tire to see how long it is.",
+      "Wipe the inside of the tire clean around the cut.",
+      "Best: a real tire boot. Press it inside so it fully covers the cut.",
+      "Keep the boot inside the tire, not over the tire edge that hooks the rim.",
+      "No boot? Fold a paper bill or an energy bar wrapper into a thick strip.",
+      "Lay the strip inside the tire across the cut, then fit the tube over it.",
+      "Pump up gently and look: the tube must not poke through the cut.",
+      "Ride slowly and straight home. You may feel a bump each turn."
+    ],
+    "warnings": [
+      "Any boot is temporary. Replace the tire before your next ride.",
+      "A bill or wrapper is weaker than a real boot. Expect it may fail; ride gently.",
+      "Boots need a tube pushing on them. They do not fix tubeless tires without a tube."
+    ],
+    "prevent": "Carry one real tire boot; it weighs nothing and saves a long walk.",
+    "sources": [
+      {"org": "Park Tool", "title": "How to Patch a Tire and Tube", "url": "https://www.parktool.com/en-us/blog/repair-help/inner-tube-repair", "supports": "Boot must fully overlap the rip, wipe inside clean, align boot so it does not pass the bead, press in place, temporary repair, replace tire."},
+      {"org": "Sheldon Brown (Harris Cyclery)", "title": "What Every Cyclist Should Know About Flat Tires", "url": "https://www.sheldonbrown.com/flats.html", "supports": "Folded dollar bills or Mylar food wrappers used as improvised boots; tube pressure holds boot; bump each revolution."},
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Boot is a 'tourniquet' get-home fix; boots don't work on tubeless without a tube; money is 'simply paper' (basis for the weaker-material warning)."}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Sheldon names Mylar food wrappers, not foil: changed to energy bar wrapper; removed 'peel' since not every boot is adhesive. Expert label kept because improvised boots are not a manufacturer method."}
+  },
+  {
+    "id": "repair-co2-inflator",
+    "title": "Using a CO2 inflator",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["CO2", "cartridge", "canister", "inflator", "no pump", "fill tire fast"],
+    "summary": "CO2 fills a tire in seconds but you get one shot per cartridge. Check the tube is not pinched first and protect your hand from the cold.",
+    "steps": [
+      "Before inflating, check all the way around that no tube is caught under the tire edge.",
+      "Presta valve: unscrew the little valve tip so it is open.",
+      "Close the inflator's trigger or dial fully.",
+      "Screw the cartridge into the inflator until it pierces. Don't open it yet.",
+      "Wrap the cartridge in a glove or sleeve. It gets freezing cold.",
+      "Turn the valve to the top and press the inflator firmly onto it.",
+      "Open the flow slowly while holding the head steady on the valve.",
+      "Stop when the tire feels firm. A snap means the tire edge has seated.",
+      "Remove the inflator and close the Presta valve tip."
+    ],
+    "warnings": [
+      "A pinched tube can burst instantly with CO2. Always check first.",
+      "The cartridge can cold-burn bare skin. Hold it through cloth.",
+      "CO2 leaks out faster than air. Let it out and refill with a pump at home."
+    ],
+    "prevent": "Carry two cartridges or a small pump as backup, since a misfire wastes a cartridge.",
+    "sources": [
+      {"org": "road.cc", "title": "How to use a CO2 inflator - get a tyre inflated in 8 easy steps", "url": "https://road.cc/content/feature/171692-how-use-co2-inflator", "supports": "Article body: open valve, close inflator, screw in cartridge to pierce, valve at top and press on, open flow, bead snap, close valve; cold enough to burn skin, wear gloves; pinched tube can blow instantly. Reader comments only: CO2 leaks faster than air."}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "Steps match road.cc article body; the 'CO2 leaks faster' warning is only in reader comments but is correct (CO2 permeates rubber faster), so kept."}
+  },
+  {
+    "id": "repair-chain-dropped",
+    "title": "Chain fell off",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["chain fell off", "dropped chain", "chain came off", "pedals spin free", "chain off"],
+    "summary": "A dropped chain usually goes back on in a minute. Use a stick to lift it onto the front ring while you turn the pedals backward.",
+    "steps": [
+      "E-bike: turn the motor off first so pedaling can't start it.",
+      "Stand the bike up, holding it with one hand.",
+      "Find a stick or use a tire lever.",
+      "Slip the stick under the chain at the bottom of the front ring.",
+      "Slowly turn the crank backward. The chain feeds up onto the teeth.",
+      "Pull the stick out before it reaches the top of the ring.",
+      "Chain off the back cogs? Push the derailleur cage forward for slack, then loop the chain onto a cog.",
+      "Single-speed or coaster brake bike: lift the rear wheel off the ground while you turn the crank."
+    ],
+    "warnings": [
+      "Keep fingers away from chainring teeth while turning the crank.",
+      "Chain jammed between the cogs and spokes? Turn the wheel backward gently. Do not yank it.",
+      "Bike fell on its right side? The derailleur hanger may be bent; see the gears card.",
+      "If the chain keeps dropping, the gears need adjusting at a shop."
+    ],
+    "prevent": "Carry thin gloves in your kit so a dropped chain doesn't leave grease all over your hands.",
+    "sources": [
+      {"org": "Sheldon Brown (Harris Cyclery)", "title": "If the Chain Falls Off or Jams", "url": "https://www.sheldonbrown.com/chain-drop.html", "supports": "Stick under chain at bottom, crank backward, remove stick before top, no lift needed with freewheel, lift rear wheel on fixed-gear/coaster bikes, rotate wheel backward gently for a jam, bent hanger after right-side fall, carry gloves."},
+      {"org": "Park Tool", "title": "Wheel Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/wheel-removal-and-installation", "supports": "Pivoting the rear derailleur to free the chain and placing the chain on a cog."}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Clarified the rear step (move the cage forward for slack). Added two Sheldon Brown warnings: chain jammed in spokes means turn the wheel backward gently, and a right-side fall can bend the hanger."}
+  },
+  {
+    "id": "repair-chain-snapped",
+    "title": "Chain snapped",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["chain broke", "chain snapped", "broken chain", "chain on the ground", "quick link", "master link", "chain tool"],
+    "summary": "With a chain tool and a quick link you can rejoin a broken chain and ride home. Replace the chain afterward.",
+    "steps": [
+      "E-bike: turn the motor off.",
+      "Find the chain ends and look at the damaged link.",
+      "Use the chain tool to push out the pins of the bent or broken links.",
+      "Remove only damaged links. Quick link: leave two narrow inner ends. Pin rejoin: one narrow, one wide.",
+      "Quick link: slip one half in each chain end and hook them together.",
+      "Put the link on the top run of chain, arrows pointing forward if marked.",
+      "Hold the rear brake and push hard on a pedal to snap the link shut.",
+      "No quick link? Push a pin only partway out, remove the bad link, then press it back.",
+      "The pushed-back pin must sit flush with the pins beside it.",
+      "Spin the pedals backward and check the joined link bends freely."
+    ],
+    "warnings": [
+      "The chain is now shorter. Avoid the biggest front ring with the biggest rear cogs.",
+      "A re-pressed pin is weak. Ride gently and replace the chain before your next ride.",
+      "Many 9-speed and higher chains need a special pin or quick link; a re-pressed pin may not hold.",
+      "Chain wrapped around the derailleur? Other parts may be damaged. Check before riding."
+    ],
+    "prevent": "Carry one quick link that matches your chain's speed count.",
+    "sources": [
+      {"org": "Park Tool", "title": "On the Ride Chain Repair", "url": "https://www.parktool.com/en-int/blog/repair-help/on-the-ride-chain-repair", "supports": "Remove damaged section, master link on upper chain row with arrows in direction of travel, brake and pedal to seat, re-pressing a partly pushed rivet to neighbor depth, rivet strength compromised, avoid largest cogs, check for tight link, inspect drivetrain if wrapped, replace chain."},
+      {"org": "Park Tool", "title": "Chain Length Sizing", "url": "https://www.parktool.com/en-us/blog/repair-help/chain-length-sizing", "supports": "Master link is two removable outer plates (so it joins two inner/narrow ends); rivet joins match inner plate to outer plate."},
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Avoid large-large gear combos after shortening; re-pressing a rivet is weakening; replace chain before the next ride."},
+      {"org": "Sheldon Brown (Harris Cyclery)", "title": "Chain Maintenance", "url": "https://www.sheldonbrown.com/chains.html", "supports": "Master link pins must match the chain; Shimano 9-speed and up need a special pin and tool to rejoin."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "CRITICAL: card said keep one narrow and one wide end for a quick link. Wrong: a quick link joins two narrow ends. Fixed per Park. Added Sheldon warning that 9-speed+ chains may not hold a re-pressed pin."}
+  },
+  {
+    "id": "repair-singlespeed-conversion",
+    "title": "Derailleur broken: make it a one-speed",
+    "category": "repair",
+    "applies_to": ["bike"],
+    "triggers": ["derailleur broken", "derailleur snapped", "hanger broken", "derailleur in spokes", "chain tangled", "singlespeed"],
+    "summary": "If the rear derailleur or its hanger is broken, bypass it. Shorten the chain to run on one front ring and one rear cog.",
+    "steps": [
+      "Break the chain with the chain tool and lift it out of the derailleur.",
+      "Pick the small or middle front ring and a middle rear cog that line up straight.",
+      "Wrap the chain around just those two, skipping the derailleur.",
+      "Pull it snug, not drum-tight, and find where the ends meet.",
+      "Quick link joins two narrow ends. A pushed-back pin joins a narrow end to a wide end.",
+      "Remove the extra chain and rejoin it.",
+      "Too loose? Move it to the next bigger rear cog, or remove one more link pair.",
+      "Tie or tape the loose derailleur away from the spokes.",
+      "Do not shift. Ride gently home."
+    ],
+    "warnings": [
+      "Shifting gears now can jam or snap the chain.",
+      "Full-suspension bike: chain length changes as the rear compresses. Leave slack or it can snap.",
+      "Get the hanger, derailleur and chain replaced before riding normally again."
+    ],
+    "prevent": "Know your bike's derailleur hanger part number and keep a spare at home.",
+    "sources": [
+      {"org": "Park Tool", "title": "On the Ride Chain Repair", "url": "https://www.parktool.com/en-int/blog/repair-help/on-the-ride-chain-repair", "supports": "Detach chain from derailleur, pick gear with good chainline and enough tension, inner plate must join outer plate, adjust cog if too loose, cut and rejoin with rivet or master link."},
+      {"org": "Park Tool", "title": "Chain Length Sizing", "url": "https://www.parktool.com/en-us/blog/repair-help/chain-length-sizing", "supports": "Master link uses two outer plates (joins two inner ends); rear suspension movement changes the needed chain length."},
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Single-speed conversion when hanger or derailleur is beyond repair; smaller or middle front ring; straight chainline; zip ties in kit."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "CRITICAL: 'too loose, try a smaller cog' was backwards (a smaller cog makes it looser); now bigger cog or remove a link pair. Fixed the quick-link end rule; added full-suspension slack warning (Park chain sizing)."}
+  },
+  {
+    "id": "repair-gears-skipping-bent-hanger",
+    "title": "Gears skipping or shifting badly",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["skipping", "chain jumping", "ghost shifting", "won't shift", "clicking", "derailleur bent", "crashed on right side"],
+    "summary": "Skipping after a fall usually means the derailleur hanger is bent. Small cable tweaks fix mild skipping; a bent hanger needs care.",
+    "steps": [
+      "Stand behind the bike and look: the derailleur should hang straight below the cogs.",
+      "Looks bent inward? Avoid the biggest rear cogs so the chain stays out of the spokes.",
+      "Won't shift to a bigger cog: turn the barrel adjuster counterclockwise one turn.",
+      "Jumps two cogs per click: turn the barrel adjuster clockwise one turn.",
+      "Test-shift by turning the pedals while lifting the back wheel.",
+      "Skipping only under hard pedaling in favorite gears suggests a worn chain and cogs.",
+      "Badly bent hanger: carefully lever it straight, or convert to one speed."
+    ],
+    "warnings": [
+      "Bending a hanger can snap it. Go slowly, and expect to need a new one.",
+      "If the derailleur touches the spokes, stop. Use the one-speed card instead."
+    ],
+    "prevent": "Lay the bike on its left side so the derailleur is not knocked and bent.",
+    "sources": [
+      {"org": "Park Tool", "title": "Rear Derailleur Hanger Alignment", "url": "https://www.parktool.com/en-us/blog/repair-help/rear-derailleur-hanger-alignment", "supports": "Bent hanger causes poor shifting, can't be fixed by indexing; caused by impacts; repeatedly bent hangers can break."},
+      {"org": "Park Tool", "title": "Rear Derailleur Adjustment", "url": "https://www.parktool.com/en-us/blog/repair-help/rear-derailleur-adjustment", "supports": "One turn counterclockwise for won't-shift, one turn clockwise for double-shift; limit screws keep chain out of spokes; check hanger first."},
+      {"org": "Park Tool", "title": "Rear Derailleur — Advanced Troubleshooting", "url": "https://www.parktool.com/en-us/blog/repair-help/rear-derailleur-advanced-troubleshooting", "supports": "Sight hanger from behind; skipping in favorite gears under load means worn chain and cogs."},
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Use a hex wrench as a lever to realign a bent hanger on the road, with risk of breaking it."},
+      {"org": "Park Tool", "title": "Wheel Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/wheel-removal-and-installation", "supports": "Lay the bike on its non-drive (left) side."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "Barrel adjuster directions and amounts match Park exactly; hanger sighting, worn-chain symptom and field lever method confirmed; no changes."}
+  },
+  {
+    "id": "repair-disc-brake-rubbing",
+    "title": "Disc brake rubbing",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["brake rubbing", "disc rub", "scraping noise", "wheel drags", "rotor rubbing", "ching ching"],
+    "summary": "Most disc rub after a wheel change is a wheel not fully seated. Reseat the wheel; if it still rubs, re-center the caliper.",
+    "steps": [
+      "Stand the bike on the ground. Open the axle, push down on the bike, and re-close it.",
+      "Spin the wheel. If the rub is gone, you're done.",
+      "Still rubbing: loosen the two bolts holding the brake caliper to the frame.",
+      "Squeeze the brake lever hard and hold it.",
+      "While holding, snug both caliper bolts, then let the lever go.",
+      "Spin the wheel and listen.",
+      "Rub in one spot each turn can mean a bent rotor. Have a shop true it."
+    ],
+    "warnings": [
+      "Keep fingers and tools clear of the spinning rotor.",
+      "Never squeeze a hydraulic brake lever with the wheel out; the pads close up.",
+      "If the lever feels soft or reaches the bar, use the brakes-not-stopping card."
+    ],
+    "prevent": "Always reseat the wheel with the bike's weight on it after any flat repair.",
+    "sources": [
+      {"org": "Park Tool", "title": "Hydraulic Disc Brake Alignment", "url": "https://www.parktool.com/en-us/blog/repair-help/hydraulic-disc-brake-alignment", "supports": "Wheel not seated and bent rotor as causes; reseat wheel with weight on bike; loosen caliper bolts, squeeze lever, snug bolts, release, test; care with fingers near spinning wheel."},
+      {"org": "Park Tool", "title": "Wheel Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/wheel-removal-and-installation", "supports": "Do not squeeze hydraulic lever with wheel out or pads close."},
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Pad rub can usually be adjusted on the road with a 4/5mm hex or T25."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Procedure matches Park exactly; added Park's warning to keep fingers clear of the spinning rotor."}
+  },
+  {
+    "id": "repair-rim-brake-rubbing",
+    "title": "Rim brake rubbing",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["brake rubbing", "pad on rim", "squeal", "wheel drags", "v-brake", "caliper brake"],
+    "summary": "Rim brake rub is usually a wheel sitting crooked, a brake off-center, or a cable set too tight.",
+    "steps": [
+      "Check the wheel sits straight and fully in the frame. Reseat it if not.",
+      "Look for a brake quick-release left open or half closed. Set it properly.",
+      "One pad touching: turn the small centering screw on the brake arm a little.",
+      "Test after each quarter turn. Spin the wheel and look at both pad gaps.",
+      "Both pads touching: turn the barrel adjuster at the lever inward to add slack.",
+      "Squeeze the lever. It must still stop the wheel well before hitting the bar."
+    ],
+    "warnings": [
+      "Too much slack makes the brake weak. Never trade stopping power for a quiet wheel.",
+      "A wobbly wheel after a spoke breaks can rub; see the broken spoke card."
+    ],
+    "prevent": "Close the brake quick-release every time you put a wheel back in.",
+    "sources": [
+      {"org": "Park Tool", "title": "Linear Pull Brake Service", "url": "https://www.parktool.com/en-us/blog/repair-help/linear-pull-brake-service", "supports": "Centering screws move both arms; too tight setting causes rub; barrel adjuster in adds slack; too loose loses power."},
+      {"org": "Park Tool", "title": "Dual Pivot Brake Service", "url": "https://www.parktool.com/en-us/blog/repair-help/dual-pivot-brake-service", "supports": "Centering screw shifts pads; barrel adjuster sets clearance; lever nearly touching bar means too loose."},
+      {"org": "Park Tool", "title": "Wheel Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/wheel-removal-and-installation", "supports": "Re-engage brake release, center wheel in frame, check pads centered."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "Centering screw, barrel adjuster direction and too-loose warning all confirmed against Park linear-pull and dual-pivot pages; no changes."}
+  },
+  {
+    "id": "repair-brakes-not-stopping",
+    "title": "Brakes not stopping: test it, or walk it",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["brakes don't work", "can't stop", "brake lever to the bar", "soft brake", "spongy brake", "brake cable snapped", "brake fluid leak"],
+    "summary": "A quick test tells you if a brake is safe. If a lever touches the bar or the wheel won't stop, do not ride on that brake.",
+    "steps": [
+      "Stop somewhere safe. E-bike: turn the motor off.",
+      "Lift the front wheel, spin it, and squeeze the front lever. The wheel must stop.",
+      "Do the same for the rear wheel.",
+      "Lever touches the handlebar? That brake has failed.",
+      "Loose cable brake: turn the barrel adjuster out to take up slack, then retest.",
+      "Snapped cable: there is no roadside fix.",
+      "Look for oil or fluid at the lever or caliper on hydraulic brakes.",
+      "If any brake fails the test, walk the bike or call for a ride.",
+      "Need to keep moving? Walk the bike on the road shoulder or path."
+    ],
+    "warnings": [
+      "If you must ride on one brake, go very slowly, away from hills and traffic.",
+      "Hydraulic leak: snug the fitting if you can, but only ride if the lever stays firm."
+    ],
+    "prevent": "Before each ride, squeeze both levers; they should feel firm and never touch the bar.",
+    "sources": [
+      {"org": "League of American Bicyclists (via pedbikeinfo.org)", "title": "The ABC Quick Check", "url": "https://www.pedbikeinfo.org/bicyclesaferjourney/abcquickcheck.pdf", "supports": "Levers must not hit handlebars; lift and spin each wheel and squeeze to confirm it stops."},
+      {"org": "Cascade Bicycle Club", "title": "ABC Quick Check", "url": "https://cascade.org/resources/beginner-tips-biking/abc-quick-check", "supports": "At least an inch of lever clearance from bar; if you cannot make the repair, go to a bike shop before riding."},
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Broken brake cable has no good trailside fix, use remaining brake carefully; snug a leaking hydraulic fitting and continue only if lever is firm."},
+      {"org": "Park Tool", "title": "Linear Pull Brake Service", "url": "https://www.parktool.com/en-us/blog/repair-help/linear-pull-brake-service", "supports": "Barrel adjuster outward removes slack."},
+      {"org": "Park Tool", "title": "Springtime Attention Brings Problem Prevention", "url": "https://www.parktool.com/en-us/blog/calvins-corner/springtime-attention-brings-problem-prevention", "supports": "Wetness where tubing enters lever and caliper indicates a hydraulic leak."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "ABC PDF text extracted and matched; Park on-the-ride confirms cable and hydraulic guidance; the card's walk-first stance is more cautious than Park, which is acceptable. No changes."}
+  },
+  {
+    "id": "repair-loose-stem-handlebar",
+    "title": "Loose or crooked handlebar / stem",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["handlebar loose", "bars crooked", "stem twisted", "handlebar turns", "front end knocking", "headset loose"],
+    "summary": "After a fall the bars often twist out of line. Straighten them and snug the stem bolts with your multitool.",
+    "steps": [
+      "Stand over the front wheel and see whether the bars line up with the wheel.",
+      "Crooked: loosen the bolts on the side of the stem clamping the fork tube.",
+      "Line the stem up with the wheel, then tighten those bolts evenly, a little at a time.",
+      "Bars rolled or slipping in the stem: loosen the front faceplate bolts slightly.",
+      "Center and set the bars, then tighten the faceplate bolts in an X pattern.",
+      "Snug firmly, not huge force. These bolts are usually small and low-torque.",
+      "Test: hold the front wheel between your knees and twist the bars. Nothing should move.",
+      "Hold the front brake and rock the bike. A knock means the headset is loose; ride slowly."
+    ],
+    "warnings": [
+      "Do not loosen the top cap bolt to straighten the bars; it only sets bearing play.",
+      "Carbon bars or stems: do not overtighten. Snug only, then get them torqued at a shop."
+    ],
+    "prevent": "Twist-test the bars against the front wheel before rides after any fall.",
+    "sources": [
+      {"org": "Park Tool", "title": "Stem Removal & Installation: Threadless", "url": "https://www.parktool.com/en-us/blog/repair-help/stem-removal-installation-threadless", "supports": "Straighten bars to the fork before snugging pinch bolts; faceplate bolts in an X pattern, 4-6 Nm typical; top cap sets bearing preload; rock with front brake held to check play; centering bars."},
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Realign and retighten stems, saddles and seatposts with hex wrenches on the road."},
+      {"org": "Park Tool", "title": "Springtime Attention Brings Problem Prevention", "url": "https://www.parktool.com/en-us/blog/calvins-corner/springtime-attention-brings-problem-prevention", "supports": "Check stem and handlebar bolts with a torque wrench rather than winding them tighter."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "Park threadless stem page confirms the X pattern, the 4-6 Nm (low torque) figure, that the top cap only sets preload, and the brake-rock headset check. The carbon over-tightening caution is standard practice. No changes."}
+  },
+  {
+    "id": "repair-loose-seat",
+    "title": "Loose seat or seatpost",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["seat loose", "saddle tilted", "seat sliding down", "seat twisted", "seatpost slipping"],
+    "summary": "A seat that tilts, twists or slides down can be fixed with your multitool in two minutes.",
+    "steps": [
+      "Seat sliding down or twisting: find the clamp where the post enters the frame.",
+      "If it is a quick-release lever, open it, set height and straightness, and close it firmly.",
+      "If it is a bolt, loosen, line the seat nose up with the top tube, then retighten.",
+      "Never raise the post so high that its minimum-insert mark shows above the frame.",
+      "Seat tilting: find the bolt or bolts under the seat.",
+      "Level the seat, then snug those bolts.",
+      "Sit and bounce lightly. The seat should not move."
+    ],
+    "warnings": [
+      "A cracked seatpost cannot be fixed on the road; remove it and stand-pedal or walk."
+    ],
+    "prevent": "Check the seat clamp and quick-release are tight as part of your pre-ride check.",
+    "sources": [
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Realign and retighten saddles and seatposts with hex wrenches; remove a broken seatpost."},
+      {"org": "Park Tool", "title": "How to Adjust a Bike Saddle and Seatpost", "url": "https://www.parktool.com/en-us/blog/repair-help/how-to-adjust-a-bike-saddle-seatpost", "supports": "Seat collar or quick-release collar; align saddle nose with top tube; minimum insertion mark should not be visible when installed; saddle clamp bolt."},
+      {"org": "League of American Bicyclists (via pedbikeinfo.org)", "title": "The ABC Quick Check", "url": "https://www.pedbikeinfo.org/bicyclesaferjourney/abcquickcheck.pdf", "supports": "Seat post quick releases must be tight and closed; seat must be tight before riding."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Added missing safety step: never show the seatpost minimum-insert mark (a post raised too far can snap or crack the frame), sourced from Park's saddle/seatpost page. Clarified that the seat nose lines up with the top tube."}
+  },
+  {
+    "id": "repair-loose-crank-pedal",
+    "title": "Crank arm or pedal feels loose",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["crank loose", "pedal wobbly", "clunk every pedal stroke", "pedal falling off", "crank arm wiggles"],
+    "summary": "A wobbling crank or pedal gets worse fast. Snug a loose crank with your multitool; a loose pedal is a reason to walk.",
+    "steps": [
+      "Stop riding as soon as a crank or pedal feels loose.",
+      "Grab each crank arm and wiggle it side to side. There should be no play.",
+      "Loose crank arm: tighten the bolt or bolts holding that arm with your multitool.",
+      "Loose pedal that you cannot tighten firmly: walk the bike home.",
+      "Riding on a loose pedal can strip the crank threads and ruin the crank."
+    ],
+    "warnings": [
+      "Get crank bolts checked with a proper torque wrench afterward."
+    ],
+    "prevent": "Wiggle both crank arms during your pre-ride check.",
+    "sources": [
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Loose crank is dangerous: stop, tighten with a multi-tool and torque properly later; loose pedal means walk home to avoid ruining crank threads."},
+      {"org": "League of American Bicyclists (via pedbikeinfo.org)", "title": "The ABC Quick Check", "url": "https://www.pedbikeinfo.org/bicyclesaferjourney/abcquickcheck.pdf", "supports": "Wiggle crank arms side to side; there should be no movement."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Added Park's 'stop right away' step. Changed 'the crank bolt' to 'the bolt or bolts holding that arm', because many cranks use side pinch bolts rather than one center bolt."}
+  },
+  {
+    "id": "repair-broken-spoke",
+    "title": "Broken spoke: get home safely",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["broken spoke", "spoke snapped", "ping", "wheel wobble", "spoke flapping", "rim rubbing"],
+    "summary": "One broken spoke usually still lets you ride home slowly. Stop it from flapping and give the wobbly rim room.",
+    "steps": [
+      "Stop and find the broken spoke. Spin the wheel slowly with your light on it.",
+      "If you can, unthread or bend it out and remove it.",
+      "Can't remove it: wrap it around the spoke next to it, or zip-tie it there.",
+      "Make sure nothing can catch the chain, derailleur, or brake.",
+      "Rim brakes rubbing? Open the brake quick-release only enough to clear, then test it still stops.",
+      "Ride slowly and gently home or to a shop."
+    ],
+    "warnings": [
+      "Opening a rim brake release makes that brake weaker. Ride slower.",
+      "A badly bent rim cannot be fixed roadside. Walk it.",
+      "A wheel that keeps breaking spokes needs a rebuild or replacement."
+    ],
+    "prevent": "Listen for pinging or clicking from the wheels and get loose spokes trued early.",
+    "sources": [
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Remove the spoke if practical, otherwise secure it to an adjacent spoke to stop the flop; trueness not restored; bent rims not fixable on the trail; spoke wrench and zip ties in kit."},
+      {"org": "Sheldon Brown (Harris Cyclery)", "title": "Truing Wheels", "url": "https://www.sheldonbrown.com/tooltips/truing.html", "supports": "Rough fixes can make a damaged wheel rideable enough to reach home; broken spokes must be replaced."},
+      {"org": "Park Tool", "title": "Wheel Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/wheel-removal-and-installation", "supports": "Rim brake quick-release opens pads for clearance."}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Removal and securing match Park. The brake-release step now says open it only enough to clear the rim and check the brake still stops the wheel, so the rider never ends up with no brake."}
+  },
+  {
+    "id": "repair-axle-closed-correctly",
+    "title": "Quick-release or thru-axle: closed correctly?",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["quick release", "QR", "skewer", "thru axle", "wheel loose", "wheel wobble", "put wheel back"],
+    "summary": "A quick-release is a clamp, not a wing nut. Closed right, it takes real hand force and leaves a mark on your palm.",
+    "steps": [
+      "Make sure the axle sits all the way into both frame slots.",
+      "Quick-release: open the lever fully.",
+      "Hold the lever and spin the nut on the other side until it just touches.",
+      "Swing the lever closed. It should start resisting about halfway, at a right angle to the frame.",
+      "Push it fully closed. It should leave a mark on your palm.",
+      "Too easy? Open, turn the nut a bit tighter, close again.",
+      "Won't close? Open, loosen the nut slightly, close again.",
+      "Point the lever along the frame where it won't snag.",
+      "Thru-axle: slide it through, turn clockwise until tight, then close its lever if it has one.",
+      "Lift the bike and thump the wheel down. It must not move or rattle."
+    ],
+    "warnings": [
+      "Never spin a quick-release closed like a wing nut. It will not hold.",
+      "If a gap shows between the axle and the frame slot, do not clamp it. Reseat it.",
+      "Disc brakes push on the axle. A loose skewer can let the wheel come out."
+    ],
+    "prevent": "Look at both wheel levers before every ride; they must be fully closed.",
+    "sources": [
+      {"org": "Sheldon Brown and John Allen", "title": "Bicycle Quick-Releases", "url": "https://www.sheldonbrown.com/skewers.html", "supports": "Not a wingnut; adjust nut with lever open; firm close leaving palm imprint; readjust nut; wedge gap warning; disc brake forces can loosen skewers."},
+      {"org": "Park Tool", "title": "Wheel Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/wheel-removal-and-installation", "supports": "Seat hub fully; resistance at about 90 degrees; thru-axle clockwise until tight; lever placement."},
+      {"org": "League of American Bicyclists (via pedbikeinfo.org)", "title": "The ABC Quick Check", "url": "https://www.pedbikeinfo.org/bicyclesaferjourney/abcquickcheck.pdf", "supports": "Quick releases must be tight and closed properly before riding."}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "Wing-nut, palm-imprint and wedge-gap points confirmed (Sheldon/Allen), as are the 90-degree resistance and thru-axle steps (Park). No changes."}
+  },
+  {
+    "id": "repair-ebike-hub-motor-wheel",
+    "title": "E-bike hub motor wheel removal",
+    "category": "repair",
+    "applies_to": ["ebike"],
+    "triggers": ["hub motor", "ebike flat", "e-bike rear wheel", "motor cable", "axle nuts", "rear motor"],
+    "summary": "A hub motor wheel is bolted in and has a power cable. Turn power off and unplug the motor cable before loosening the axle.",
+    "steps": [
+      "Turn the e-bike off and remove the battery if you can.",
+      "Shift to the smallest rear cog. Lay or flip the bike carefully.",
+      "Find the motor cable plug near the rear frame tube. Snip any zip tie, away from the wire.",
+      "Unplug it by gripping the connector halves only. Pull straight apart; never yank the wire.",
+      "Loosen both axle nuts with the right wrench. Some bikes have a frame bolt or guard to remove too.",
+      "Note how the special washers sit at each side. They go back the same way.",
+      "Push the derailleur out of the way and lower the wheel out, lifting the chain off the cogs.",
+      "Reinstall: chain on the smallest cog, brake rotor between the pads, axle fully in the slots.",
+      "Check the washers sit in the frame, then tighten both axle nuts firmly and evenly.",
+      "Plug the cable back in, matching the arrows, until it clicks. Re-secure it.",
+      "Spin the wheel and test both brakes before riding."
+    ],
+    "warnings": [
+      "Never pull a hub motor wheel with the cable still plugged in.",
+      "A wrongly installed hub motor wheel can cause serious injury. If unsure, walk it to a shop.",
+      "Have the axle nuts set to your manual's torque as soon as you can.",
+      "Do not bend the brake rotor while the wheel is out."
+    ],
+    "prevent": "Learn where your motor cable plug is and which wrench fits your axle nuts before you need it.",
+    "sources": [
+      {"org": "Magnum Bikes", "title": "How To Remove And Reinstall The Rear Wheel On Your E-Bike", "url": "https://magnumbikes.com/blogs/learning-hub/how-to-remove-and-reinstall-the-rear-wheel-on-your-e-bike", "supports": "Power off or remove battery, shift to smallest cog, flip bike, remove retainer bolt/guard, remove zip tie and unplug motor cable, remove axle nuts, press derailleur and lift chain off, anti-turn washers inside frame, rotor between pads, reconnect cable aligning arrows, new zip tie; improper installation can cause serious injury or death."},
+      {"org": "Ribble Cycles", "title": "How to remove and fit bike wheels", "url": "https://helpcentre.ribblecycles.co.uk/en/support/solutions/articles/22000290139-how-to-remove-and-install-your-bike-s-wheels", "supports": "Pull only on connectors, never the cable; washer lips seated in frame cut-outs; reconnect aligning arrows until it clicks; torque axle nuts to spec (18-23 Nm on their model)."},
+      {"org": "Park Tool", "title": "Wheel Removal and Installation", "url": "https://www.parktool.com/en-us/blog/repair-help/wheel-removal-and-installation", "supports": "Pivoting derailleur to remove/install rear wheel; tighten solid axle nuts to manufacturer spec."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Matched Magnum and Ribble (manufacturers). Added 'guide the rotor between the pads' (Magnum), a snip-away-from-the-wire caution and a separate torque warning; changed 'push derailleur back' to neutral wording."}
+  },
+  {
+    "id": "repair-night-kit",
+    "title": "What to carry: night repair kit",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["what should I carry", "repair kit", "saddle bag", "tools to bring", "flat kit", "prepare"],
+    "summary": "A small kit fixes most roadside problems. Do your maintenance before you leave so the kit rarely gets used.",
+    "steps": [
+      "Spare tube in your exact tire size, plus a patch kit.",
+      "Two tire levers.",
+      "Mini pump, or CO2 inflator with cartridges.",
+      "Tire boot for cut tires.",
+      "Multitool with 3, 4, 5 and 6 mm hex keys and a chain tool.",
+      "A quick link that matches your chain.",
+      "Spoke wrench and a few zip ties.",
+      "A rag and thin gloves for greasy chains.",
+      "Tubeless tires: a plug tool and plugs.",
+      "Hub motor e-bike: a wrench that fits your axle nuts.",
+      "A charged phone for light and calls."
+    ],
+    "warnings": [
+      "Practice a tube change at home in good light before you need it in the dark."
+    ],
+    "prevent": "Fix worn parts at home before the ride; the roadside is the worst place to discover them.",
+    "sources": [
+      {"org": "Park Tool", "title": "Repairing On-The-Ride", "url": "https://www.parktool.com/en-us/blog/calvins-corner/repairing-on-the-ride", "supports": "Carry tubes, patch kit, pump or cartridges, two levers, spoke wrench, 3-6 mm hex, zip ties, rag; boot; do your work before the ride."},
+      {"org": "Park Tool", "title": "On the Ride Chain Repair", "url": "https://www.parktool.com/en-int/blog/repair-help/on-the-ride-chain-repair", "supports": "Chain tool plus master link or connecting rivet for road chain repair."},
+      {"org": "Park Tool", "title": "TPT-1 Tubeless Tire Plug Tool", "url": "https://www.parktool.com/en-int/product/tubeless-tire-plug-tool-tpt-1", "supports": "Carry-along plug tool for tubeless tires."},
+      {"org": "Sheldon Brown (Harris Cyclery)", "title": "If the Chain Falls Off or Jams", "url": "https://www.sheldonbrown.com/chain-drop.html", "supports": "Carry gloves for chain handling."},
+      {"org": "Magnum Bikes", "title": "How To Remove And Reinstall The Rear Wheel On Your E-Bike", "url": "https://magnumbikes.com/blogs/learning-hub/how-to-remove-and-reinstall-the-rear-wheel-on-your-e-bike", "supports": "Hub motor wheels use axle nuts that must be removed with a wrench."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "Every kit item traced to a cited source. The 'practice at home' line is common-sense advice, not from a source. No changes."}
+  },
+  {
+    "id": "repair-pre-ride-abc-check",
+    "title": "ABC check before you ride home",
+    "category": "repair",
+    "applies_to": ["bike", "ebike"],
+    "triggers": ["is my bike safe", "check bike", "after repair", "before riding", "ABC check", "safe to ride"],
+    "summary": "After any roadside fix, run the 1-minute ABC check: Air, Brakes, Cranks and chain, Quick releases, then a slow test ride.",
+    "steps": [
+      "Air: squeeze both tires. They should be firm. Spin each wheel and look for bulges.",
+      "Brakes: squeeze each lever. It must not reach the handlebar.",
+      "Lift each wheel, spin it, and brake. It must stop.",
+      "Cranks: wiggle each crank arm sideways. No movement.",
+      "Chain: turn the pedals. The chain should run smoothly and drive the wheel.",
+      "Quick releases: check both wheels and the seat post are fully closed.",
+      "Check: ride slowly for a short stretch, listening for rubbing or clicking."
+    ],
+    "warnings": [
+      "If any check fails and you can't fix it, do not ride. Walk or get a ride."
+    ],
+    "prevent": "Do this same check at home before every night ride.",
+    "sources": [
+      {"org": "League of American Bicyclists (via pedbikeinfo.org)", "title": "The ABC Quick Check", "url": "https://www.pedbikeinfo.org/bicyclesaferjourney/abcquickcheck.pdf", "supports": "All A, B, C, Quick release and Check steps."},
+      {"org": "Cascade Bicycle Club", "title": "ABC Quick Check", "url": "https://cascade.org/resources/beginner-tips-biking/abc-quick-check", "supports": "Check tire pressure and damage, lever clearance, crank play, quick releases, slow test ride; go to a shop before riding if you cannot repair."}
+    ],
+    "confidence": "official",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "PDF text extracted; every step matches the League ABC Quick Check and the Cascade version. No changes."}
+  }
+]

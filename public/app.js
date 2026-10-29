@@ -209,7 +209,7 @@ function sourceLinks(sources) {
 
 function showGuide(card) {
   go("guide");
-  $("guideTag").textContent = `Verified playbook · ${card.confidence}`;
+  $("guideTag").textContent = ["Verified playbook", card.confidence, card.qa ? `fact-checked ${card.qa.checked}` : ""].filter(Boolean).join(" · ");
   $("guideTitle").textContent = card.title;
   $("guideSummary").textContent = card.summary;
   const li = (text) => Object.assign(document.createElement("li"), { textContent: text });

@@ -1,0 +1,615 @@
+[
+  {
+    "id": "ebike-cutout-roadside",
+    "title": "E-bike or scooter suddenly cut out: what to try, in order",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["cut out", "died", "no power", "shut off", "motor stopped", "won't turn on", "lost assist", "dead", "stopped working"],
+    "summary": "Most cutouts come from a low or loose battery, a brake lever that didn't spring back, a loose plug, heat, or water. Check the easy things first, in this order.",
+    "steps": [
+      "Get fully off the road to a safe, visible spot before touching anything.",
+      "Turn your lights on if they still work, or switch on your phone flashlight.",
+      "Look at the display. Note any error code or battery level before restarting.",
+      "Squeeze and release both brake levers. Make sure each one springs all the way back.",
+      "Turn the system off. Remove the battery, check the contacts, reseat it until it locks.",
+      "Turn it back on with your feet off the pedals, then try the lowest assist level.",
+      "Check plugs you can see near the display, handlebar and motor. Push loose ones back in.",
+      "If the motor feels very hot, switch off and let it cool for several minutes.",
+      "Still nothing? Ride it like a regular bike in a low gear, or walk it.",
+      "If the same code keeps coming back, stop using assist and get the bike serviced."
+    ],
+    "warnings": [
+      "Never open the battery case at the roadside.",
+      "If the battery is very hot, smokes, swells, leaks, hisses or smells strange, stop and use the battery cards. Call 911 if anything is burning."
+    ],
+    "prevent": "Before each night ride, check the battery is charged and locked in, the brakes spring back, and the lights work.",
+    "sources": [
+      {"org": "Upway", "title": "Why Your E-Bike Motor Isn't Working or Keeps Cutting Out", "url": "https://upway.co/blogs/news/why-your-e-bike-motor-isnt-working-or-keeps-cutting-out", "supports": "Common causes (battery seating, brake sensor, loose connectors, water, overheating, error codes); reseat battery; check levers return; restart with feet off pedals; cool and restart"},
+      {"org": "Bosch eBike Systems", "title": "Original operating instructions, Intuvia on-board computer (BUI255)", "url": "https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Bedienungsanleitungen/MY2024/BES2/Intuvia_BUI255/Bosch-eBike-Manual-BUI255_Intuvia_MY24_WEU_oReg_v2.pdf?_=1689686051", "supports": "Error codes appear on display; drive may shut down on errors but you can always keep riding without assist; restart and remove/reinsert battery for battery faults; check lights before every use; have bike checked"},
+      {"org": "Bosch eBike Systems", "title": "eBike battery safety", "url": "https://www.bosch-ebike.com/en/service/battery-safety", "supports": "Do not open the battery housing"},
+      {"org": "NFPA", "title": "Lithium-Ion Battery Safety (tip sheet)", "url": "https://content.nfpa.org/-/media/project/storefront/catalog/files/safety-tip-sheets/lithiumionbatterysafetytips.pdf?rev=2af71e80158942d99e59dcd8f96ab632", "supports": "Too much heat, odor, shape change, leaking or odd noises mean stop using the battery"}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Split hot motor (cool down) from hot battery (NFPA warning sign, stop using); added feet-off-pedals restart from Upway; added NFPA source."}
+  },
+  {
+    "id": "ebike-battery-empty-assist-off",
+    "title": "Battery ran low: assist faded or quit on a hill",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["battery dead", "battery empty", "low battery", "one bar", "assist faded", "cut out on hill", "battery died", "flashing battery"],
+    "summary": "When the battery gets low, some systems shut off motor help on purpose and save what's left for the lights. Climbing on a low battery can also cause cutouts.",
+    "steps": [
+      "Check the battery gauge. A flashing or empty gauge usually means assist is used up.",
+      "Turn assist to the lowest level or off to stretch what charge remains.",
+      "Keep your lights on. Some systems keep a reserve just for lighting.",
+      "On climbs, drop to an easy gear and pedal gently, or walk the hill.",
+      "If assist comes back on flat ground, save it for where you really need it.",
+      "Plan a pickup or charging stop now, before the lights run out too."
+    ],
+    "warnings": [
+      "Light reserve times differ by brand. Don't count on lights lasting all night.",
+      "Phones or gadgets charging from the bike drain the battery faster."
+    ],
+    "prevent": "Charge to full before night rides and plan your turnaround point with charge to spare.",
+    "sources": [
+      {"org": "Bosch eBike Systems", "title": "Original operating instructions, Intuvia on-board computer (BUI255)", "url": "https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Bedienungsanleitungen/MY2024/BES2/Intuvia_BUI255/Bosch-eBike-Manual-BUI255_Intuvia_MY24_WEU_oReg_v2.pdf?_=1689686051", "supports": "When assist capacity is used up, assist switches off gently and remaining charge powers lights and display (about two hours of lighting on that system, not counting USB loads); indicator flashes; ECO for maximum range; correct gear increases range"},
+      {"org": "Upway", "title": "Why Your E-Bike Motor Isn't Working or Keeps Cutting Out", "url": "https://upway.co/blogs/news/why-your-e-bike-motor-isnt-working-or-keeps-cutting-out", "supports": "Sudden, repeatable loss of assist on climbs can point to voltage sag"}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Bosch reserve-for-lights and USB drain confirmed in manual; 'many systems' softened to 'some'; unsourced 'half your charge' rule removed from prevent."}
+  },
+  {
+    "id": "ebike-reseat-battery-connectors",
+    "title": "Power flickers or cuts on bumps: battery and plugs",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["flickers", "cuts on bumps", "loose battery", "battery not seated", "connection error", "intermittent power", "turns off on bumps"],
+    "summary": "Power that cuts in and out on bumps often means the battery isn't locked in or a plug is loose. Reseating usually fixes it.",
+    "steps": [
+      "Stop somewhere safe and switch the whole system off.",
+      "Remove the battery if it comes out. Look for dirt, sand or bent pins on the contacts.",
+      "Gently clean grit off with a dry cloth. Never use metal tools on the contacts.",
+      "Slide the battery back in until it clicks and locks. Tug it to confirm.",
+      "If the display comes off, reseat it firmly in its holder.",
+      "Look along the cables for any plug pulled apart. Push it straight back together.",
+      "Switch on and test. If it still cuts out on bumps, ride without assist and get service."
+    ],
+    "warnings": [
+      "Do not use a battery with cracks, swelling, or crash damage until a dealer checks it.",
+      "Keep keys, coins and screws away from battery contacts. They can short it."
+    ],
+    "prevent": "Wipe battery contacts clean and check the battery locks in firmly before riding on rough roads.",
+    "sources": [
+      {"org": "Upway", "title": "Why Your E-Bike Motor Isn't Working or Keeps Cutting Out", "url": "https://upway.co/blogs/news/why-your-e-bike-motor-isnt-working-or-keeps-cutting-out", "supports": "Reseat and lock battery; check contacts for dirt/moisture/looseness; check plugs for looseness and bent pins; loose connections cause cutouts over bumps"},
+      {"org": "Bosch eBike Systems", "title": "Original operating instructions, Intuvia on-board computer (BUI255)", "url": "https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Bedienungsanleitungen/MY2024/BES2/Intuvia_BUI255/Bosch-eBike-Manual-BUI255_Intuvia_MY24_WEU_oReg_v2.pdf?_=1689686051", "supports": "System only switches on with charged battery inserted and display seated in holder; battery fault fix: switch off, remove and reinsert battery, restart; connection-problem codes"},
+      {"org": "Bosch eBike Systems", "title": "12 questions about your eBike battery", "url": "https://www.bosch-ebike.com/us/news/12-questions-about-the-ebike-battery", "supports": "Keep battery away from small metal objects (keys, nails, screws) that can short it"},
+      {"org": "UL Solutions", "title": "E-Bike/Micromobility Device Safety: Product Certification", "url": "https://www.ul.com/news/e-bikemicromobility-device-safety-product-certification", "supports": "Damaged battery should be inspected by the brand's authorized dealer before further use"}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "All steps match Upway, Bosch manual and Bosch battery FAQ; warning tied to UL dealer-inspection wording."}
+  },
+  {
+    "id": "ebike-brake-cutoff-stuck",
+    "title": "Motor won't help: brake cutoff switch stuck on",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["brake sensor", "brake cutoff", "throttle not working", "no assist", "brake lever stuck", "motor won't engage", "power cuts when braking"],
+    "summary": "Brake levers have switches that cut motor power when squeezed. If a lever doesn't fully return, the bike thinks you're braking and won't help.",
+    "steps": [
+      "Squeeze each brake lever hard, then let go. Watch that it snaps fully back.",
+      "Push each lever forward by hand to make sure it's all the way home.",
+      "Look for a bent lever or grit jamming it. Clear it if you can.",
+      "Test each brake separately: does assist return after working one side?",
+      "Restart the system with your feet off the pedals, then try the lowest assist level.",
+      "If assist is still off, ride it as a normal bike or walk it home."
+    ],
+    "warnings": [
+      "Make sure the brakes themselves still stop the bike before riding.",
+      "If the motor keeps pushing while you brake, stop riding that bike and get it serviced."
+    ],
+    "prevent": "Keep brake levers clean and have a shop check a lever that feels sticky.",
+    "sources": [
+      {"org": "Upway", "title": "How to Fix a Brake Sensor on an E-Bike: Causes and Easy Repairs", "url": "https://upway.co/blogs/news/how-to-fix-a-brake-sensor-on-an-e-bike", "supports": "How brake cutoff switches work; stuck sensor blocks motor; check lever returns fully; clean lever/sensor; test each brake individually; ride as traditional bike short-term; don't use bike if motor keeps pushing while braking"},
+      {"org": "Upway", "title": "Why Your E-Bike Motor Isn't Working or Keeps Cutting Out", "url": "https://upway.co/blogs/news/why-your-e-bike-motor-isnt-working-or-keeps-cutting-out", "supports": "Brake cutoff keeps motor from assisting if a lever doesn't fully return; restart pedal-assist bikes with feet off the pedals"},
+      {"org": "California Highway Patrol", "title": "Information Bulletin: Electric Bicycles and Other Devices (May 27, 2026)", "url": "https://www.chp.ca.gov/siteassets/policy/ib/ib-electric-bicycles-and-other-devices.pdf", "supports": "CVC 24016(a): e-bike motor must disengage or stop when brakes are applied"}
+    ],
+    "confidence": "community",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Added feet-off-pedals restart (Upway); added CHP/CVC 24016 source confirming brake cutoff is required on CA e-bikes. Repair steps remain retailer-sourced, so label stays community."}
+  },
+  {
+    "id": "ebike-overheat-temperature-error",
+    "title": "Overheated motor or battery: temperature cutout",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["overheat", "too hot", "temperature error", "hot motor", "cut out climbing", "summer heat", "thermal"],
+    "summary": "Systems protect themselves by cutting or reducing power when the motor or battery is outside its safe temperature range. Hot days and long climbs make this more likely.",
+    "steps": [
+      "Pull over somewhere safe and switch the system off.",
+      "Move the bike into shade if you can. Keep the battery out of direct sun.",
+      "Wait several minutes for things to cool, then restart.",
+      "Ride on in a lower assist level and an easier gear to reduce load.",
+      "If it overheats again, stop using assist and ride or walk it home.",
+      "Never pour water on the battery or motor to cool it."
+    ],
+    "warnings": [
+      "A battery that is very hot, smells, swells, or makes noise is a fire risk. Use the battery warning-signs card.",
+      "In cold, the same error can mean the battery is too cold. Warm it indoors before use."
+    ],
+    "prevent": "On hot days use lower assist on long climbs and park the bike in shade.",
+    "sources": [
+      {"org": "Bosch eBike Systems", "title": "Original operating instructions, Intuvia on-board computer (BUI255)", "url": "https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Bedienungsanleitungen/MY2024/BES2/Intuvia_BUI255/Bosch-eBike-Manual-BUI255_Intuvia_MY24_WEU_oReg_v2.pdf?_=1689686051", "supports": "Codes 540/605 temperature errors (drive unit and battery): switch off, let cool down or warm up to permitted range, restart, see dealer if it persists; do not immerse components in water"},
+      {"org": "Upway", "title": "Why Your E-Bike Motor Isn't Working or Keeps Cutting Out", "url": "https://upway.co/blogs/news/why-your-e-bike-motor-isnt-working-or-keeps-cutting-out", "supports": "Overheated drive unit may limit output until it cools; stop riding and get service if it keeps overheating"},
+      {"org": "FDNY", "title": "Safety Tips for Lithium-Ion Batteries - FDNY Smart", "url": "https://www.fdnysmart.org/be-fdnysmart-when-using-any-devices-powered-by-lithium-ion-batteries/", "supports": "Do not place battery in direct sunlight; warning signs (odor, shape/color change, leaking, odd noises)"},
+      {"org": "NFPA", "title": "Lithium-Ion Battery Safety (tip sheet)", "url": "https://content.nfpa.org/-/media/project/storefront/catalog/files/safety-tip-sheets/lithiumionbatterysafetytips.pdf?rev=2af71e80158942d99e59dcd8f96ab632", "supports": "Too much heat is a sign of a problem; stop using"},
+      {"org": "Bosch eBike Systems", "title": "12 questions about your eBike battery", "url": "https://www.bosch-ebike.com/us/news/12-questions-about-the-ebike-battery", "supports": "Never submerge battery in water"}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Steps match Bosch codes 540/605; removed 'hot battery' trigger so a hot battery routes to the warning-signs card (NFPA); added NFPA source."}
+  },
+  {
+    "id": "ebike-error-code-general",
+    "title": "Error code on the display: what to do",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["error code", "error", "warning code", "E code", "display error", "code on screen", "fault"],
+    "summary": "Codes differ by brand, but most roadside fixes are the same: note the code, restart, reseat the battery, check plugs. If it returns, ride without assist and get service.",
+    "steps": [
+      "Read the code out loud or snap a photo so you have it later.",
+      "Press any button to clear the screen, then switch the system fully off.",
+      "Wait a moment, then switch back on.",
+      "Still there? Switch off, remove and reinsert the battery, then restart.",
+      "Check nearby plugs and the wheel speed sensor magnet for anything knocked loose.",
+      "If the code comes back, ride without assist. You can always pedal it.",
+      "Once you're safe, look the code up in your bike's manual or on the maker's website."
+    ],
+    "warnings": [
+      "Don't keep restarting a bike that smells hot or is smoking. Use the battery fire card.",
+      "After a repeating code, have the bike checked before your next ride."
+    ],
+    "prevent": "Save a photo of your bike's error code list on your phone.",
+    "sources": [
+      {"org": "Bosch eBike Systems", "title": "Original operating instructions, Intuvia on-board computer (BUI255)", "url": "https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Bedienungsanleitungen/MY2024/BES2/Intuvia_BUI255/Bosch-eBike-Manual-BUI255_Intuvia_MY24_WEU_oReg_v2.pdf?_=1689686051", "supports": "Press any button to return to standard display; most codes: restart system, reinsert battery, check connections, check spoke magnet; you can always keep riding without assist; check bike before further journeys"},
+      {"org": "Upway", "title": "Why Your E-Bike Motor Isn't Working or Keeps Cutting Out", "url": "https://upway.co/blogs/news/why-your-e-bike-motor-isnt-working-or-keeps-cutting-out", "supports": "Codes are not universal, check your user manual; if the issue returns don't keep clearing codes and riding; speed sensor magnet check"}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Steps match Bosch error table; confidence lowered official->expert because one brand's manual is generalized to all brands; lookup step now points to the manual (Upway)."}
+  },
+  {
+    "id": "ebike-wet-water-cutout",
+    "title": "Cut out after rain, a puddle, or washing",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["rain", "wet", "water", "puddle", "flooded", "washed bike", "moisture", "cut out after rain"],
+    "summary": "Normal rain and splashes are usually fine, but water in a plug or connector can cause cutouts. Dry it, don't force it.",
+    "steps": [
+      "Switch the system off and move out of the water.",
+      "Remove the battery and wipe water off the contacts with a dry cloth.",
+      "Check plugs you can reach for water. Dry them and push them back firmly.",
+      "Let things air dry as long as you can before switching on.",
+      "If it still cuts out, ride without assist or walk it home.",
+      "Let the whole bike dry fully indoors before you charge it."
+    ],
+    "warnings": [
+      "If the battery sat underwater, don't charge or use it. Have a dealer check it first.",
+      "Never submerge an e-bike battery or spray it with a hose or pressure washer.",
+      "Unplug any phone and close the USB port cover in rain."
+    ],
+    "prevent": "Avoid deep puddles and never pressure-wash the bike; wipe it down with a damp cloth instead.",
+    "sources": [
+      {"org": "Bosch eBike Systems", "title": "Safely through the winter with the eBike", "url": "https://www.bosch-ebike.com/us/news/safely-through-the-winter-with-the-ebike", "supports": "Components are protected against rain, spray and splashes"},
+      {"org": "Bosch eBike Systems", "title": "12 questions about your eBike battery", "url": "https://www.bosch-ebike.com/us/news/12-questions-about-the-ebike-battery", "supports": "Never submerge battery or clean it with a pressure washer; wipe with a damp cloth"},
+      {"org": "Bosch eBike Systems", "title": "Original operating instructions, Intuvia on-board computer (BUI255)", "url": "https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Bedienungsanleitungen/MY2024/BES2/Intuvia_BUI255/Bosch-eBike-Manual-BUI255_Intuvia_MY24_WEU_oReg_v2.pdf?_=1689686051", "supports": "USB connection not waterproof: in rain connect no external device and keep cover closed; do not immerse components or clean with pressurised water"},
+      {"org": "Upway", "title": "Why Your E-Bike Motor Isn't Working or Keeps Cutting Out", "url": "https://upway.co/blogs/news/why-your-e-bike-motor-isnt-working-or-keeps-cutting-out", "supports": "Moisture from washing or heavy rain can cause cutouts; dry and inspect connectors; don't open the motor; shop if it smells electrical"},
+      {"org": "Upway", "title": "How to Fix a Brake Sensor on an E-Bike: Causes and Easy Repairs", "url": "https://upway.co/blogs/news/how-to-fix-a-brake-sensor-on-an-e-bike", "supports": "After heavy rain let the system dry thoroughly before testing"},
+      {"org": "UL Solutions", "title": "E-Bike/Micromobility Device Safety: Product Certification", "url": "https://www.ul.com/news/e-bikemicromobility-device-safety-product-certification", "supports": "Damaged battery: authorized dealer inspects before further use"}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Removed 'shake' the battery; added submerged-battery warning (card triggers on 'flooded'); USB warning now matches Bosch (no device connected in rain)."}
+  },
+  {
+    "id": "ebike-ride-assist-off",
+    "title": "Pedaling a heavy e-bike with no power",
+    "category": "ebike",
+    "applies_to": ["ebike"],
+    "triggers": ["pedal without battery", "no assist", "heavy bike", "ride without power", "pedal home", "assist off", "dead battery pedal"],
+    "summary": "An e-bike can still be ridden like a normal bike with the power off. It's heavy, so gears and pacing matter more than strength.",
+    "steps": [
+      "Shift to an easy, low gear before you start pedaling.",
+      "Spin the pedals lightly and quickly instead of pushing hard.",
+      "Shift down early, before hills, not halfway up.",
+      "Walk steep climbs. Pushing beats burning out.",
+      "Start braking earlier. A heavy bike takes longer to stop.",
+      "Rest in safe, lit spots and drink water if you have it.",
+      "Keep your rear red light or reflector visible the whole way."
+    ],
+    "warnings": [
+      "Chest pain, fainting, or feeling like you can't go on: stop somewhere safe and call 911.",
+      "Throttle-only scooters can't be pedaled. Walk them instead."
+    ],
+    "prevent": "Practice riding with assist off on a short, easy loop so you know your bike's easiest gear.",
+    "sources": [
+      {"org": "Bosch eBike Systems", "title": "Original operating instructions, Intuvia on-board computer (BUI255)", "url": "https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Bedienungsanleitungen/MY2024/BES2/Intuvia_BUI255/Bosch-eBike-Manual-BUI255_Intuvia_MY24_WEU_oReg_v2.pdf?_=1689686051", "supports": "OFF level: moved by pedalling as with a normal bicycle; you can always continue without assist; lower gear with higher cadence"},
+      {"org": "San Bernardino County (Board of Supervisors, District 1)", "title": "Electric Bike Rules and Regulations pursuant to the California Vehicle Code", "url": "https://bosd1.sbcounty.gov/wp-content/uploads/sites/103/E-Bike-Information.pdf", "supports": "Brake sooner on an e-bike because of more power, speed and weight; be visible at night"},
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21201", "url": "https://california.public.law/codes/ca_veh_code_section_21201", "supports": "21201(f): e-bikes must have the rear red reflector or red light at all hours"}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "Steps match Bosch, SB County and CVC 21201(f); 911 warning reworded as an emergency trigger, not medical advice."}
+  },
+  {
+    "id": "ebike-walk-mode",
+    "title": "Using walk mode to push a heavy e-bike",
+    "category": "ebike",
+    "applies_to": ["ebike"],
+    "triggers": ["walk mode", "walk assist", "push assist", "pushing bike", "walking the bike", "push it home", "uphill push"],
+    "summary": "Many e-bikes have a walk mode that powers the bike at walking speed while you push it beside you. It needs some battery left.",
+    "steps": [
+      "Stand beside the bike with both hands on the handlebar.",
+      "On many bikes walk mode won't start with assist set to off. Pick a low level.",
+      "Press your bike's walk button, then hold the button it asks for.",
+      "Walk alongside. It stops when you let go, brake, or go too fast.",
+      "Keep a firm grip. It can stop suddenly and roll back on hills.",
+      "No sidewalk? Walk near the left edge facing traffic, unless that side is unsafe.",
+      "If walk mode won't start, the battery may be too low. Just push."
+    ],
+    "warnings": [
+      "Only use walk mode with both wheels on the ground.",
+      "California allows walk mode up to 3.7 mph on class 1 and 3 bikes. Buttons vary, so check your manual."
+    ],
+    "prevent": "Try walk mode once at home in daylight so you know which buttons to press.",
+    "sources": [
+      {"org": "Bosch eBike Systems", "title": "Original operating instructions, Intuvia on-board computer (BUI255)", "url": "https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Bedienungsanleitungen/MY2024/BES2/Intuvia_BUI255/Bosch-eBike-Manual-BUI255_Intuvia_MY24_WEU_oReg_v2.pdf?_=1689686051", "supports": "Press WALK then hold + within 10 s; not available at OFF; stops on release, wheel lock/braking or over 6 km/h; may stop and move backwards or tip; wheels must touch ground; works differently by region"},
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 312.5", "url": "https://california.public.law/codes/ca_veh_code_section_312.5", "supports": "312.5(a)(4): class 1 or 3 e-bikes may have start assistance or walk mode on motor power alone up to 3.7 mph"},
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21956", "url": "https://california.public.law/codes/ca_veh_code_section_21956", "supports": "Outside business/residence districts pedestrians walk close to the left edge; right edge allowed when left is unsafe"}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Walk-mode-at-OFF rule is Bosch-specific, now hedged; 3.7 mph worded as what 312.5(a)(4) allows for class 1/3; 21956 right-side exception added."}
+  },
+  {
+    "id": "ebike-range-will-i-make-it",
+    "title": "Will my battery get me home?",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["range", "will I make it", "how far", "miles left", "enough battery", "running low", "headwind", "hills"],
+    "summary": "Range drops with cold, headwind, hills, high assist, extra weight and low tire pressure. The display estimate assumes nothing changes, so plan with margin.",
+    "steps": [
+      "Check the battery gauge and the miles you still need to cover.",
+      "Remember the range estimate assumes steady conditions. Wind and hills shrink it.",
+      "Rough check: if battery percent left is below the percent of trip left, act now.",
+      "Drop to the lowest assist level. That gives the most range.",
+      "Use easy gears and steady speeds; avoid hard starts.",
+      "Unplug your phone from the bike's USB port if it's charging.",
+      "If it's close, tell someone your route and plan a pickup point now."
+    ],
+    "warnings": [
+      "Cold nights can cut range noticeably. Leave extra margin in winter.",
+      "Low tire pressure costs range and makes pedaling harder."
+    ],
+    "prevent": "Check tire pressure weekly and note how much battery your usual commute really uses.",
+    "sources": [
+      {"org": "Bosch eBike Systems", "title": "12 questions about your eBike battery", "url": "https://www.bosch-ebike.com/us/news/12-questions-about-the-ebike-battery", "supports": "Range depends on support level, riding behavior, air resistance, tire pressure and terrain; cold reduces performance"},
+      {"org": "Bosch eBike Systems", "title": "Original operating instructions, Intuvia on-board computer (BUI255)", "url": "https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Bedienungsanleitungen/MY2024/BES2/Intuvia_BUI255/Bosch-eBike-Manual-BUI255_Intuvia_MY24_WEU_oReg_v2.pdf?_=1689686051", "supports": "Range readout assumes constant conditions; ECO gives maximum range; correct gear increases range; USB loads affect range"},
+      {"org": "Bosch eBike Systems", "title": "Safely through the winter with the eBike", "url": "https://www.bosch-ebike.com/us/news/safely-through-the-winter-with-the-ebike", "supports": "Battery loses capacity at low temperatures, limiting range"}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "All range factors match Bosch; the percent rule of thumb is our own heuristic (worded as rough), clarified wording only."}
+  },
+  {
+    "id": "ebike-cold-night-battery",
+    "title": "Cold night: battery weak or range dropping",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["cold", "freezing", "winter", "cold battery", "lost range in cold", "battery too cold", "cold night"],
+    "summary": "Lithium batteries give less power and range when cold. Keeping the battery warm before the ride helps more than anything on the road.",
+    "steps": [
+      "Expect less range than on a warm day. Use lower assist from the start.",
+      "If you stop for a while, take the battery inside with you if it comes off.",
+      "Put it back in right before you ride, not long before.",
+      "If you get a temperature error, warm the battery indoors before restarting.",
+      "Don't charge a freezing battery. Let it reach room temperature first.",
+      "On ice or frost, start off without motor help so the tires don't spin."
+    ],
+    "warnings": [
+      "Do not charge below 32°F (0°C).",
+      "Never heat a battery with a heater, flame, or hand warmer pressed against it."
+    ],
+    "prevent": "Store and charge the battery indoors at room temperature and fit it just before you leave.",
+    "sources": [
+      {"org": "Bosch eBike Systems", "title": "Safely through the winter with the eBike", "url": "https://www.bosch-ebike.com/us/news/safely-through-the-winter-with-the-ebike", "supports": "Cold reduces capacity and range; below zero remove battery, store at room temperature, replace shortly before riding; start off without motor support on slippery ground"},
+      {"org": "Bosch eBike Systems", "title": "12 questions about your eBike battery", "url": "https://www.bosch-ebike.com/us/news/12-questions-about-the-ebike-battery", "supports": "Below freezing bring battery into a heated space to reach room temperature; charge only between 32°F and 104°F"},
+      {"org": "NFPA", "title": "Lithium-Ion Battery Safety (tip sheet)", "url": "https://content.nfpa.org/-/media/project/storefront/catalog/files/safety-tip-sheets/lithiumionbatterysafetytips.pdf?rev=2af71e80158942d99e59dcd8f96ab632", "supports": "Do not charge below 32°F (0°C) or above 105°F; keep batteries at room temperature"},
+      {"org": "Bosch eBike Systems", "title": "eBike battery safety", "url": "https://www.bosch-ebike.com/en/service/battery-safety", "supports": "Keep battery away from heat sources"}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Slippery-start step corrected: Bosch says start WITHOUT motor support, not with low assist."}
+  },
+  {
+    "id": "ebike-stranded-at-night",
+    "title": "Battery died at night, far from home",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["stranded", "stuck", "battery died at night", "far from home", "need a ride", "pickup", "where to charge", "pushing home"],
+    "summary": "First get safe and visible, then decide: pedal, push, charge, or get picked up. Don't push a long way along a dark road if a pickup is possible.",
+    "steps": [
+      "Move well off the road into a lit spot if you can, like a store lot.",
+      "Turn on any lights left. Keep the rear red light or reflector facing traffic.",
+      "Share your live location with someone and say where you're headed.",
+      "Decide: pedal it, use walk mode, or push. Check how far home really is.",
+      "If walking on a road with no sidewalk, keep to the left edge facing traffic.",
+      "Need a ride? Call someone you trust or a ride service that can carry the bike.",
+      "To charge, ask an open business for a wall outlet and stay with the charging battery.",
+      "Feel unsafe, hurt, or threatened? Call 911."
+    ],
+    "warnings": [
+      "Never leave a battery charging unattended, even for a short trip inside.",
+      "Use only your bike's own charger, plugged straight into a wall outlet.",
+      "VVTA Micro-Link on-demand buses run weekdays 6 a.m. to 8 p.m. only. Not a late-night option."
+    ],
+    "prevent": "Carry your charger, a small backup light, and a charged phone on every night ride.",
+    "sources": [
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21201", "url": "https://california.public.law/codes/ca_veh_code_section_21201", "supports": "Night lighting/reflector requirements; e-bikes need a rear red reflector or light at all hours"},
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21956", "url": "https://california.public.law/codes/ca_veh_code_section_21956", "supports": "Walk near the left edge of the roadway outside business/residence districts"},
+      {"org": "Victor Valley Transit Authority", "title": "Micro-Link", "url": "https://vvta.org/microlink/", "supports": "On-demand Micro-Link serves an Apple Valley zone, Mon-Fri 6am-8pm, book via AccessLink app or 760-244-4000; bike racks hold two bikes (page does not mention e-bikes)"},
+      {"org": "CPSC", "title": "Micromobility: E-Bikes, E-Scooters and Hoverboards", "url": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Micromobility-Information-Center", "supports": "Always be present when charging; use only the charger provided with or recommended by the manufacturer"},
+      {"org": "FDNY", "title": "Lithium-Ion Safety (FDNY multilingual guide)", "url": "https://www.nyc.gov/assets/fdny/downloads/pdf/codes/lithium-ion-batteries-safety.pdf", "supports": "Plug directly into a wall outlet; no extension cords or power strips"},
+      {"org": "Bosch eBike Systems", "title": "Original operating instructions, Intuvia on-board computer (BUI255)", "url": "https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Bedienungsanleitungen/MY2024/BES2/Intuvia_BUI255/Bosch-eBike-Manual-BUI255_Intuvia_MY24_WEU_oReg_v2.pdf?_=1689686051", "supports": "Remaining charge after assist cutoff is reserved for lights on that system"}
+    ],
+    "confidence": "expert",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Removed vague 'check if transit is running' step; added explicit warning that VVTA Micro-Link stops at 8 p.m. weekdays (verified on vvta.org)."}
+  },
+  {
+    "id": "ebike-battery-smoke-fire",
+    "title": "Battery smoking, hissing, or on fire",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["smoke", "smoking", "fire", "burning", "hissing", "popping", "battery on fire", "flames", "burning smell"],
+    "summary": "A lithium battery that smokes or burns is an emergency. Get away, keep others away, and call 911. Don't try to put it out.",
+    "steps": [
+      "Stop and get off the bike right away.",
+      "Indoors: get out now, close the door behind you, and call 911 from outside.",
+      "Outdoors: step well back and keep other people away. Stay out of the smoke.",
+      "Call 911. Say it's a lithium e-bike battery fire and give your location.",
+      "Do not try to put out a battery fire yourself.",
+      "Stay back until firefighters arrive. Don't go back for the bike.",
+      "Never ride, charge, or reuse that battery again."
+    ],
+    "warnings": [
+      "Smoke from battery fires is toxic. Keep upwind and well away.",
+      "Fire spreading to brush, a car, or a building: call 911 immediately and move away.",
+      "If you breathed smoke or got burned, tell the 911 operator."
+    ],
+    "prevent": "Use only certified batteries and the original charger, and stop using any battery that swells, leaks, or smells.",
+    "sources": [
+      {"org": "FDNY", "title": "Lithium-Ion Safety (FDNY multilingual guide)", "url": "https://www.nyc.gov/assets/fdny/downloads/pdf/codes/lithium-ion-batteries-safety.pdf", "supports": "For fires involving batteries: close the door, leave the building immediately, call 911 from outside, do not try to extinguish a battery fire; battery that starts to expand or emit smoke: leave immediately and call 911"},
+      {"org": "FDNY", "title": "Safety Tips for Lithium-Ion Batteries - FDNY Smart", "url": "https://www.fdnysmart.org/be-fdnysmart-when-using-any-devices-powered-by-lithium-ion-batteries/", "supports": "Discontinue use immediately at warning signs; call 911"},
+      {"org": "NFPA", "title": "Lithium-Ion Battery Safety (tip sheet)", "url": "https://content.nfpa.org/-/media/project/storefront/catalog/files/safety-tip-sheets/lithiumionbatterysafetytips.pdf?rev=2af71e80158942d99e59dcd8f96ab632", "supports": "Batteries can overheat, catch fire, or explode; stop using; call 911"},
+      {"org": "Seattle Fire Department", "title": "Fire safety tips for e-bikes and e-scooters", "url": "https://fireline.seattle.gov/2024/04/04/fire-safety-tips-for-e-bikes-and-e-scooters/", "supports": "Lithium-ion battery fires give off toxic gases and burn extremely hot"},
+      {"org": "UL Solutions", "title": "E-Bike/Micromobility Device Safety: Product Certification", "url": "https://www.ul.com/news/e-bikemicromobility-device-safety-product-certification", "supports": "Stop using a battery immediately if it overheats, smells, changes shape or color, leaks, or makes odd noises"}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Removed 'move it away if not burning yet': for a smoking/hissing battery FDNY says leave immediately and call 911. Indoor step moved up; toxic-smoke warning added (Seattle FD)."}
+  },
+  {
+    "id": "ebike-battery-warning-signs",
+    "title": "Signs your battery is failing (or was damaged in a crash)",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["swollen battery", "bulging", "battery smells", "battery leaking", "battery hot", "hot battery", "dropped battery", "crashed", "damaged battery", "battery noise"],
+    "summary": "Swelling, leaking, odd smells, strange noises, color change or too much heat mean stop using the battery now. Crash damage counts too.",
+    "steps": [
+      "Stop using it now if it swells, leaks, smells, changes color, makes noise, or gets very hot.",
+      "Don't ride it and don't charge it. If it's charging, unplug only if safe.",
+      "If it is safe to do so, move it away from anything that can burn.",
+      "Call 911, then keep yourself and others well back from it.",
+      "Swelling, smoke, or hissing: don't touch it. Get away and call 911.",
+      "After a crash or hard drop, have a dealer inspect it before charging or riding.",
+      "Never open, repair, or rebuild a battery yourself.",
+      "Take dead or damaged batteries to a battery recycler or hazardous waste site, never the trash."
+    ],
+    "warnings": [
+      "Smoke, flames, or fire spreading: get away and call 911. Use the battery fire card.",
+      "Replace with the maker's battery or an approved one, not a cheap unknown pack."
+    ],
+    "prevent": "Look the battery over for cracks, swelling, or damage before every charge.",
+    "sources": [
+      {"org": "NFPA", "title": "Lithium-Ion Battery Safety (tip sheet)", "url": "https://content.nfpa.org/-/media/project/storefront/catalog/files/safety-tip-sheets/lithiumionbatterysafetytips.pdf?rev=2af71e80158942d99e59dcd8f96ab632", "supports": "Signs of a problem (odor, color change, too much heat, shape change, leaking, odd noises): stop using; if safe, move device away from anything that can catch fire; call 911; recycle, don't trash"},
+      {"org": "FDNY", "title": "Lithium-Ion Safety (FDNY multilingual guide)", "url": "https://www.nyc.gov/assets/fdny/downloads/pdf/codes/lithium-ion-batteries-safety.pdf", "supports": "Damaged battery: do not charge; hot while charging: stop using; starts to expand or emit smoke: leave immediately and call 911; never alter or open a battery"},
+      {"org": "FDNY", "title": "Safety Tips for Lithium-Ion Batteries - FDNY Smart", "url": "https://www.fdnysmart.org/be-fdnysmart-when-using-any-devices-powered-by-lithium-ion-batteries/", "supports": "Warning signs (odor, shape or color change, leaking, odd noises); discontinue use; if safe move away from anything that can catch fire and call 911; buy manufacturer's compatible battery"},
+      {"org": "UL Solutions", "title": "E-Bike/Micromobility Device Safety: Product Certification", "url": "https://www.ul.com/news/e-bikemicromobility-device-safety-product-certification", "supports": "Damaged battery: authorized dealer inspects before further use; replace with the exact same battery; no aftermarket batteries; don't modify"},
+      {"org": "UL Standards & Engagement", "title": "How Riders Are Unknowingly Raising the Battery Fire Risks of E-Mobility", "url": "https://ulse.org/news/how-riders-are-unknowingly-raising-battery-fire-risks-e-mobility", "supports": "Overheating and swelling are warning signs that cannot be ignored; crash damage is a critical reason to replace"},
+      {"org": "Bosch eBike Systems", "title": "eBike battery safety", "url": "https://www.bosch-ebike.com/en/service/battery-safety", "supports": "Check for damage before charging; do not open the housing; never repair or recondition batteries; hand old/defective batteries to a dealer, not household waste"},
+      {"org": "CPSC", "title": "Micromobility: E-Bikes, E-Scooters and Hoverboards", "url": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Micromobility-Information-Center", "supports": "Never use reworked or used-cell batteries; never put lithium batteries in trash; use battery recycler or hazardous waste collection center"}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Major: original said call 911 only if smoke appears; NFPA/FDNY say call 911 at warning signs and FDNY says leave at swelling. Removed 'remove the battery' and 'set it on bare ground and stay with it'."}
+  },
+  {
+    "id": "ebike-charging-safety",
+    "title": "Charging an e-bike battery safely",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["charging", "charge", "charger", "overnight charging", "plug in", "how to charge", "charging safety"],
+    "summary": "Many battery fires happen while charging, often at night. Use the right charger, a wall outlet, a safe spot, and be there while it charges.",
+    "steps": [
+      "Use only the charger that came with the bike or a maker-approved one.",
+      "Look the battery over first. Don't charge if it's damaged or swollen.",
+      "Let a hot battery cool, and a freezing one warm, before charging.",
+      "Plug straight into a wall outlet. No extension cords or power strips.",
+      "Charge on a hard, dry surface. Never on a bed or couch, or in a bedroom.",
+      "Keep it away from doors, exits, and anything that burns.",
+      "Stay awake and nearby. Never charge while sleeping or away.",
+      "Unplug once it's full."
+    ],
+    "warnings": [
+      "Only charge between 32°F and 104°F (0°C to 40°C).",
+      "Gets hot, smells, or swells while charging? Stop using it and see the warning-signs card.",
+      "Have a working smoke alarm where you charge."
+    ],
+    "prevent": "Charge in the daytime while you're home and awake, outdoors or in a ventilated spot if possible.",
+    "sources": [
+      {"org": "CPSC", "title": "Micromobility: E-Bikes, E-Scooters and Hoverboards", "url": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Micromobility-Information-Center", "supports": "Always be present when charging; never charge while sleeping or away from home; manufacturer charger; unplug when done; many home fires and deaths at night while charging"},
+      {"org": "FDNY", "title": "Safety Tips for Lithium-Ion Batteries - FDNY Smart", "url": "https://www.fdnysmart.org/be-fdnysmart-when-using-any-devices-powered-by-lithium-ion-batteries/", "supports": "Charge outside if possible; wall outlet, no extension cord; not near exits; not in your bedroom; not in direct sunlight; away from flammables"},
+      {"org": "FDNY", "title": "Lithium-Ion Safety (FDNY multilingual guide)", "url": "https://www.nyc.gov/assets/fdny/downloads/pdf/codes/lithium-ion-batteries-safety.pdf", "supports": "No extension cords or power strips; working smoke alarms in charging area; remove combustibles; damaged battery do not charge; gets hot while charging stop using"},
+      {"org": "NFPA", "title": "Lithium-Ion Battery Safety (tip sheet)", "url": "https://content.nfpa.org/-/media/project/storefront/catalog/files/safety-tip-sheets/lithiumionbatterysafetytips.pdf?rev=2af71e80158942d99e59dcd8f96ab632", "supports": "Not on bed or couch; don't keep charging once full; original cord; don't charge below 32°F or above 105°F; flat, dry area"},
+      {"org": "Bosch eBike Systems", "title": "12 questions about your eBike battery", "url": "https://www.bosch-ebike.com/us/news/12-questions-about-the-ebike-battery", "supports": "Charge between 32°F (0°C) and 104°F (40°C); let battery cool first; check for damage; ventilated room with smoke detector"}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Summary 'most fires start around charging' overstated CPSC; reworded. Added FDNY no-bedroom rule and hot-while-charging warning."}
+  },
+  {
+    "id": "ebike-battery-heat-storage",
+    "title": "Desert heat: storing and parking your battery",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["heat", "hot day", "summer", "sun", "storing battery", "hot garage", "battery in sun", "storage"],
+    "summary": "Heat ages lithium batteries and raises fire risk. In High Desert summers, keep the battery shaded and store it cool and dry.",
+    "steps": [
+      "Park in shade. Don't leave the battery in direct sun.",
+      "If the battery comes off, bring it inside with you on hot days.",
+      "Don't charge it while it's hot. Let it cool to room temperature first.",
+      "Store it indoors, dry, and away from heaters and anything that burns.",
+      "For long storage, leave it about 30 to 60 percent charged.",
+      "Keep a smoke alarm where you store and charge it."
+    ],
+    "warnings": [
+      "Never charge above 104°F (40°C).",
+      "A battery that feels unusually hot, swells, or smells: stop using it and see the warning-signs card."
+    ],
+    "prevent": "Pick a cool, dry indoor storage spot away from exits and flammables before summer starts.",
+    "sources": [
+      {"org": "FDNY", "title": "Safety Tips for Lithium-Ion Batteries - FDNY Smart", "url": "https://www.fdnysmart.org/be-fdnysmart-when-using-any-devices-powered-by-lithium-ion-batteries/", "supports": "Keep batteries at room temperature; not in direct sunlight; store away from anything flammable; not near exits"},
+      {"org": "Bosch eBike Systems", "title": "12 questions about your eBike battery", "url": "https://www.bosch-ebike.com/us/news/12-questions-about-the-ebike-battery", "supports": "Store at 30-60% charge, 32-68°F, dry ventilated room with smoke detector; charge 32-104°F; let cool before charging"},
+      {"org": "Bosch eBike Systems", "title": "eBike battery safety", "url": "https://www.bosch-ebike.com/en/service/battery-safety", "supports": "Protect from direct sunlight and heat sources and flammable materials; store 0-20°C dry"},
+      {"org": "NFPA", "title": "Lithium-Ion Battery Safety (tip sheet)", "url": "https://content.nfpa.org/-/media/project/storefront/catalog/files/safety-tip-sheets/lithiumionbatterysafetytips.pdf?rev=2af71e80158942d99e59dcd8f96ab632", "supports": "Room temperature; don't charge above 105°F; store away from things that can catch fire; charge away from direct sunlight"}
+    ],
+    "confidence": "official",
+    "qa": {"status": "verified", "checked": "2026-10-28", "notes": "All steps match FDNY, NFPA and Bosch storage guidance."}
+  },
+  {
+    "id": "ebike-certified-battery-ul",
+    "title": "Is my e-bike or battery certified? (UL 2849, UL 2271)",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["UL", "certified", "UL 2849", "UL 2271", "UL 2272", "replacement battery", "cheap battery", "buy battery", "safe battery", "SB 1271"],
+    "summary": "UL 2849 covers a whole e-bike electrical system, UL 2271 covers light-vehicle battery packs, and UL 2272 covers scooters and similar devices. Certified gear has a testing lab's mark on it.",
+    "steps": [
+      "Look on the bike, battery, and charger for a testing lab mark and standard number.",
+      "E-bike system: look for UL 2849 or EN 15194. Scooters and boards: UL 2272.",
+      "Loose or replacement packs: look for UL 2271 or the maker's approval for your bike.",
+      "Since January 1, 2026, California bans selling e-bikes, batteries or chargers without accredited lab testing.",
+      "Used sales don't need the lab label, so check secondhand gear extra carefully.",
+      "You can search the product in UL's free Product iQ database.",
+      "Buy replacements from the brand or its authorized dealer, matched to your bike.",
+      "Skip rebuilt, reworked, or used-cell packs, even if they're cheap."
+    ],
+    "warnings": [
+      "Certified batteries can still fail if damaged or misused. Charging rules still apply.",
+      "Check for recalls and report problems at SaferProducts.gov."
+    ],
+    "prevent": "Before buying any battery or charger, confirm it's made or approved for your exact bike and carries a lab mark.",
+    "sources": [
+      {"org": "UL Solutions", "title": "E-Bike/Micromobility Device Safety: Product Certification", "url": "https://www.ul.com/news/e-bikemicromobility-device-safety-product-certification", "supports": "What UL 2849, 2271, 2272 cover; Product iQ free search tool; exact replacement battery; no aftermarket batteries"},
+      {"org": "CPSC", "title": "Important Safety Information Concerning Micromobility Devices (letter, Dec 19, 2022)", "url": "https://www.cpsc.gov/s3fs-public/Important%20Safety%20Information%20Concerning%20Micromobility%20Devices.pdf", "supports": "CPSC urged compliance with UL 2272 and UL 2849, certified by accredited lab; at least 208 micromobility fire/overheating incidents and 19 deaths Jan 2021-Nov 2022"},
+      {"org": "CPSC", "title": "Micromobility: E-Bikes, E-Scooters and Hoverboards", "url": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Micromobility-Information-Center", "supports": "Use devices certified to safety standards; manufacturer-approved replacement batteries only; never reworked/used-cell batteries; report to SaferProducts.gov; recalls"},
+      {"org": "FDNY", "title": "Safety Tips for Lithium-Ion Batteries - FDNY Smart", "url": "https://www.fdnysmart.org/be-fdnysmart-when-using-any-devices-powered-by-lithium-ion-batteries/", "supports": "Look for UL mark; buy manufacturer's compatible battery"},
+      {"org": "California Health and Safety Code (via california.public.law)", "title": "Health and Safety Code section 26302", "url": "https://california.public.law/codes/ca_health_and_safety_code_section_26302", "supports": "No sale/lease of e-bikes or batteries without accredited lab testing (UL 2849 or EN 15194 for e-bikes; UL 2271/2272 for powered mobility devices); chargers must be certified for the product; lab mark and standard must be affixed; labeling rule does not apply to secondhand sales"},
+      {"org": "CalMatters Digital Democracy", "title": "SB 1271 (2023-2024) bill page", "url": "https://calmatters.digitaldemocracy.org/bills/ca_202320240sb1271", "supports": "SB 1271 chaptered Sept 27, 2024 (Ch. 791); chapter operative January 1, 2026; rental section 26303 operative January 1, 2028"},
+      {"org": "UL Standards & Engagement", "title": "How Riders Are Unknowingly Raising the Battery Fire Risks of E-Mobility", "url": "https://ulse.org/news/how-riders-are-unknowingly-raising-battery-fire-risks-e-mobility", "supports": "UL 2849 covers e-bike electrical systems; UL 2271 covers LEV battery packs; counterfeit/damaged batteries risk"}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "SB 1271/HSC 26302 claim verified (operative 1/1/2026, rentals 2028); law was cited but missing from steps, now added; EN 15194 added as CA-accepted alternative; secondhand label exemption stated precisely."}
+  },
+  {
+    "id": "ebike-california-classes-rules",
+    "title": "California e-bike classes 1, 2, 3: helmets, age, where to ride",
+    "category": "ebike",
+    "applies_to": ["ebike"],
+    "triggers": ["class 1", "class 2", "class 3", "e-bike law", "helmet law", "is it legal", "bike path", "trail", "age limit", "28 mph"],
+    "summary": "California e-bikes have fully working pedals and motors of 750 watts or less. Class 1 is pedal-assist to 20 mph, class 2 has a throttle to 20 mph, class 3 is pedal-assist to 28 mph.",
+    "steps": [
+      "Find the class label on the bike. It lists class, top assisted speed, and wattage.",
+      "Class 1: assist only while pedaling, stops at 20 mph.",
+      "Class 2: throttle can move the bike alone, stops at 20 mph.",
+      "Class 3: pedal assist to 28 mph, needs a speedometer.",
+      "Class 3 riders must be 16 or older. Rider and passenger always wear helmets.",
+      "Classes 1 and 2: helmets required for riders and passengers under 18.",
+      "Trails and paths: local agencies and State Parks can ban e-bikes. Obey posted signs.",
+      "Bikes modified past 20 mph on motor alone, over 750 watts, or with pedals removed aren't e-bikes."
+    ],
+    "warnings": [
+      "Local rules vary, such as sidewalk or park bans. Check your city's rules.",
+      "Pedal-less electric dirt bikes (e-motos) are not e-bikes and are banned on public roads.",
+      "Police can impound a class 3 e-bike ridden by someone under 16."
+    ],
+    "prevent": "Know your bike's class before you ride paths, and wear a helmet every ride regardless of class.",
+    "sources": [
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 312.5", "url": "https://california.public.law/codes/ca_veh_code_section_312.5", "supports": "E-bike definition (fully operable pedals, motor not exceeding 750 W); class 1/2/3 definitions and speeds; class 3 speedometer; label with class, top assisted speed, wattage; modified vehicles (over 20 mph motor-only, over 750 W, pedals removed) excluded. Text current as updated Jan 1, 2025"},
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21213", "url": "https://california.public.law/codes/ca_veh_code_section_21213", "supports": "Under 16 may not operate class 3; class 3 operator and passengers must wear helmet"},
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21212", "url": "https://california.public.law/codes/ca_veh_code_section_21212", "supports": "Riders and passengers under 18 must wear helmets on bicycles (e-bikes included)"},
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21207.5", "url": "https://california.public.law/codes/ca_veh_code_section_21207.5", "supports": "Local authorities may ban e-bikes (any class) on equestrian, hiking or recreational trails; State Parks may ban them on its bike paths/trails (text updated Jan 1, 2023)"},
+      {"org": "California Highway Patrol", "title": "Information Bulletin: Electric Bicycles and Other Devices (May 27, 2026)", "url": "https://www.chp.ca.gov/siteassets/policy/ib/ib-electric-bicycles-and-other-devices.pdf", "supports": "Current CHP summary of 312.5, 21207.5, 21213; e-moto definition (CVC 436.1) effective Jan 1, 2026, e-motos prohibited on public roadways; CVC 22651.08 impound of class 3 bike operated by under-16 rider"},
+      {"org": "San Bernardino County (Board of Supervisors, District 1)", "title": "Electric Bike Rules and Regulations pursuant to the California Vehicle Code", "url": "https://bosd1.sbcounty.gov/wp-content/uploads/sites/103/E-Bike-Information.pdf", "supports": "Class definitions; class 3 age 16 and helmet regardless of age; under-18 helmet for all bicycles; out-of-class vehicles and Sur-Ron style e-motorcycles are not e-bikes"},
+      {"org": "Town of Danville, CA", "title": "Electric Bikes and Scooters", "url": "https://www.danville.ca.gov/1053/Electric-Bikes-and-Scooters", "supports": "Example of local sidewalk and park restrictions on e-bikes"}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "'Under 750 W' corrected to '750 W or less' (312.5 says does not exceed); pedals-removed exclusion added; e-moto warning updated to CVC 436.1 (eff. 1/1/2026) per CHP May 2026 bulletin; impound warning added."}
+  },
+  {
+    "id": "scooter-california-rules",
+    "title": "California electric scooter rules",
+    "category": "ebike",
+    "applies_to": ["scooter"],
+    "triggers": ["scooter law", "e-scooter", "electric scooter", "scooter license", "scooter helmet", "scooter sidewalk", "scooter speed"],
+    "summary": "Stand-up motorized scooters follow different rules than e-bikes: a driver's license or permit, 15 mph max, no passengers, and no sidewalk riding.",
+    "steps": [
+      "You need a valid driver's license or instruction permit to ride one.",
+      "Riders under 18 must wear a fitted, buckled bike helmet.",
+      "Top legal speed is 15 mph, everywhere.",
+      "On roads posted over 25 mph, stay in a bike lane or separated bikeway unless local rules allow otherwise.",
+      "No passengers, and no riding on sidewalks except to enter or leave property.",
+      "Keep at least one hand on the handlebars at all times.",
+      "At night: white front light, red rear reflector, and side reflectors."
+    ],
+    "warnings": [
+      "Cities may add their own scooter limits. Check local signs.",
+      "Throttle-only scooters can't be pedaled when the battery dies. Plan to walk."
+    ],
+    "prevent": "Charge fully before night trips and keep a backup front light on you.",
+    "sources": [
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21235", "url": "https://california.public.law/codes/ca_veh_code_section_21235", "supports": "License/permit required; helmet under 18; no passengers; no sidewalks except to enter/leave adjacent property; roads over 25 mph only within Class II/IV bikeway unless local authority allows up to 35 mph; 15 mph max per 22411; one hand on handlebar (text updated Jan 1, 2019)"},
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21223", "url": "https://california.public.law/codes/ca_veh_code_section_21223", "supports": "At night: white front lamp (may be worn), red rear reflector (may be worn), white/yellow side reflectors"},
+      {"org": "Town of Danville, CA", "title": "Electric Bikes and Scooters", "url": "https://www.danville.ca.gov/1053/Electric-Bikes-and-Scooters", "supports": "Summary of scooter rules and example local restrictions"}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "All rules match current 21235/21223 text; added the local-exception clause to the over-25-mph step."}
+  },
+  {
+    "id": "ebike-night-lights-visibility",
+    "title": "Riding or pushing at night: lights and reflectors",
+    "category": "ebike",
+    "applies_to": ["ebike", "scooter"],
+    "triggers": ["lights", "headlight", "dark", "can't see", "reflector", "lights died", "visibility", "night riding"],
+    "summary": "California requires a front white light, rear red reflector, and pedal and side reflectors at night, and e-bikes need the rear red light or reflector at all times. When the bike's lights die, you need a backup.",
+    "steps": [
+      "Lights out? Pull off the road before fixing anything.",
+      "Use a backup clip-on light. A light worn on you or your helmet also counts.",
+      "No light at all? Walk the bike and use your phone flashlight to see.",
+      "Make sure the rear red reflector or light is clean and facing traffic.",
+      "Wear something bright or reflective if you have it.",
+      "Ride where drivers can see you; slow down when you can't see ahead.",
+      "If you can't be seen safely, walk it on the left edge facing traffic."
+    ],
+    "warnings": [
+      "On a dark road with no lights, walking is safer than riding.",
+      "Your phone is your lifeline. Save some battery for calls."
+    ],
+    "prevent": "Carry a small charged backup light and keep reflectors on pedals and wheels.",
+    "sources": [
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21201", "url": "https://california.public.law/codes/ca_veh_code_section_21201", "supports": "At night: white front lamp visible 300 ft (may be worn by rider, 21201(e)), red rear reflector/light visible 500 ft, pedal/shoe and side reflectors; 21201(f) e-bikes need rear red reflector or light at all hours"},
+      {"org": "San Bernardino County (Board of Supervisors, District 1)", "title": "Electric Bike Rules and Regulations pursuant to the California Vehicle Code", "url": "https://bosd1.sbcounty.gov/wp-content/uploads/sites/103/E-Bike-Information.pdf", "supports": "Wear bright/reflective clothing; front white light, rear red light and reflectors in darkness; ride where people can see you"},
+      {"org": "California Vehicle Code (via california.public.law)", "title": "CA Veh Code Section 21956", "url": "https://california.public.law/codes/ca_veh_code_section_21956", "supports": "Pedestrians walk near left edge of roadway outside business/residence districts"}
+    ],
+    "confidence": "official",
+    "qa": {"status": "fixed", "checked": "2026-10-28", "notes": "Removed 'ride with phone flashlight pointed forward' (one-handed riding; not a mounted lamp); now walk with phone light. Worn-lamp option from 21201(e) added."}
+  }
+]

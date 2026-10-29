@@ -1,0 +1,1076 @@
+[
+  {
+    "id": "safety-driver-harassing",
+    "title": "A driver is buzzing, harassing or following you",
+    "category": "safety",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "following",
+      "harassing",
+      "buzzed",
+      "road rage",
+      "driver yelling",
+      "tailgating me",
+      "car keeps passing close",
+      "driver threatening",
+      "slowing down next to me",
+      "keeps slowing down",
+      "pulled up next to me",
+      "pulled up beside me",
+      "yelling at me",
+      "honking at me",
+      "threw something",
+      "swerved at me",
+      "creepy car",
+      "scared of a driver"
+    ],
+    "summary": "Don't engage. Get somewhere lit, open and busy, and call 911 if you feel threatened or are being followed.",
+    "steps": [
+      "Do not react, gesture, or confront the driver. Retaliating escalates things.",
+      "Head to the nearest lit, open business or busy place with people.",
+      "If followed, do not go home. Go to a police station or open business.",
+      "If you feel threatened or are followed, call 911 now.",
+      "Tell dispatch your exact location and direction of travel.",
+      "If safe, note plate, make, model and color of the vehicle.",
+      "After you are safe, tap Close call to log the spot."
+    ],
+    "warnings": [
+      "Never chase or block the vehicle to get a plate. Your safety comes first.",
+      "Apple Valley is patrolled by the San Bernardino County Sheriff, Apple Valley Patrol Station."
+    ],
+    "prevent": "Plan night routes past open businesses so you always know the nearest safe place.",
+    "sources": [
+      {
+        "org": "California Highway Patrol (Sgt. Brian Pennings, via ABC30 Fresno 'Know the Road', Apr 30 2021)",
+        "title": "Know the Road with the CHP: Road rage",
+        "url": "https://abc30.com/automotive/know-the-road-road-rage/10563930/",
+        "supports": "Don't engage or retaliate; if followed don't go home, drive to a police station; call 911 with location, direction, vehicle description and plate"
+      },
+      {
+        "org": "City of Alexandria (Indiana) Police Department",
+        "title": "Personal Safety Tips",
+        "url": "https://www.in.gov/cities/alexandria/departments/police-department/personal-safety-tips/",
+        "supports": "If followed on foot, cross the street and go to the nearest well-lit populated area; if followed in a vehicle, don't go home, go to a police station or open business"
+      },
+      {
+        "org": "San Bernardino County Sheriff's Department",
+        "title": "Apple Valley Patrol Station",
+        "url": "https://wp.sbcounty.gov/sheriff/patrol-stations/apple-valley/",
+        "supports": "Sheriff's Apple Valley station serves the town"
+      }
+    ],
+    "confidence": "expert",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "Removed 'avoid eye contact' step: not in any cited source. All other steps confirmed against CHP/ABC30 and Alexandria PD."
+    }
+  },
+  {
+    "id": "report-driver-harassment-after",
+    "title": "Report a dangerous or harassing driver afterward",
+    "category": "report",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "report driver",
+      "report close call",
+      "report harassment",
+      "non-emergency",
+      "sheriff number",
+      "police non emergency"
+    ],
+    "summary": "If no one is in danger now, report the driver to the Sheriff's non-emergency line. Emergencies always go to 911.",
+    "steps": [
+      "If anyone is in danger right now, call 911 instead.",
+      "Call the Sheriff's Desert non-emergency dispatch: (760) 956-5001.",
+      "Or call the Apple Valley Patrol Station: (760) 240-7400, open 8 a.m. to 5 p.m.",
+      "Station address: 14931 Dale Evans Parkway, Apple Valley, CA 92307.",
+      "Give date, time, exact spot, what happened, and any plate or vehicle details.",
+      "Ask for a report or incident number and write it down.",
+      "Save any video or photos. Do not post the plate publicly."
+    ],
+    "warnings": [
+      "The station office line is staffed business hours only; after hours use dispatch or 911.",
+      "The Sheriff page lists the Desert line without naming towns; Apple Valley is in the High Desert."
+    ],
+    "prevent": "",
+    "sources": [
+      {
+        "org": "San Bernardino County Sheriff's Department",
+        "title": "Apple Valley Patrol Station",
+        "url": "https://wp.sbcounty.gov/sheriff/patrol-stations/apple-valley/",
+        "supports": "Station phone (760) 240-7400, address 14931 Dale Evans Parkway, hours 8:00 a.m.-5:00 p.m., non-emergency dispatch Desert (760) 956-5001"
+      },
+      {
+        "org": "California Highway Patrol (via ABC30 Fresno)",
+        "title": "Know the Road with the CHP: Road rage",
+        "url": "https://abc30.com/automotive/know-the-road-road-rage/10563930/",
+        "supports": "Details police want: location, direction, make, model, color, plate"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "verified",
+      "checked": "2026-10-28",
+      "notes": "Both phone numbers, station address and 8-5 hours confirmed verbatim on the official Sheriff Apple Valley station page."
+    }
+  },
+  {
+    "id": "law-three-foot-passing",
+    "title": "California's 3-foot passing law",
+    "category": "law",
+    "applies_to": [
+      "bike",
+      "ebike"
+    ],
+    "triggers": [
+      "buzzed",
+      "passed too close",
+      "close pass",
+      "three feet",
+      "3 feet",
+      "car passed close"
+    ],
+    "summary": "Drivers passing a bicycle must leave at least three feet. If they can't, they must slow down and pass only when it won't endanger you (VC 21760).",
+    "steps": [
+      "Drivers may not pass a bicycle with less than three feet of clearance.",
+      "If another same-direction lane is open, drivers must change lanes to pass when practical and lawful.",
+      "If three feet isn't possible, drivers must slow and pass only when safe for you.",
+      "Violation is an infraction: $35 base fine, or $220 if a crash injures the cyclist.",
+      "Log the close pass with Close call; report it to the Sheriff if needed."
+    ],
+    "warnings": [
+      "Knowing the law does not stop a close pass. Ride defensively and keep an escape space."
+    ],
+    "prevent": "Use lights and leg reflectors so drivers spot you sooner and have time to move over.",
+    "sources": [
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 21760 (Three Feet for Safety Act)",
+        "url": "https://california.public.law/codes/vehicle_code_section_21760",
+        "supports": "3-foot minimum (c), lane change when another same-direction lane available (c), slow-and-pass exception (d), $35 infraction and $220 when a collision injures the cyclist (e)"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "Matches current VC 21760. Clarified lane-change wording and that $35/$220 are base fines; $220 applies when a collision injures the rider."
+    }
+  },
+  {
+    "id": "law-bike-lights-night",
+    "title": "Required bike lights and reflectors at night",
+    "category": "law",
+    "applies_to": [
+      "bike",
+      "ebike"
+    ],
+    "triggers": [
+      "lights",
+      "headlight",
+      "tail light",
+      "reflectors",
+      "night riding law",
+      "riding in the dark",
+      "ticket for no light"
+    ],
+    "summary": "Riding in darkness in California requires a white front light, a red rear reflector or light, and pedal and side reflectors (VC 21201).",
+    "steps": [
+      "Front: white light visible from 300 feet ahead and to the sides.",
+      "A white light worn on your body may replace the bike-mounted front light.",
+      "Rear: red reflector, or solid or flashing red light with built-in reflector, visible 500 feet.",
+      "Pedals, shoes or ankles: white or yellow reflectors visible front and rear from 200 feet.",
+      "Sides: reflectors on each side, or reflective tires front and rear.",
+      "E-bikes: the rear red reflector or light rule applies at all hours, day too."
+    ],
+    "warnings": [
+      "The rule covers roads, bikeways, and sidewalks where riding is allowed.",
+      "These are legal minimums. In one study, lights alone didn't help drivers recognize riders sooner."
+    ],
+    "prevent": "Check light batteries before every night ride.",
+    "sources": [
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 21201",
+        "url": "https://california.public.law/codes/vehicle_code_section_21201",
+        "supports": "(d) darkness on highway, sidewalk or bikeway; 300 ft front lamp; 500 ft rear red; 200 ft pedal/shoe/ankle reflectors front and rear; side reflectors or reflective tires; (e) worn lamp allowed; (f) e-bike rear rule at all hours"
+      },
+      {
+        "org": "California DMV",
+        "title": "Bicyclists & Pedestrians driver guide",
+        "url": "https://www.dmv.ca.gov/portal/driver-education-and-safety/special-interest-driver-guides/bicyclists-pedestrians/",
+        "supports": "Lights and reflectors at night are the law; same distances; avoid dark clothing"
+      },
+      {
+        "org": "Accident Analysis & Prevention (Wood, Tyrrell et al., 2012)",
+        "title": "Using reflective clothing to enhance the conspicuity of bicyclists at night",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/22269563/",
+        "supports": "Static or flashing bike light did not improve conspicuity in a closed-road study"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "All distances match VC 21201(d)-(f). Added 'front and rear' to pedal reflectors, where the rule applies, and cited the study behind the lights warning."
+    }
+  },
+  {
+    "id": "law-where-to-ride-take-lane",
+    "title": "Where you can ride and when you can take the lane",
+    "category": "law",
+    "applies_to": [
+      "bike",
+      "ebike"
+    ],
+    "triggers": [
+      "take the lane",
+      "lane position",
+      "ride on the right",
+      "narrow lane",
+      "driver honking at me",
+      "where do I ride"
+    ],
+    "summary": "Slower riders keep as far right as practicable, but the law lets you move left for hazards, turns, passing, and lanes too narrow to share (VC 21202).",
+    "steps": [
+      "Ride in the same direction as traffic.",
+      "If slower than traffic, ride as far right as practicable.",
+      "You may move left to pass, prepare a left turn, or avoid hazards.",
+      "Hazards include objects, parked or moving vehicles, people, animals, and surface problems.",
+      "If a lane is too narrow to share side by side, you may use the lane.",
+      "You may also move left when approaching a spot where you will turn right.",
+      "On one-way roads with two or more lanes, you may ride near the left edge."
+    ],
+    "warnings": [
+      "On a two-lane road, if five or more vehicles line up behind you, pull off where safe (VC 21656).",
+      "Taking the lane is legal when conditions allow it, but some drivers still react badly. Stay calm, don't engage."
+    ],
+    "prevent": "",
+    "sources": [
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 21202",
+        "url": "https://california.public.law/codes/vehicle_code_section_21202",
+        "supports": "Ride right when slower; exceptions for passing, left turns, hazards and substandard width lanes (subject to 21656), right turns; one-way left-side option"
+      },
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 21656",
+        "url": "https://california.public.law/codes/vehicle_code_section_21656",
+        "supports": "Slow vehicle with five or more vehicles behind on a two-lane highway must turn off at a turnout or safe spot"
+      },
+      {
+        "org": "California DMV",
+        "title": "Bicyclists & Pedestrians driver guide",
+        "url": "https://www.dmv.ca.gov/portal/driver-education-and-safety/special-interest-driver-guides/bicyclists-pedestrians/",
+        "supports": "Ride with traffic; safe lane position when lane too narrow to share"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "Added the missing right-turn exception and the VC 21656 five-vehicle turnout duty that 21202 is expressly subject to; hazard list aligned to statute."
+    }
+  },
+  {
+    "id": "law-sidewalk-riding-local",
+    "title": "Can I ride on the sidewalk?",
+    "category": "law",
+    "applies_to": [
+      "bike",
+      "ebike"
+    ],
+    "triggers": [
+      "sidewalk",
+      "ride on sidewalk",
+      "is sidewalk riding legal"
+    ],
+    "summary": "California lets cities and counties regulate riding on sidewalks, so it depends on where you are. NIGHTRIDE has not confirmed Apple Valley's rule.",
+    "steps": [
+      "State law lets local ordinances regulate bike riding on sidewalks.",
+      "Check the Town of Apple Valley code or call the Town at (760) 240-7000.",
+      "Where allowed, ride slowly and yield to people walking.",
+      "At night on a sidewalk, you still need lights and reflectors."
+    ],
+    "warnings": [
+      "NIGHTRIDE could not confirm Apple Valley's specific sidewalk ordinance. Do not assume it is allowed."
+    ],
+    "prevent": "",
+    "sources": [
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 21206",
+        "url": "https://california.public.law/codes/vehicle_code_section_21206",
+        "supports": "Local authorities may by ordinance regulate operation of bicycles on pedestrian or bicycle facilities"
+      },
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 21201",
+        "url": "https://california.public.law/codes/vehicle_code_section_21201",
+        "supports": "Lighting rule covers sidewalks where bike riding is permitted"
+      },
+      {
+        "org": "Town of Apple Valley",
+        "title": "Apple Valley Connect",
+        "url": "https://applevalley.org/apple-valley-connect/",
+        "supports": "Town phone (760) 240-7000"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "weak",
+      "checked": "2026-10-28",
+      "notes": "State law and Town phone verified, but Apple Valley's actual sidewalk ordinance could not be found on any official page; the card can't answer the user's question."
+    }
+  },
+  {
+    "id": "law-walking-no-sidewalk",
+    "title": "Walking where there is no sidewalk",
+    "category": "law",
+    "applies_to": [
+      "walk"
+    ],
+    "triggers": [
+      "no sidewalk",
+      "walking on the road",
+      "which side to walk",
+      "walking on shoulder",
+      "walking home"
+    ],
+    "summary": "Outside business and residence districts, walk near the left edge of the road, facing oncoming traffic (VC 21956).",
+    "steps": [
+      "Use a sidewalk whenever one exists.",
+      "Outside business or residence districts, walk near the left edge, facing oncoming traffic.",
+      "You may use the right edge if no safe crossing exists or crossing is unsafe.",
+      "Wear bright clothes and carry a flashlight at night.",
+      "Never assume a driver sees you."
+    ],
+    "warnings": [
+      "Drivers must use due care for you, and you must use due care too."
+    ],
+    "prevent": "Carry a small flashlight on every night walk.",
+    "sources": [
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 21956",
+        "url": "https://california.public.law/codes/vehicle_code_section_21956",
+        "supports": "Walk near left-hand edge outside business/residence districts; right-edge exception; due care duties for pedestrians and drivers"
+      },
+      {
+        "org": "California Office of Traffic Safety",
+        "title": "Pedestrian Safety",
+        "url": "https://www.ots.ca.gov/media-and-research/campaigns/pedestrian-safety/",
+        "supports": "Walk on the sidewalk; bright clothes and a flashlight at night; don't assume drivers see you"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "Step now states the law's actual scope (outside business/residence districts); removed unsupported 'step off the road' advice from warning."
+    }
+  },
+  {
+    "id": "safety-walk-home-night",
+    "title": "Walking home safely at night",
+    "category": "safety",
+    "applies_to": [
+      "walk"
+    ],
+    "triggers": [
+      "walking home",
+      "walking at night",
+      "walking alone",
+      "dark street",
+      "feel unsafe walking"
+    ],
+    "summary": "Be visible, stay alert, and pick lit routes. If someone follows you, change direction toward light and people.",
+    "steps": [
+      "Plan your route on well-lit streets.",
+      "Wear bright clothes and carry a flashlight.",
+      "Keep your phone down when crossing streets.",
+      "Cross at crosswalks or intersections. Look left, right, then left again.",
+      "Watch for cars turning into your path.",
+      "If followed on foot, cross the street and go to a lit, populated place.",
+      "If you feel in danger, call 911."
+    ],
+    "warnings": [
+      "Don't assume drivers can see you. Make eye contact with drivers before you cross."
+    ],
+    "prevent": "Share your route and arrival time with someone before you leave.",
+    "sources": [
+      {
+        "org": "California Office of Traffic Safety",
+        "title": "Pedestrian Safety",
+        "url": "https://www.ots.ca.gov/media-and-research/campaigns/pedestrian-safety/",
+        "supports": "Bright clothes and flashlight at night; crosswalks; look left-right-left; turning vehicles; phone down; make eye contact, don't assume drivers see you"
+      },
+      {
+        "org": "City of Alexandria (Indiana) Police Department",
+        "title": "Personal Safety Tips",
+        "url": "https://www.in.gov/cities/alexandria/departments/police-department/personal-safety-tips/",
+        "supports": "Plan routes on well-lit streets; if followed cross the street and go to a well-lit populated area"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "QUT source only covers cyclists' self-visibility, so the pedestrian warning was replaced with OTS guidance; 'earbuds' dropped (OTS says phone only); QUT source removed."
+    }
+  },
+  {
+    "id": "safety-crash-immediate",
+    "title": "You were just hit or crashed",
+    "category": "safety",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "hit by car",
+      "crash",
+      "collision",
+      "I got hit",
+      "accident",
+      "knocked off bike"
+    ],
+    "summary": "Call 911 first if anyone is hurt. Get out of traffic only if you safely can. Gather details once you are safe.",
+    "steps": [
+      "Call 911 right away if anyone is hurt, including you.",
+      "If you are hurt, tell the 911 dispatcher and follow their instructions.",
+      "If no one is hurt, move out of traffic, then call 911.",
+      "Tell dispatch your location and if the driver left.",
+      "When safe, photograph the scene, vehicle, plate, and your bike.",
+      "Ask witnesses for names and phone numbers.",
+      "Ask the driver for name, address, license, insurance, plate, and owner info.",
+      "Ask the deputy or officer for the report number before leaving."
+    ],
+    "warnings": [
+      "NIGHTRIDE does not give medical advice. If you are injured, call 911."
+    ],
+    "prevent": "",
+    "sources": [
+      {
+        "org": "California DMV",
+        "title": "California Driver's Handbook: Financial Responsibility, Insurance Requirements, and Collisions",
+        "url": "https://dmv.ca.gov/portal/handbook/california-driver-handbook/financial-responsibility-insurance-requirements-and-collisions/",
+        "supports": "Call 911 right away if anyone is hurt; if no one is hurt, first move out of traffic, then call 911; exchange license, registration, insurance and address"
+      },
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 20003",
+        "url": "https://california.public.law/codes/vehicle_code_section_20003",
+        "supports": "Driver must give name, address, registration, owner info to the person struck, and show license on request"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "Fixed step order conflict ('get out of traffic first') to match DMV: move out of traffic, then call 911. Added license/insurance per DMV and 20003(b). No medical advice."
+    }
+  },
+  {
+    "id": "law-hit-and-run",
+    "title": "The driver hit me and left (hit-and-run)",
+    "category": "law",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "hit and run",
+      "driver drove off",
+      "driver left",
+      "didn't stop",
+      "fled the scene"
+    ],
+    "summary": "A driver in a crash that injures someone must stop, give their information, and help. Leaving is a crime (VC 20001, 20003).",
+    "steps": [
+      "Call 911 now. Say the driver left and which way they went.",
+      "Give any plate, make, model, color, or damage you saw.",
+      "Do not chase the vehicle.",
+      "Ask nearby people if they saw it or have video.",
+      "Ask deputies for a report number."
+    ],
+    "warnings": [
+      "NIGHTRIDE is not legal advice. For claims or charges, talk to a lawyer."
+    ],
+    "prevent": "",
+    "sources": [
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 20001",
+        "url": "https://california.public.law/codes/vehicle_code_section_20001",
+        "supports": "Driver in an injury or death crash must immediately stop and meet 20003/20004 duties; penalties up to jail/prison and $1,000-$10,000 fines"
+      },
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 20003",
+        "url": "https://california.public.law/codes/vehicle_code_section_20003",
+        "supports": "Driver must give name, address, registration, owner info and render reasonable assistance including arranging transport"
+      },
+      {
+        "org": "California DMV",
+        "title": "California Driver's Handbook: Collisions",
+        "url": "https://dmv.ca.gov/portal/handbook/california-driver-handbook/financial-responsibility-insurance-requirements-and-collisions/",
+        "supports": "Drivers must stop; leaving is hit-and-run; call 911"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "verified",
+      "checked": "2026-10-28",
+      "notes": "VC 20001(a)/(b) and 20003(a) duties and penalties match current text; steps defer to 911, no chasing."
+    }
+  },
+  {
+    "id": "report-get-police-report",
+    "title": "Get a copy of your crash or incident report",
+    "category": "report",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "police report",
+      "crash report",
+      "collision report",
+      "get report copy",
+      "insurance needs report"
+    ],
+    "summary": "Request Sheriff reports online, in person, or by mail. Crash victims and involved parties can usually get them.",
+    "steps": [
+      "Keep your report number from the scene.",
+      "Request online through the county's public records portal (NextRequest).",
+      "Or go to your local Sheriff station, weekdays 8 a.m. to 5 p.m. Bring photo ID.",
+      "Or mail: Sheriff's Records Division, PO Box 569, San Bernardino, CA 92402.",
+      "Expect a decision on release within 10 days; it can be extended.",
+      "Crashes on freeways or unincorporated county roads go through CHP. Request from CHP instead."
+    ],
+    "warnings": [
+      "Parts of reports involving a crime or death may not be released right away."
+    ],
+    "prevent": "",
+    "sources": [
+      {
+        "org": "San Bernardino County Sheriff's Department",
+        "title": "Public Records",
+        "url": "https://wp.sbcounty.gov/sheriff/?p=8615",
+        "supports": "Who can request, NextRequest portal (sanbernardinocounty.nextrequest.com), in-person M-F 8-5 with government ID, PO Box 569 San Bernardino CA 92402, 10-day determination with extensions, CHP handles freeway and county-road collisions, delays for crime/fatality"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "10 days is a deadline to decide on release (extendable), not delivery; reworded. Mail address, hours and CHP split confirmed on Sheriff page."
+    }
+  },
+  {
+    "id": "safety-visibility-biomotion",
+    "title": "What actually helps drivers see you",
+    "category": "safety",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "visibility",
+      "drivers don't see me",
+      "reflective",
+      "what to wear",
+      "be seen",
+      "lights not enough"
+    ],
+    "summary": "Reflective strips on ankles and knees, which move as you pedal or walk, help drivers recognize you much sooner than vests or lights alone.",
+    "steps": [
+      "Put reflective bands on both ankles. Ankles help most.",
+      "Add reflective bands at the knees if you can.",
+      "A reflective vest alone helps less than moving leg reflectors.",
+      "A fluorescent vest without reflective material does little at night.",
+      "Keep using legal lights; add leg reflectors on top of them."
+    ],
+    "warnings": [
+      "In one closed-road study, bike lights alone did not make riders easier to recognize."
+    ],
+    "prevent": "Leave reflective ankle bands clipped to your bike so you never ride without them.",
+    "sources": [
+      {
+        "org": "Accident Analysis & Prevention (Wood, Tyrrell et al., 2012)",
+        "title": "Using reflective clothing to enhance the conspicuity of bicyclists at night",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/22269563/",
+        "supports": "Vest plus ankle and knee reflectors recognized at longer distances than vest or black clothing; static or flashing light did not improve conspicuity"
+      },
+      {
+        "org": "Transportation Research Part F (Wood, Black, Tyrrell, 2022)",
+        "title": "Increasing the conspicuity of cyclists at night by using bicycle lights and clothing to highlight their biological motion",
+        "url": "https://trid.trb.org/View/2026577",
+        "supports": "Lower-leg (especially ankle) reflective strips beat both fluorescent and retroreflective vests; ankle strips alone helped"
+      },
+      {
+        "org": "Queensland University of Technology, Vision & Everyday Function research group",
+        "title": "Night-time visibility of pedestrians and cyclists",
+        "url": "https://research.qut.edu.au/visionfunction/?p=815",
+        "supports": "Joint markings help pedestrians too (up to 3x recognition distance vs vest); cyclists wrongly believe a non-reflective fluorescent vest helps at night"
+      }
+    ],
+    "confidence": "expert",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "Findings confirmed in both peer-reviewed abstracts and QUT page; narrowed 'fluorescent colors' to the fluorescent vest the research actually tested."
+    }
+  },
+  {
+    "id": "safety-light-placement",
+    "title": "Where to mount your front light",
+    "category": "safety",
+    "applies_to": [
+      "bike",
+      "ebike"
+    ],
+    "triggers": [
+      "helmet light",
+      "light placement",
+      "where to put light",
+      "headlight position"
+    ],
+    "summary": "In a small closed-road study, drivers recognized riders sooner with a helmet-mounted white light than a handlebar light, especially with ankle reflectors.",
+    "steps": [
+      "Keep the legal white front light on the bike or your body.",
+      "Consider a helmet-mounted white light as well.",
+      "Pair it with reflective ankle bands for the biggest benefit."
+    ],
+    "warnings": [
+      "Based on one study of 15 young drivers on a closed road.",
+      "NIGHTRIDE found no research source on bike light aim or glare; we can't advise on angle."
+    ],
+    "prevent": "",
+    "sources": [
+      {
+        "org": "Transportation Research Part F (Wood, Black, Tyrrell, 2022)",
+        "title": "Increasing the conspicuity of cyclists at night by using bicycle lights and clothing to highlight their biological motion",
+        "url": "https://trid.trb.org/View/2026577",
+        "supports": "15 participants; helmet light gave longer recognition distances than handlebar; leg reflector benefit larger with helmet light"
+      },
+      {
+        "org": "California Legislature (text via California Public Law)",
+        "title": "Vehicle Code 21201",
+        "url": "https://california.public.law/codes/vehicle_code_section_21201",
+        "supports": "Operator-worn white lamp can replace bike-mounted front lamp (e)"
+      }
+    ],
+    "confidence": "expert",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "Claims match the 2022 abstract; added the study's small size (15 participants) so the card doesn't overstate the evidence."
+    }
+  },
+  {
+    "id": "safety-night-risk",
+    "title": "Why night is more dangerous",
+    "category": "safety",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "why night",
+      "dark danger",
+      "night statistics",
+      "am I visible"
+    ],
+    "summary": "Riders and walkers face more risk in low light, and cyclists tend to think they are more visible than they really are.",
+    "steps": [
+      "Assume drivers see you later than you think.",
+      "Ride and walk as if unseen until a driver clearly reacts.",
+      "Use lights, leg reflectors, and bright clothing every night trip."
+    ],
+    "warnings": [],
+    "prevent": "Pick routes with streetlights when you have a choice.",
+    "sources": [
+      {
+        "org": "Insurance Institute for Highway Safety",
+        "title": "IIHS president: Dark roadways are deadly, no matter the time (Apr 10 2025)",
+        "url": "https://www.iihs.org/news/detail/iihs-president-dark-roadways-are-deadly-no-matter-the-time",
+        "supports": "Pedestrians and bicyclists are at greater risk in low light conditions"
+      },
+      {
+        "org": "Insurance Institute for Highway Safety",
+        "title": "Fatality Facts: Bicyclists",
+        "url": "https://www.iihs.org/research-areas/fatality-statistics/detail/bicyclists",
+        "supports": "Peak bicyclist deaths 6-9 p.m. (23% of 1,075 in 2024)"
+      },
+      {
+        "org": "Queensland University of Technology, Vision & Everyday Function research group",
+        "title": "Night-time visibility of pedestrians and cyclists",
+        "url": "https://research.qut.edu.au/visionfunction/?p=815",
+        "supports": "Cyclists overestimate their own night visibility"
+      },
+      {
+        "org": "California Office of Traffic Safety",
+        "title": "Pedestrian Safety",
+        "url": "https://www.ots.ca.gov/media-and-research/campaigns/pedestrian-safety/",
+        "supports": "Don't assume drivers can see you"
+      }
+    ],
+    "confidence": "expert",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "'Most people' overestimate visibility narrowed to cyclists (what QUT supports); added OTS for the 'assume unseen' step. IIHS figures confirmed."
+    }
+  },
+  {
+    "id": "report-close-call-why",
+    "title": "Why your Close call reports matter",
+    "category": "report",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "close call",
+      "near miss",
+      "why report",
+      "does reporting help"
+    ],
+    "summary": "Official crash records miss many bike incidents. Near-miss reports show danger spots before someone gets hurt.",
+    "steps": [
+      "Tap Close call as soon as you are safe.",
+      "Add what happened in a few words: close pass, cut off, followed.",
+      "Report road hazards to the Town too, using Apple Valley Connect."
+    ],
+    "warnings": [
+      "Close call reports are not police reports. For threats or crimes, call the Sheriff or 911."
+    ],
+    "prevent": "",
+    "sources": [
+      {
+        "org": "Transportation Research Record (Branion-Calles, Nelson, Winters, 2017)",
+        "title": "Comparing Crowdsourced Near-Miss and Collision Cycling Data and Official Bike Safety Reporting",
+        "url": "https://trid.trb.org/View/1438393",
+        "supports": "Official cyclist safety data suffer underreporting and bias; crowdsourced near-miss data often involve motor vehicles and spots without bike facilities, can fill gaps"
+      }
+    ],
+    "confidence": "expert",
+    "qa": {
+      "status": "verified",
+      "checked": "2026-10-28",
+      "notes": "Underreporting and near-miss findings confirmed in the TRR abstract."
+    }
+  },
+  {
+    "id": "report-road-hazard-apple-valley",
+    "title": "Report a road hazard in Apple Valley",
+    "category": "report",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "pothole",
+      "road hazard",
+      "broken streetlight",
+      "debris",
+      "report to town",
+      "dangerous road"
+    ],
+    "summary": "The Town of Apple Valley takes problem reports like potholes through its Apple Valley Connect app.",
+    "steps": [
+      "Get somewhere safe first. Don't stop in the road to report.",
+      "Install Apple Valley Connect from the App Store or Google Play.",
+      "Report the problem and its location in the app.",
+      "Questions: call the Town at (760) 240-7000.",
+      "Town Hall: 14955 Dale Evans Parkway, Apple Valley, CA 92307."
+    ],
+    "warnings": [
+      "The app is for town problems, not emergencies. Dangerous driving goes to the Sheriff or 911."
+    ],
+    "prevent": "",
+    "sources": [
+      {
+        "org": "Town of Apple Valley",
+        "title": "Apple Valley Connect",
+        "url": "https://applevalley.org/apple-valley-connect/",
+        "supports": "App for reporting issues like potholes; App Store and Google Play; Town phone (760) 240-7000; 14955 Dale Evans Parkway"
+      },
+      {
+        "org": "Town of Apple Valley",
+        "title": "State of the Town 2026",
+        "url": "https://applevalley.org/state-of-the-town-2026/",
+        "supports": "'Spotted a pothole?' Apple Valley Connect; Town Hall address and phone"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "App, stores, phone and address confirmed on two Town pages. Removed 'take a photo' and 'free' (Town pages don't state either)."
+    }
+  },
+  {
+    "id": "report-road-hazard-county",
+    "title": "Report a hazard on a county-maintained road",
+    "category": "report",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "county road",
+      "unincorporated",
+      "pothole outside town",
+      "flooded road",
+      "storm drain"
+    ],
+    "summary": "For roads San Bernardino County Public Works maintains in unincorporated areas, report problems with the free SeeClickFix app.",
+    "steps": [
+      "Make sure the road is county-maintained, not a Town street.",
+      "Install SeeClickFix from the App Store or Google Play.",
+      "Submit a photo or video and a short description.",
+      "Potholes, flooding, and blocked storm drains are accepted."
+    ],
+    "warnings": [
+      "Town of Apple Valley streets go through Apple Valley Connect instead."
+    ],
+    "prevent": "",
+    "sources": [
+      {
+        "org": "San Bernardino County, Third District Supervisor",
+        "title": "SeeClickFix makes reporting problems easy (Apr 18 2023)",
+        "url": "https://bosd3.sbcounty.gov/seeclickfix-makes-reporting-problems-easy/",
+        "supports": "Free SeeClickFix app routes to County Public Works Transportation, Special Districts and Flood Control; potholes, flooding, storm drains; photos/videos; Google Play and App Store"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "Confirmed on County supervisor page (free, both stores, photos/videos). Replaced vague 'outside town limits' with County-maintained/unincorporated."
+    }
+  },
+  {
+    "id": "desert-goatheads",
+    "title": "Goatheads (puncturevine) and flat tires",
+    "category": "desert",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "flat tire",
+      "goathead",
+      "thorns",
+      "puncturevine",
+      "stickers",
+      "puncture"
+    ],
+    "summary": "Puncturevine burs are hard and spiny and can puncture bike tires. The plant grows in low mats along roadsides in hot, dry weather.",
+    "steps": [
+      "Watch for low mats with small yellow five-petal flowers along road edges.",
+      "Avoid riding through roadside dirt and weed mats when you can.",
+      "If you get a flat, move well off the road before fixing it.",
+      "Burs stick to tires and shoes. Remove them so you don't spread the plant."
+    ],
+    "warnings": [
+      "Burs can also hurt people and pets who step on them."
+    ],
+    "prevent": "Carry a spare tube or patch kit and a pump on every ride.",
+    "sources": [
+      {
+        "org": "UC Statewide IPM Program (UC Agriculture and Natural Resources)",
+        "title": "Puncturevine",
+        "url": "https://ipm.ucanr.edu/home-and-landscape/puncturevine/",
+        "supports": "Burs can puncture bicycle tires and injure people/pets; identification (mats, yellow 5-petal flowers); roadsides; hot dry conditions; summer annual; burs stick to tires and shoes, avoid spreading them"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "Plant facts match UC IPM. Merged two bur steps to what UC IPM says; 'move off the road' and spare-tube tips are general safety sense, not from the source."
+    }
+  },
+  {
+    "id": "desert-heat",
+    "title": "Riding or walking in desert heat",
+    "category": "desert",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "hot",
+      "heat",
+      "overheating",
+      "dizzy in heat",
+      "heat wave",
+      "too hot to ride"
+    ],
+    "summary": "Plan trips for the coolest part of the day, carry water, and take shade breaks. If someone may have heat stroke, call 911.",
+    "steps": [
+      "Travel in the coolest part of the day when you can.",
+      "Carry water and drink throughout the trip.",
+      "Take breaks in shade.",
+      "Know warning signs: cramps, heavy sweating, dizziness, headache, weakness, nausea.",
+      "Confusion, slurred speech, hot red skin, or fainting can mean heat stroke.",
+      "If someone may have heat stroke, call 911 right away."
+    ],
+    "warnings": [
+      "NIGHTRIDE does not give medical advice. For heat illness, call 911 or seek medical care."
+    ],
+    "prevent": "Check the forecast before longer trips.",
+    "sources": [
+      {
+        "org": "Centers for Disease Control and Prevention",
+        "title": "About Heat and Your Health",
+        "url": "https://www.cdc.gov/heat-health/about/index.html",
+        "supports": "Shade and breaks; coolest part of day; carry water and drink throughout the day; warning signs (cramps, heavy sweating, dizziness, headache, weakness, nausea)"
+      },
+      {
+        "org": "National Weather Service",
+        "title": "Heat-Related Illnesses",
+        "url": "https://www.weather.gov/safety/heat-illness",
+        "supports": "Heat stroke signs (confusion, slurred speech, hot red skin, fainting); call 911 or get the victim to a hospital immediately"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "Added NWS heat stroke signs so users know when to call 911; 911 instruction comes from NWS (CDC page doesn't mention 911). No treatment advice."
+    }
+  },
+  {
+    "id": "desert-cold-night",
+    "title": "Cold desert nights",
+    "category": "desert",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "cold",
+      "freezing",
+      "shivering",
+      "wind chill",
+      "stuck in the cold"
+    ],
+    "summary": "Wind makes cold more dangerous. Dress in layers, cover skin, stay dry, and get out of the wind.",
+    "steps": [
+      "Wear several loose layers and cover exposed skin.",
+      "Protect ears, nose, fingers and toes. Mittens are warmer than gloves.",
+      "Stay dry. Change wet clothes once inside.",
+      "If stuck, shelter out of the wind.",
+      "If someone is confused, sluggish, or very cold, call 911."
+    ],
+    "warnings": [
+      "NIGHTRIDE does not give medical advice. For cold injury, call 911."
+    ],
+    "prevent": "Pack a warm layer even if it was hot when you left.",
+    "sources": [
+      {
+        "org": "National Weather Service",
+        "title": "Staying Safe in the Cold",
+        "url": "https://www.weather.gov/safety/cold-during",
+        "supports": "Layers, loose clothing, cover skin, mittens better than gloves, protect extremities, stay dry, stay out of wind; call an ambulance for suspected hypothermia (cold, sluggish, trouble thinking)"
+      },
+      {
+        "org": "National Weather Service",
+        "title": "Cold Safety",
+        "url": "https://www.weather.gov/safety/cold",
+        "supports": "Brisk wind produces dangerous wind chill; uncovered skin and extremities most prone to frostbite"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "verified",
+      "checked": "2026-10-28",
+      "notes": "All steps match NWS cold guidance; 911 step matches NWS 'call an ambulance' for suspected hypothermia."
+    }
+  },
+  {
+    "id": "desert-wind-dust",
+    "title": "Strong wind or blowing dust",
+    "category": "desert",
+    "applies_to": [
+      "bike",
+      "ebike",
+      "walk"
+    ],
+    "triggers": [
+      "wind",
+      "gusts",
+      "blowing dust",
+      "dust storm",
+      "can't see",
+      "wind advisory",
+      "sand"
+    ],
+    "summary": "High Desert gusts and dust can push you around and hide you from drivers. Check NWS alerts and shelter when it gets bad.",
+    "steps": [
+      "Check the NWS San Diego forecast for 'Apple and Lucerne Valleys' before leaving.",
+      "Wind Advisory: secure loose items and travel with caution.",
+      "High Wind Warning: seek shelter in a sturdy building.",
+      "Dust Storm Warning means visibility half a mile or less. Get indoors if you can.",
+      "Without shelter, stay away from trees, power lines, and the roadside.",
+      "Treat downed power lines as live. Stay away.",
+      "Give trucks and trailers extra room; gusts can tip them over."
+    ],
+    "warnings": [
+      "In dust, drivers may not see you even with lights."
+    ],
+    "prevent": "If a High Wind or Dust Storm Warning is out, skip the trip or get a ride.",
+    "sources": [
+      {
+        "org": "National Weather Service",
+        "title": "Wind Watch, Warning, and Advisory Definitions",
+        "url": "https://www.weather.gov/safety/wind-ww",
+        "supports": "Wind Advisory (secure objects, caution), High Wind Warning (seek shelter); Dust Storm Warning at 1/2 mile visibility or less"
+      },
+      {
+        "org": "National Weather Service",
+        "title": "During High Winds",
+        "url": "https://www.weather.gov/safety/wind-during",
+        "supports": "Shelter in sturdy building; without shelter avoid trees, power lines, roadside; downed lines may be live; distance from trucks/trailers"
+      },
+      {
+        "org": "National Weather Service",
+        "title": "Point forecast for Apple Valley area",
+        "url": "https://forecast.weather.gov/MapClick.php?lat=34.5008&lon=-117.1859",
+        "supports": "Apple Valley forecast issued by NWS San Diego, zone 'Apple and Lucerne Valleys, CA' (CAZ060)"
+      }
+    ],
+    "confidence": "official",
+    "qa": {
+      "status": "fixed",
+      "checked": "2026-10-28",
+      "notes": "NWS gives no specific Dust Storm Warning action; replaced 'get off the road' with NWS shelter guidance. Zone CAZ060 and office SGX confirmed."
+    }
+  }
+]

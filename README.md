@@ -1,49 +1,88 @@
 # NIGHTRIDE
 
-A voice-first night dispatcher for people who are not in a car: cyclists, walkers, skaters.
-When something goes wrong after dark (a flat, a snapped chain, a dead phone, an unsafe stretch
-of road), you hold one button and say what happened. NIGHTRIDE sorts it and gives you one thing to do.
+**Built for the worst hour. Works at every hour.**
 
-Built for the Meta Global AI Developer Hackathon (Indie track). Every line in this repo was
+A voice-first night dispatcher for people who are not in a car: cyclists, e-bike riders, walkers, skaters.
+When something goes wrong after dark (a flat, a snapped chain, an e-bike that cuts out miles from home,
+a driver who won't leave you alone), you hold one button and say what happened. NIGHTRIDE sorts it,
+tells you the one next thing to do out loud, and shows you where that advice came from.
+
+Built for the Meta Global AI Developer Hackathon (Indie track) by a rider who commutes 20 miles a shift
+on an e-bike through California's High Desert, often home after dark. Every line in this repo was
 written during the hackathon building period, starting Oct 27 2026 12:00 AM ET. The commit history is the record.
+
+## Why
+
+- 76% of US pedestrian deaths and 52% of cyclist deaths happen in the dark (NHTSA, 2024 data).
+- Pedestrian deaths at night rose 84% from 2010 to 2023; daytime deaths rose 28% (GHSA, 2025).
+- 1 in 4 pedestrians and 1 in 5 cyclists killed were hit by a driver who left the scene (NHTSA, 2024).
+- 11.3 million US households have no vehicle (Census ACS 2024).
 
 ## What it does
 
-| Screen | What happens | Meta model (when wired) |
+| Feature | How | Meta model |
 |---|---|---|
-| Talk | Hold to talk, let go. | Muse Voice Transcribe |
-| Dispatch | One card: FIX IT, RIDE, SAFE PLACE, or EMERGENCY. | Muse Spark |
-| Fix it | Camera clip of the problem; the broken part glows amber and stays locked on while you follow the steps. | Muse Spark (video) + SAM 3.1 |
-| Get me somewhere | Three places open now, one tap to directions. | Muse Spark + search grounding |
-| Tell my people | A ready message with battery and a live map link, sent from your own phone. | none |
-| Night riders nearby | Opt-in riders who can help. **Simulated in this build.** | none |
+| **Talk** | Hold to talk; audio is converted to WAV and transcribed. | Muse Spark Open (audio) |
+| **Dispatch** | One card: FIX IT, RIDE, SAFE PLACE, or EMERGENCY, spoken aloud. | Muse Spark Open |
+| **Fix it** | Camera frame of the problem; the model names it and picks a verified playbook card. | Muse Spark Open (vision) |
+| **Part outline** | The broken part glows amber and tracks on the live camera. *Preview data until SAM 3.1 is wired.* | SAM 3.1 |
+| **Get me somewhere** | Real places open right now, ranked for the situation, one tap to bike directions. | none (OpenStreetMap) |
+| **Tell my people** | Message with battery and a live map link, sent from the rider's own phone. | none |
+| **Close call** | One tap logs where a driver came too close. Reports stack into hotspots on a night map; the city can download them as CSV. | none |
+| **Night riders nearby** | Opt-in riders who can help. **Simulated in this build.** | none |
 
-Safety rules that live in code, not in a prompt:
-- Words like "hurt", "bleeding", "hit by" go straight to a full-screen **Call 911** button, whatever a model says.
-- NIGHTRIDE gives no medical advice and never calls anyone by itself.
+All Meta model calls use **Muse Spark Open** (open weights, `meta-models/muse-spark-open-1026`) served on Baseten.
 
-## Status
+## The verified playbook
 
-- Day 1: every screen works end to end with **canned answers** (the page shows a DEMO DATA badge).
-  Real Meta Model API calls get switched on route by route next.
+64 short cards for the roadside: flats, chains, brakes, e-bike cutouts, lithium battery fire safety,
+California bike law (VC 21760 three-foot passing, 21201 lights, 21202 lane position), what to do when a driver
+harasses you, how to report dangerous roads in Apple Valley, desert heat and wind.
+
+- Every card cites the pages it came from (Park Tool, CPSC, FDNY, NFPA, UL, Bosch, the California Vehicle Code,
+  NWS, the San Bernardino County Sheriff), and every card was fact-checked against those sources in a second pass.
+  The fact-check reports are in [`playbook/qa/`](playbook/qa/).
+- Steps are written in our own words, at most 20 words each, for a tired person in the dark.
+- Picking a card from the rider's words is plain keyword matching in code: **no model tokens**.
+  For a photo, the model only names the problem and picks a card id; **the steps come from the cited card**,
+  not from the model. If no card fits, the model writes steps and the app labels them "AI steps, not verified."
+
+## Safety rules that live in code, not in a prompt
+
+- Words like "hit me", "bleeding", "can't breathe", "following me" go straight to a full-screen **Call 911**
+  button before any model sees them.
+- Battery smoke, fire or swelling: "Move away from the battery. Call 911."
+- No medical advice, ever. NIGHTRIDE never calls anyone by itself.
+- Locked in by tests: `npm test`.
+
+## Free and light
+
+No paid services. Places come from OpenStreetMap (Overpass), cached per area so a rider gets an answer in
+under 12 seconds and instantly after that. Voice replies use the phone's own speech engine. Map tiles are
+OpenStreetMap. Keys stay on the server, outside the repo.
 
 ## Run it
 
 ```
 npm install
-copy .env.example .env
-npm start
+npm start          # http://localhost:8787
+npm test
 ```
 
-Open http://localhost:8787. Camera and mic need HTTPS on a phone; on the laptop, localhost is fine.
+Put keys in `~/.nightride/.env` (see `.env.example`). Without a key every route answers from canned data.
+`SPARK=off` keeps the key loaded but saves credit while building. Camera and mic need HTTPS on a phone.
 
 ## Layout
 
-- `server/index.js` API routes; holds the Meta key so the browser never sees it
+- `server/index.js` routes; the model key never reaches the browser
 - `server/dispatch.js` lane sorting and the emergency guard
-- `server/canned.js` stand-in answers, same shape as the real routes
+- `server/spark.js` Muse Spark Open client (Baseten, OpenAI-compatible)
+- `server/playbook.js` + `playbook/*.json` the verified cards
+- `server/places.js` open-now places from OpenStreetMap
+- `server/closecalls.js` close call reports (rounded to about a block, no accounts)
 - `public/` the phone web app (plain HTML, CSS, JS)
 
 ## License
 
-MIT
+MIT for the code. Playbook cards are original summaries that link to their sources; map data
+© OpenStreetMap contributors.

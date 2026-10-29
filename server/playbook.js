@@ -46,5 +46,6 @@ export const publicCard = (c) => c && ({
   warnings: c.warnings || [],
   prevent: c.prevent || "",
   confidence: c.confidence,
+  qa: c.qa ? { status: c.qa.status, checked: c.qa.checked } : null,
   sources: (c.sources || []).map(({ org, title, url }) => ({ org, title, url })),
 });
