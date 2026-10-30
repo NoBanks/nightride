@@ -2,7 +2,7 @@
 
 **Built for the worst hour. Works at every hour.**
 
-**Demo video:** https://youtu.be/rWvFvOLHeZI  ·  **Receipts (every claim, its test, its code):** [RECEIPTS.md](RECEIPTS.md)
+**Demo video:** https://youtu.be/ZW6jwK26yeE  ·  **Receipts (every claim, its test, its code):** [RECEIPTS.md](RECEIPTS.md)
 
 **Live:** https://nightride.nohumannearby.com (open it on a phone; Add to Home Screen installs it, and it keeps working with no signal)
 
