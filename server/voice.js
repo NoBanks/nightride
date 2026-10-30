@@ -12,7 +12,11 @@ export const isRefusal = (text) => REFUSAL.test(text);
 
 // Length and loudness of a 16-bit mono WAV, so the log can tell a silent mic from a model problem.
 export function wavStats(wav) {
-  const pcm = new Int16Array(wav.buffer, wav.byteOffset + 44, Math.floor((wav.length - 44) / 2));
+  // Samples start after the "data" chunk header; ffmpeg can put other chunks before it.
+  const at = wav.indexOf("data", 12);
+  const start = at >= 0 ? at + 8 : 44;
+  const bytes = wav.length - start - ((wav.length - start) % 2);
+  const pcm = new Int16Array(wav.buffer.slice(wav.byteOffset + start, wav.byteOffset + start + bytes));
   let peak = 0;
   for (const s of pcm) peak = Math.max(peak, Math.abs(s));
   return { seconds: +(pcm.length / 16000).toFixed(1), peakDb: peak ? +(20 * Math.log10(peak / 32768)).toFixed(1) : -Infinity };

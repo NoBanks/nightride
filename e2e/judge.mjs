@@ -90,7 +90,7 @@ try {
     return "home screen ready";
   });
 
-  await check("2. hold to talk: Muse Spark Open hears \"my back tire just went flat\" and says FIX IT", async () => {
+  await check("2. hold to talk: Meta Voice Transcribe hears \"my back tire just went flat\", Muse Spark Open says FIX IT", async () => {
     const r = await ev(`(() => { const b = document.getElementById('talk').getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; })()`);
     await send("Input.dispatchMouseEvent", { type: "mouseMoved", x: r.x, y: r.y });
     await send("Input.dispatchMouseEvent", { type: "mousePressed", x: r.x, y: r.y, button: "left", clickCount: 1 });
