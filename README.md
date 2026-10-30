@@ -33,7 +33,6 @@ written during the hackathon building period, starting Oct 27 2026 12:00 AM ET. 
 | **Get me somewhere** | Real places open right now, ranked for the situation, one tap to bike directions. | none (OpenStreetMap) |
 | **Tell my people** | Message with battery and a live map link, sent from the rider's own phone. | none |
 | **Close call** | One tap logs where a driver came too close. Reports stack into hotspots on a night map; the city can download them as CSV. | none |
-| **Night riders nearby** | Opt-in riders who can help. **Simulated in this build.** | none |
 
 Hearing, sorting and seeing use **Muse Spark Open** (open weights, `meta-models/muse-spark-open-1026`) served on Baseten.
 The part outline uses **SAM 3.1** (`sam-3.1`) on the Meta Model API: the clip is converted to H.264 MP4, sent with the
@@ -49,6 +48,8 @@ harasses you, how to report dangerous roads in Apple Valley, desert heat and win
   NWS, the San Bernardino County Sheriff), and every card was fact-checked against those sources in a second pass.
   The fact-check reports are in [`playbook/qa/`](playbook/qa/).
 - Steps are written in our own words, at most 20 words each, for a tired person in the dark.
+- Long repairs come in parts, so a 21-step rear flat reads as four small jobs: "Get the wheel off · part 1 of 4 ·
+  Step 1 of 8". Back, See all steps (tap one to jump), and "Can't fix it here?" are always one tap away.
 - Picking a card from the rider's words is plain keyword matching in code: **no model tokens**.
   For a photo, the model only names the problem and picks a card id; **the steps come from the cited card**,
   not from the model. If no card fits, the model writes steps and the app labels them "AI steps, not verified."
@@ -75,6 +76,7 @@ npm install
 npm start          # http://localhost:8787
 npm test           # unit tests
 npm run test:live  # end-to-end against the live site
+npm run test:judge # walks every demo feature in a headless phone browser (fake mic + camera)
 ```
 
 Put keys in `~/.nightride/.env` (see `.env.example`). Without a key every route answers from canned data.
