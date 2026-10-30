@@ -488,36 +488,60 @@ async function loadNearby(tries = 0) {
 }
 
 // ---------- 5. tell my people ----------
+// People are { name, tel } kept only in this phone's storage; nothing is uploaded.
 const PEOPLE_KEY = "nightride.people";
+const cleanTel = (t) => String(t || "").replace(/[^\d+]/g, "");
 function loadPeople() {
-  try { return JSON.parse(localStorage.getItem(PEOPLE_KEY)) || []; } catch { return []; }
+  try {
+    const raw = JSON.parse(localStorage.getItem(PEOPLE_KEY)) || [];
+    return raw.map((p) => (typeof p === "string" ? { name: p, tel: "" } : p)); // older builds saved bare names
+  } catch { return []; }
 }
 function savePeople(people) {
   try { localStorage.setItem(PEOPLE_KEY, JSON.stringify(people)); } catch {}
 }
+function addPeople(list) {
+  const people = loadPeople();
+  for (const p of list) if (p.tel && !people.some((q) => q.tel === p.tel)) people.push(p);
+  savePeople(people);
+  renderPeople();
+}
 function renderPeople() {
   const people = loadPeople();
-  $("people").replaceChildren(...people.map((name, i) => {
+  $("people").replaceChildren(...people.map((p, i) => {
     const li = document.createElement("li");
-    li.textContent = name;
+    const who = document.createElement("span");
+    who.textContent = p.tel ? `${p.name} · ${p.tel}` : `${p.name} · no number yet`;
     const x = document.createElement("button");
     x.textContent = "Remove";
-    x.addEventListener("click", () => {
-      people.splice(i, 1);
-      savePeople(people);
-      renderPeople();
-    });
-    li.append(x);
+    x.addEventListener("click", () => { people.splice(i, 1); savePeople(people); renderPeople(); });
+    li.append(who, x);
     return li;
   }));
+  $("sendShare").textContent = people.some((p) => p.tel)
+    ? `Text ${people.filter((p) => p.tel).map((p) => p.name).join(", ")}`
+    : "Text my people";
 }
+
+// Chrome on Android has a contact picker: the rider chooses, the site never sees the whole address book.
+const canPick = "contacts" in navigator && "select" in (navigator.contacts || {});
+$("pickContacts").hidden = !canPick;
+$("pickContacts").addEventListener("click", async () => {
+  try {
+    const picked = await navigator.contacts.select(["name", "tel"], { multiple: true });
+    addPeople(picked.map((c) => ({ name: (c.name && c.name[0]) || "Contact", tel: cleanTel(c.tel && c.tel[0]) })));
+    if (picked.some((c) => !(c.tel && c.tel[0]))) $("shareStatus").textContent = "Some contacts had no phone number and weren't added.";
+  } catch {
+    // Rider closed the picker.
+  }
+});
 $("addPerson").addEventListener("submit", (e) => {
   e.preventDefault();
-  const name = $("personName").value.trim();
-  if (!name) return;
-  savePeople([...loadPeople(), name]);
-  $("personName").value = "";
-  renderPeople();
+  const name = $("personName").value.trim(), tel = cleanTel($("personTel").value);
+  if (!name || tel.length < 7) { $("shareStatus").textContent = "Add a name and a phone number."; return; }
+  addPeople([{ name, tel }]);
+  $("personName").value = ""; $("personTel").value = "";
+  $("addManual").open = false;
 });
 
 async function prepareShare() {
@@ -531,17 +555,26 @@ async function prepareShare() {
   }
 }
 
-// Sends from the rider's own phone (share sheet or SMS app); no paid SMS service.
-$("sendShare").addEventListener("click", async () => {
+// Sends from the rider's own phone: Messages opens addressed to their people with the text filled in,
+// and they press send. No paid SMS service, and NIGHTRIDE never sends anything by itself.
+const clock = () => new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+$("sendShare").addEventListener("click", () => {
+  const text = $("shareText").value;
+  const people = loadPeople().filter((p) => p.tel);
+  if (!people.length) {
+    $("shareStatus").textContent = canPick ? "Choose your people first." : "Add someone by number first.";
+    if (!canPick) $("addManual").open = true;
+    return;
+  }
+  window.location.href = `sms:${people.map((p) => p.tel).join(",")}?body=${encodeURIComponent(text)}`;
+  $("shareStatus").textContent = `${clock()}: Messages opened to ${people.map((p) => p.name).join(", ")}. Press send.`;
+});
+$("shareOther").addEventListener("click", async () => {
   const text = $("shareText").value;
   try {
     if (navigator.share) await navigator.share({ text });
-    else window.location.href = `sms:?&body=${encodeURIComponent(text)}`;
-    const time = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-    const names = loadPeople();
-    $("shareStatus").textContent = names.length
-      ? `Opened at ${time}. Send it to ${names.join(", ")}.`
-      : `Opened at ${time}.`;
+    else window.location.href = `sms:?body=${encodeURIComponent(text)}`;
+    $("shareStatus").textContent = `${clock()}: share sheet opened.`;
   } catch {
     // Rider closed the share sheet.
   }

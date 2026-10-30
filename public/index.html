@@ -140,13 +140,19 @@
       <h2>Tell my people</h2>
       <p class="label">Message</p>
       <textarea id="shareText" rows="5"></textarea>
-      <p class="label">My people</p>
+      <p class="label">My people (saved on this phone only)</p>
       <ul id="people"></ul>
-      <form id="addPerson" class="row">
-        <input id="personName" type="text" placeholder="Add a name" autocomplete="off">
-        <button class="btn small" type="submit">Add</button>
-      </form>
-      <button id="sendShare" class="btn wide">Send</button>
+      <button id="pickContacts" class="btn ghost wide" type="button" hidden>Choose from my contacts</button>
+      <details id="addManual" class="type-instead">
+        <summary>Add someone by number</summary>
+        <form id="addPerson" class="add-person">
+          <input id="personName" type="text" placeholder="Name (Mom)" autocomplete="off">
+          <input id="personTel" type="tel" placeholder="Phone number" autocomplete="off" inputmode="tel">
+          <button class="btn small" type="submit">Add</button>
+        </form>
+      </details>
+      <button id="sendShare" class="btn wide">Text my people</button>
+      <button id="shareOther" class="btn ghost wide" type="button">Share another way</button>
       <p id="shareStatus" class="hint"></p>
     </section>
 

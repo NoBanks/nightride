@@ -125,6 +125,8 @@ textarea { width: 100%; resize: vertical; }
 /* Share */
 #people, #riderReplies { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 #people li { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--panel); border-radius: 12px; }
+.add-person { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; }
+#people li span { overflow-wrap: anywhere; }
 #people li button { background: none; border: 0; color: var(--dim); min-height: 40px; cursor: pointer; }
 
 /* Riders */
