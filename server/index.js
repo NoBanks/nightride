@@ -118,6 +118,8 @@ app.post("/api/look", upload.fields([{ name: "clip", maxCount: 1 }, { name: "fra
     const d = await sparkJSON(menu ? prompts.lookWithPlaybook(menu) : prompts.LOOK, content, { maxTokens: 3000 });
     const base = { problem: str(d.problem, 160), part: str(d.part, 40) || "bicycle", fixable: d.fixable !== false };
     const card = playbook.getCard(d.card);
+    // What the model saw, for checking real-world scans (its answer only, not the rider's words).
+    console.log(`look: problem="${base.problem}" part="${base.part}" card=${card?.id || "none"}`);
     if (card) return { ...base, card: playbook.publicCard(card), steps: card.steps, stages: card.stages || [], prevent: card.prevent || "" };
     const steps = Array.isArray(d.steps) ? d.steps.map((s) => str(s, 200)).filter(Boolean).slice(0, 8) : [];
     if (!steps.length && base.fixable) throw new Error("no card and no steps");
