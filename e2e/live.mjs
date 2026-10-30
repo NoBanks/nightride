@@ -34,6 +34,17 @@ await check("hear: voice -> Muse Spark Open transcript", async () => {
   const r = await fetch(BASE + "/api/transcribe", { method: "POST", body: fd }); const j = await r.json();
   expect(j.source === "muse-spark-open" && /tire/i.test(j.text), `${j.source}: ${j.text}`); return `"${j.text}"`;
 });
+// A 2.5 s WebM, the format Android Chrome records; the server converts it for SAM.
+const clip = readFileSync(new URL("./fixtures/wheels.webm", import.meta.url));
+await check("outline: Meta SAM 3.1 tracks the part in every frame", async () => {
+  const fd = new FormData(); fd.append("clip", new Blob([clip], { type: "video/webm" }), "clip.webm"); fd.append("part", "bicycle wheel");
+  const j = await (await fetch(BASE + "/api/track", { method: "POST", body: fd })).json();
+  expect(j.source === "sam-3.1", `source ${j.source}`);
+  expect(j.frames.length >= 20 && j.found === j.frames.length, `found in ${j.found}/${j.frames.length} frames`);
+  const inside = j.frames.every((f) => f.rings.flat().every(([x, y]) => x >= 0 && x <= 1 && y >= 0 && y <= 1));
+  expect(inside, "outline point outside the frame");
+  return `wheel outlined in ${j.found}/${j.frames.length} frames, SAM ${j.ms} ms`;
+});
 for (const [text, lane] of [["my back tire just went flat", "fix"], ["my e-bike cut out and I'm six miles from home", "ride"], ["a truck keeps slowing down next to me and I'm scared", "safe"]]) {
   await check(`sort: "${text}" -> ${lane}`, async () => {
     const d = await json("/api/dispatch", { text, battery: 0.4 });

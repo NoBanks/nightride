@@ -9,6 +9,7 @@ import * as canned from "./canned.js";
 import * as prompts from "./prompts.js";
 import { sparkReady, sparkJSON, sparkTranscribe, imagePart } from "./spark.js";
 import { toWav } from "./audio.js";
+import { samReady, samTrack, SAM_FPS } from "./sam.js";
 import * as closeCalls from "./closecalls.js";
 import { placesNear, rank } from "./places.js";
 import * as playbook from "./playbook.js";
@@ -68,7 +69,7 @@ const str = (v, max) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 app.get("/api/health", (_req, res) => res.json({
   ok: true,
   mode: sparkReady() ? "live" : "canned",
-  demo: ["track"], // still canned: SAM 3.1 waits on Meta API credits
+  outline: samReady() ? "sam-3.1" : "canned",
 }));
 
 app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
@@ -122,9 +123,23 @@ app.post("/api/look", upload.fields([{ name: "clip", maxCount: 1 }, { name: "fra
   }, fallback, req.ip));
 });
 
-app.post("/api/track", upload.single("clip"), (req, res) => {
+// Meta SAM 3.1 outlines the part Muse Spark named, in every frame of the rider's clip.
+// If it can't, the rider gets no outline rather than a made-up one; the steps still show.
+app.post("/api/track", upload.single("clip"), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: "no clip" });
-  res.json({ ...canned.track(req.body?.part), source: "canned" });
+  const part = str(req.body?.part, 40) || "bicycle wheel";
+  if (!samReady()) return res.json({ ...canned.track(part), source: "canned" });
+  const none = { part, fps: SAM_FPS, frames: [] };
+  if (!allowModel(req.ip)) return res.json({ ...none, source: "limit" });
+  const t0 = Date.now();
+  try {
+    const out = await samTrack(req.file.buffer, part, { signal: AbortSignal.timeout(30000) });
+    console.log(`track: sam-3.1 ${Date.now() - t0}ms, "${part}" in ${out.found}/${out.frames.length} frames`);
+    res.json({ part, ...out, ms: Date.now() - t0, source: "sam-3.1" });
+  } catch (e) {
+    console.warn(`track: no outline after ${Date.now() - t0}ms: ${e.message}`);
+    res.json({ ...none, source: "fallback" });
+  }
 });
 
 app.post("/api/nearby", async (req, res) => {

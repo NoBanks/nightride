@@ -275,7 +275,7 @@ $("closeEmergency").addEventListener("click", () => {
 });
 
 // ---------- 3. fix it: camera, clip, mask overlay ----------
-let cam = null, anim = 0;
+let cam = null, anim = 0, replay = null;
 
 async function startCamera() {
   resetFix();
@@ -292,14 +292,28 @@ async function startCamera() {
 function stopCamera() {
   cancelAnimationFrame(anim);
   anim = 0;
+  endReplay();
   if (!cam) return;
   cam.getTracks().forEach((t) => t.stop());
   cam = null;
   $("camVideo").srcObject = null;
 }
 
+// After a scan the camera view replays the rider's clip with the outline on it; this goes back to live.
+function endReplay() {
+  if (!replay) return;
+  const video = $("camVideo");
+  video.pause();
+  video.removeAttribute("src");
+  video.loop = false;
+  URL.revokeObjectURL(replay);
+  replay = null;
+  video.srcObject = cam;
+}
+
 function resetFix() {
   cancelAnimationFrame(anim);
+  endReplay();
   const c = $("overlay");
   c.getContext("2d").clearRect(0, 0, c.width, c.height);
   $("partTag").hidden = true;
@@ -353,8 +367,9 @@ $("scan").addEventListener("click", async () => {
       $("stepSource").textContent = "AI steps, not verified. Stop if anything feels unsafe.";
     }
     speak(look.problem);
+    $("camMsg").textContent = `Finding the ${look.part}...`;
     const masks = await postForm("/api/track", [["clip", clip, filename], ["part", look.part]]);
-    playMasks(masks);
+    playMasks(masks, clip);
     showStep(false);
     btn.hidden = true;
   } catch {
@@ -370,14 +385,25 @@ $("scan").addEventListener("click", async () => {
   }
 });
 
-// Draws the tracked part over the live video, mapped through object-fit: cover.
-function playMasks({ part, fps, frames }) {
+// Replays the clip the rider just filmed and draws the outline SAM found on each of its frames,
+// mapped through object-fit: cover.
+function playMasks({ part, fps, frames, source }, clip) {
   const canvas = $("overlay"), video = $("camVideo"), ctx = canvas.getContext("2d");
   $("partTag").textContent = part;
   $("partTag").hidden = false;
-  $("camMsg").textContent = "";
-  const t0 = performance.now();
   cancelAnimationFrame(anim);
+  if (!frames?.length || !frames.some((f) => f.rings.length)) {
+    $("camMsg").textContent = `Couldn't outline the ${part}. The steps below still apply.`;
+    return;
+  }
+  $("camMsg").textContent = source === "sam-3.1" ? "Replay · outlined by Meta SAM 3.1" : "Demo outline";
+  video.srcObject = null;
+  replay = URL.createObjectURL(clip);
+  video.src = replay;
+  video.loop = true;
+  video.play().catch(() => {});
+  // Clips recorded in the browser often have no seek index, so loop by hand if "loop" stalls.
+  video.onended = () => { video.currentTime = 0; video.play().catch(() => {}); };
 
   const draw = (now) => {
     const dpr = window.devicePixelRatio || 1;
@@ -390,7 +416,7 @@ function playMasks({ part, fps, frames }) {
     ctx.clearRect(0, 0, w, h);
     const vw = video.videoWidth || w, vh = video.videoHeight || h;
     const s = Math.max(w / vw, h / vh), ox = (w - vw * s) / 2, oy = (h - vh * s) / 2;
-    const frame = frames[Math.floor(((now - t0) / 1000) * fps) % frames.length];
+    const frame = frames[Math.min(frames.length - 1, Math.floor(video.currentTime * fps))];
 
     ctx.beginPath();
     for (const ring of frame.rings) {
