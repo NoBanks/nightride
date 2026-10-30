@@ -133,9 +133,13 @@ app.post("/api/track", upload.single("clip"), async (req, res) => {
   if (!allowModel(req.ip)) return res.json({ ...none, source: "limit" });
   const t0 = Date.now();
   try {
-    const out = await samTrack(req.file.buffer, part, { signal: AbortSignal.timeout(30000) });
-    console.log(`track: sam-3.1 ${Date.now() - t0}ms, "${part}" in ${out.found}/${out.frames.length} frames`);
-    res.json({ part, ...out, ms: Date.now() - t0, source: "sam-3.1" });
+    const signal = AbortSignal.timeout(30000);
+    let concept = part, out = await samTrack(req.file.buffer, concept, { signal });
+    // "rear tail light" can miss where "light" hits: one retry with the head noun.
+    const head = part.split(/\s+/).pop();
+    if (!out.found && head !== part && allowModel(req.ip)) out = await samTrack(req.file.buffer, (concept = head), { signal });
+    console.log(`track: sam-3.1 ${Date.now() - t0}ms, "${concept}" in ${out.found}/${out.frames.length} frames`);
+    res.json({ part, concept, ...out, ms: Date.now() - t0, source: "sam-3.1" });
   } catch (e) {
     console.warn(`track: no outline after ${Date.now() - t0}ms: ${e.message}`);
     res.json({ ...none, source: "fallback" });
