@@ -6,7 +6,13 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 
-const ENDPOINTS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"];
+// Public Overpass mirrors, tried in order; any one can be slow or down on a given day.
+const ENDPOINTS = [
+  "https://overpass-api.de/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter",
+  "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+];
 const UA = "NIGHTRIDE/0.1 (hackathon prototype; github.com/NoBanks/nightride)";
 // Places barely change; hours are re-checked on every request, so a day-old list is fine.
 const TTL = 24 * 60 * 60 * 1000;
@@ -53,7 +59,7 @@ async function fetchOverpass(lat, lng) {
         method: "POST",
         headers: { "User-Agent": UA, "Content-Type": "application/x-www-form-urlencoded" },
         body: `data=${encodeURIComponent(query(lat, lng))}`,
-        signal: AbortSignal.timeout(70000),
+        signal: AbortSignal.timeout(45000),
       });
       if (!r.ok) throw new Error(`overpass ${r.status}`);
       return (await r.json()).elements || [];
@@ -87,7 +93,14 @@ export async function placesNear(lat, lng) {
       })
       .finally(() => inflight.delete(key)));
   }
-  return inflight.get(key);
+  const fresh = inflight.get(key);
+  // An older list beats no list: stores don't move overnight, and open-now is worked out from
+  // their hours on every request. Answer with it now; the lookup above refreshes it.
+  if (hit) {
+    fresh.catch(() => {});
+    return hit.places;
+  }
+  return fresh;
 }
 
 function openState(hours, now) {
