@@ -1,6 +1,7 @@
 [
   {
     "id": "ebike-cutout-roadside",
+    "stages": [{"name":"Get safe","from":1},{"name":"Reset the system","from":3},{"name":"Get home","from":9}],
     "title": "E-bike or scooter suddenly cut out: what to try, in order",
     "category": "ebike",
     "applies_to": ["ebike", "scooter"],

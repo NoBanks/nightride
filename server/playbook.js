@@ -30,6 +30,7 @@ export const publicCard = (c) => c && ({
   triggers: c.triggers, // the phone matches cards itself when there's no signal
   summary: c.summary,
   steps: c.steps,
+  stages: c.stages || [],
   warnings: c.warnings || [],
   prevent: c.prevent || "",
   confidence: c.confidence,

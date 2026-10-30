@@ -1,6 +1,7 @@
 [
   {
     "id": "repair-flat-rear-tube",
+    "stages": [{"name":"Get the wheel off","from":1},{"name":"Find what caused it","from":9},{"name":"Put the new tube in","from":15},{"name":"Wheel back on","from":20}],
     "title": "Flat rear tire (inner tube)",
     "category": "repair",
     "applies_to": ["bike", "ebike"],
@@ -48,6 +49,7 @@
   },
   {
     "id": "repair-flat-front-tube",
+    "stages": [{"name":"Get the wheel off","from":1},{"name":"Find what caused it","from":6},{"name":"Put the new tube in","from":9},{"name":"Wheel back on","from":12}],
     "title": "Flat front tire (inner tube)",
     "category": "repair",
     "applies_to": ["bike", "ebike"],
@@ -296,6 +298,7 @@
   },
   {
     "id": "repair-chain-snapped",
+    "stages": [{"name":"Remove the bad link","from":1},{"name":"Join it with a quick link","from":5},{"name":"No quick link: re-pin it","from":8},{"name":"Check it","from":10}],
     "title": "Chain snapped",
     "category": "repair",
     "applies_to": ["bike", "ebike"],
@@ -630,6 +633,7 @@
   },
   {
     "id": "repair-ebike-hub-motor-wheel",
+    "stages": [{"name":"Unplug the motor","from":1},{"name":"Take the wheel out","from":5},{"name":"Put the wheel back","from":8}],
     "title": "E-bike hub motor wheel removal",
     "category": "repair",
     "applies_to": ["ebike"],

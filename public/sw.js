@@ -1,9 +1,9 @@
 // Keeps NIGHTRIDE usable with no signal: the app shell, the emergency guard and the
 // verified playbook are saved on the phone. Live features (AI, places, maps) still need signal.
-const CACHE = "nightride-v4";
+const CACHE = "nightride-v5";
 const SHELL = [
   "/", "/index.html", "/app.css", "/app.js", "/manifest.webmanifest",
-  "/icon-192.png", "/icon-512.png", "/shared/dispatch.js", "/shared/match.js", "/api/playbook",
+  "/icon-192.png", "/icon-512.png", "/shared/dispatch.js", "/shared/match.js", "/shared/stages.js", "/api/playbook",
 ];
 
 self.addEventListener("install", (e) => {

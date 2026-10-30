@@ -57,7 +57,6 @@
       <div class="links">
         <button class="link" data-go="playbook">Playbook</button>
         <button class="link" data-go="map">Close call map</button>
-        <button class="link" data-go="riders">Night riders nearby</button>
       </div>
     </section>
 
@@ -118,12 +117,22 @@
       <div class="sheet">
         <button id="scan" class="btn wide">Show NIGHTRIDE the problem</button>
         <div id="steps" hidden>
+          <p class="stage" id="stageName"></p>
           <p class="label" id="stepCount"></p>
           <p class="step" id="stepText"></p>
-          <button id="nextStep" class="btn wide">Next</button>
+          <div class="step-nav">
+            <button id="prevStep" class="btn ghost" type="button">Back</button>
+            <button id="nextStep" class="btn wide">Next</button>
+          </div>
+          <button id="allSteps" class="link" type="button">See all steps</button>
+          <div id="stepList" class="step-list" hidden></div>
           <p id="stepSource" class="source"></p>
         </div>
-        <button class="btn ghost wide" data-go="nearby">Can't fix it</button>
+        <p class="label">Can't fix it here?</p>
+        <div class="step-nav">
+          <button class="btn ghost" data-go="nearby">Get me somewhere</button>
+          <button class="btn ghost" data-go="share">Tell my people</button>
+        </div>
       </div>
     </section>
 
@@ -156,15 +165,6 @@
       <p id="shareStatus" class="hint"></p>
     </section>
 
-    <!-- 6. Night riders nearby (simulated) -->
-    <section id="riders" class="screen">
-      <button class="back" data-go="home">Back</button>
-      <h2>Night riders nearby <span class="badge">SIMULATED</span></h2>
-      <canvas id="riderMap" class="ridermap"></canvas>
-      <p id="riderCount" class="hint"></p>
-      <button id="askRiders" class="btn wide">Ask for help</button>
-      <ul id="riderReplies"></ul>
-    </section>
   </main>
 
   <!-- After a close call is logged: optional one-tap detail, then it gets out of the way. -->

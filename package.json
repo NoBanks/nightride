@@ -11,7 +11,8 @@
     "start": "node --env-file-if-exists=.env server/index.js",
     "dev": "node --watch --env-file-if-exists=.env server/index.js",
     "test": "node --test",
-    "test:live": "node e2e/live.mjs"
+    "test:live": "node e2e/live.mjs",
+    "test:judge": "node e2e/judge.mjs"
   },
   "license": "MIT",
   "dependencies": {

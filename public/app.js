@@ -1,5 +1,6 @@
 import { cannedDispatch } from "/shared/dispatch.js";
 import { matchCards, LANE_CATEGORIES } from "/shared/match.js";
+import { groupSteps, stageOf } from "/shared/stages.js";
 
 const $ = (id) => document.getElementById(id);
 const state = { battery: null, location: null, lastText: "", look: null, step: 0, cards: [] };
@@ -20,7 +21,6 @@ function go(name) {
   if (name === "fix") startCamera(); else stopCamera();
   if (name === "nearby") loadNearby();
   if (name === "share") prepareShare();
-  if (name === "riders") drawRiders();
   if (name === "map") loadMap().catch(() => { $("mapSummary").textContent = "Couldn't load the map. Check your signal."; });
   window.scrollTo(0, 0);
 }
@@ -61,10 +61,27 @@ $("voiceToggle").addEventListener("click", () => {
 });
 renderVoice();
 
+// The phone's default voice is often the old robotic one; most phones also carry natural ones.
+// Pick the best English voice the phone has: neural/natural/enhanced first, then known good ones.
+let bestVoice = null;
+const VOICE_RANK = [/natural|neural|enhanced|premium/i, /google us english/i, /samantha|ava|allison|siri/i, /google/i, /aria|jenny|guy|zira/i];
+function pickVoice() {
+  if (!("speechSynthesis" in window)) return;
+  const en = speechSynthesis.getVoices().filter((v) => /^en[-_]/i.test(v.lang));
+  const us = (v) => (/en[-_]US/i.test(v.lang) ? 0 : 1);
+  const rank = (v) => { const i = VOICE_RANK.findIndex((re) => re.test(v.name)); return (i < 0 ? 99 : i) * 2 + us(v); };
+  bestVoice = en.sort((a, b) => rank(a) - rank(b))[0] || null;
+}
+if ("speechSynthesis" in window) {
+  pickVoice();
+  speechSynthesis.addEventListener?.("voiceschanged", pickVoice);
+}
+
 function speak(text) {
   if (!voiceOn || !text || !("speechSynthesis" in window)) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
+  if (bestVoice) { u.voice = bestVoice; u.lang = bestVoice.lang; }
   u.rate = 0.95;
   speechSynthesis.speak(u);
 }
@@ -256,7 +273,11 @@ function showGuide(card) {
   $("guideTitle").textContent = card.title;
   $("guideSummary").textContent = card.summary;
   const li = (text) => Object.assign(document.createElement("li"), { textContent: text });
-  $("guideSteps").replaceChildren(...card.steps.map(li));
+  // Grouped by stage on long cards; the numbering runs straight through.
+  $("guideSteps").replaceChildren(...groupSteps(card.stages, card.steps).flatMap((g) => [
+    ...(g.name ? [Object.assign(document.createElement("li"), { className: "guide-stage", textContent: g.name })] : []),
+    ...g.steps.map((s, j) => Object.assign(li(s), { value: g.start + j + 1 })),
+  ]));
   $("guideWarnings").replaceChildren(...card.warnings.map(li));
   $("guidePrevent").textContent = card.prevent ? `Next time: ${card.prevent}` : "";
   $("guideSources").replaceChildren(...card.sources.map((s) => {
@@ -441,25 +462,58 @@ function playMasks({ part, fps, frames, source }, clip) {
 
 // say=false on the first step so it doesn't talk over the problem summary.
 function showStep(say = true) {
-  const { steps, prevent } = state.look;
+  const { steps, prevent, stages } = state.look;
   $("steps").hidden = false;
-  let text;
+  $("stepList").hidden = true;
+  $("allSteps").textContent = "See all steps";
+  $("prevStep").disabled = state.step === 0;
+  let text, spoken;
   if (state.step >= steps.length) {
+    $("stageName").textContent = "";
     $("stepCount").textContent = "Done";
-    text = prevent ? `Nice work. Next time: ${prevent}` : "Nice work. Spin it once more and ride safe.";
+    text = prevent ? `Nice work. Spin the wheel and test your brakes before you ride. Next time: ${prevent}` : "Nice work. Spin the wheel and test your brakes before you ride.";
     $("nextStep").textContent = "Home";
   } else {
-    $("stepCount").textContent = `Step ${state.step + 1} of ${steps.length}`;
+    const st = stageOf(stages, state.step, steps.length);
+    $("stageName").textContent = st ? `${st.name} · part ${st.n} of ${st.of}` : "";
+    $("stepCount").textContent = st ? `Step ${st.step} of ${st.steps}` : `Step ${state.step + 1} of ${steps.length}`;
     text = steps[state.step];
-    $("nextStep").textContent = "Next";
+    // Say the stage name out loud when a new stage starts.
+    if (st && st.step === 1) spoken = `${st.name}. ${text}`;
+    $("nextStep").textContent = state.step === steps.length - 1 ? "Finish" : "Next";
   }
   $("stepText").textContent = text;
-  if (say) speak(text);
+  if (say) speak(spoken || text);
+}
+
+// Every step at once, grouped by stage; tap one to jump there (for riders who know the first part).
+function renderStepList() {
+  const { steps, stages } = state.look;
+  $("stepList").replaceChildren(...groupSteps(stages, steps).flatMap((g) => [
+    ...(g.name ? [Object.assign(document.createElement("p"), { className: "guide-stage", textContent: g.name })] : []),
+    ...g.steps.map((s, j) => {
+      const b = Object.assign(document.createElement("button"), { type: "button", className: "jump", textContent: `${g.start + j + 1}. ${s}` });
+      if (g.start + j === state.step) b.classList.add("here");
+      b.addEventListener("click", () => { state.step = g.start + j; showStep(); });
+      return b;
+    }),
+  ]));
 }
 $("nextStep").addEventListener("click", () => {
   if (state.step >= state.look.steps.length) return go("home");
   state.step += 1;
   showStep();
+});
+$("prevStep").addEventListener("click", () => {
+  if (state.step === 0) return;
+  state.step -= 1;
+  showStep();
+});
+$("allSteps").addEventListener("click", () => {
+  const open = $("stepList").hidden;
+  if (open) renderStepList();
+  $("stepList").hidden = !open;
+  $("allSteps").textContent = open ? "Hide all steps" : "See all steps";
 });
 
 // ---------- 4. get me somewhere ----------
@@ -695,59 +749,6 @@ async function loadMap() {
     ? `${calls.length} close call${calls.length > 1 ? "s" : ""} logged. Worst spot: ${worst} report${worst > 1 ? "s" : ""}.`
     : "No close calls yet. Tap CLOSE CALL on the home screen when a driver comes too close.";
 }
-
-// ---------- 6. night riders nearby (simulated for the demo) ----------
-const SIM_RIDERS = [
-  { name: "Dee", dx: 0.3, dy: -0.25, eta: 6 },
-  { name: "Marco", dx: -0.45, dy: 0.35, eta: 11 },
-  { name: "Jules", dx: 0.85, dy: 0.75, eta: 19 },
-];
-const MAP_MILES = 1.25;
-
-function drawRiders() {
-  const canvas = $("riderMap"), ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1, w = canvas.clientWidth, h = canvas.clientHeight;
-  canvas.width = Math.round(w * dpr);
-  canvas.height = Math.round(h * dpr);
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  const cx = w / 2, cy = h / 2, r = Math.min(w, h) / 2 - 8, perMile = r / MAP_MILES;
-
-  ctx.strokeStyle = "#2a2a2a";
-  ctx.fillStyle = "#8a8478";
-  ctx.font = "12px system-ui";
-  for (const miles of [0.5, 1]) {
-    ctx.beginPath();
-    ctx.arc(cx, cy, miles * perMile, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.fillText(`${miles} mi`, cx + 4, cy - miles * perMile - 4);
-  }
-  ctx.fillStyle = "#e8e2d6";
-  for (const rider of SIM_RIDERS) {
-    ctx.beginPath();
-    ctx.arc(cx + rider.dx * perMile, cy + rider.dy * perMile, 6, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.fillStyle = "#ffb000";
-  ctx.beginPath();
-  ctx.arc(cx, cy, 9, 0, Math.PI * 2);
-  ctx.fill();
-
-  const close = SIM_RIDERS.filter((rd) => Math.hypot(rd.dx, rd.dy) <= 1).length;
-  $("riderCount").textContent = `${close} riders within 1 mile. Ask for help?`;
-  $("riderReplies").replaceChildren();
-  $("askRiders").disabled = false;
-}
-
-$("askRiders").addEventListener("click", () => {
-  $("askRiders").disabled = true;
-  SIM_RIDERS.forEach((rider, i) => {
-    setTimeout(() => {
-      const li = document.createElement("li");
-      li.textContent = `${rider.name}: On my way, ${rider.eta} min.`;
-      $("riderReplies").append(li);
-    }, 1200 * (i + 1));
-  });
-});
 
 watchBattery();
 watchLocation();
