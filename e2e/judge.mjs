@@ -132,6 +132,8 @@ try {
     const part = await text("partTag"), msg = await text("camMsg");
     await sleep(800); await shot("04_outline");
     expect(/SAM 3\.1/.test(msg), `camera says: ${msg}`);
+    // Proof the vision model ran: the fallback path draws no outline and names no part.
+    expect(part && /tire|wheel/i.test(part), `part from the vision model: "${part}"`);
     return `part "${part}", ${msg}`;
   });
 

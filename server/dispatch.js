@@ -6,7 +6,12 @@ const EMERGENCY = [
   /\bstruck\b/, /\bran me (over|off)\b/, /\brun over\b/, /\bcrash(ed)?\b/, /\bknocked (me )?(out|down|over)\b/,
   /can'?t move\b/, /can'?t (get|stand) up\b/,
   /can'?t breathe/, /cannot breathe/, /\bunconscious\b/, /passed out/, /chest pain/,
-  /\bbroke my\b/, /\battack/, /following me/, /\bstabbed\b/, /\bshot\b/,
+  /\battack/, /following me/, /\bstabbed\b/,
+  // Broken bones, not broken bike parts: "I broke my chain" is a repair, "I broke my wrist" is 911.
+  /\b(broke|broken|busted|fractured?) (my |his |her |their )?(arm|leg|wrist|ankle|collarbone|hip|ribs?|nose|jaw|hand|foot|neck|skull|shoulder|elbow|knee|back(?! (wheel|tire|tyre|rim|light|brake|hub|end)))\b/,
+  /\b(arm|leg|wrist|ankle|collarbone|hip|ribs?|nose|jaw|hand|foot|neck|shoulder|elbow|knee)('s| is| feels| might be| could be| may be) (broken|broke|fractured)\b/,
+  // Gunfire, not "a car shot past me".
+  /\b(got|been|was|were|i'm|im|getting) shot\b/, /\bshot (me|at me|at us|him|her)\b/, /\bshooting at\b/, /\bgunshot/, /\b(a|has a|pulled a|with a) gun\b/,
 ];
 
 // Lithium battery fires: fire services say get away from it and call 911.

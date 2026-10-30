@@ -25,7 +25,11 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 
 const PORT = Number(process.env.PORT) || 8787;
 const LANES = new Set(["fix", "ride", "safe"]);
 
-app.set("trust proxy", "loopback"); // behind a local tunnel, req.ip is the rider's address
+app.set("trust proxy", "loopback");
+// Behind the Cloudflare tunnel every request arrives from this machine; Cloudflare puts the
+// visitor's address in CF-Connecting-IP. Only trust that header when the tunnel (loopback) sent it,
+// so each visitor gets their own model allowance instead of everyone sharing one.
+const clientIp = (req) => (/^(::1|127\.|::ffff:127\.)/.test(req.socket.remoteAddress || "") && req.get("cf-connecting-ip")) || req.ip;
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(fileURLToPath(new URL("../public", import.meta.url))));
 // The phone runs the same emergency guard and card matching when there's no signal.
@@ -109,7 +113,7 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
     console.warn(`transcribe: silent audio (${seconds}s, peak ${peakDb} dB)`);
     return res.json({ text: "", reason: "silent", source: "none" });
   }
-  if (!allowModel(req.ip)) return res.json({ text: "", reason: "limit", source: "limit" });
+  if (!allowModel(clientIp(req))) return res.json({ text: "", reason: "limit", source: "limit" });
   const ears = [
     voiceReady() && req.query.engine !== "spark" && ["muse-voice-transcribe", () => hearWithVoice(wav, seconds)],
     sparkReady() && req.query.engine !== "voice" && ["muse-spark-open", () => hearWithSpark(wav, seconds, peakDb)],
@@ -131,7 +135,7 @@ app.post("/api/dispatch", async (req, res) => {
   const d = await live("dispatch", async () => {
     const d = await sparkJSON(prompts.DISPATCH, context, { maxTokens: 3000 });
     return { lane: LANES.has(d.lane) ? d.lane : "ride", say: str(d.say, 240) || "I hear you. Here's what's open near you.", why: str(d.why, 120) };
-  }, cannedDispatch(text), req.ip);
+  }, cannedDispatch(text), clientIp(req));
   // Matching a verified card costs no tokens: plain keywords against the rider's words.
   const [card] = playbook.match(text, playbook.LANE_CATEGORIES[d.lane]);
   res.json({ ...d, card: playbook.publicCard(card) || null });
@@ -146,9 +150,12 @@ app.post("/api/look", upload.fields([{ name: "clip", maxCount: 1 }, { name: "fra
   const fixCategories = ["repair", "ebike"];
   // Without the model, the rider's own words still pick a verified card.
   const [saidCard] = playbook.match(said, fixCategories);
+  // If the model can't look (error, timeout, cap), never guess a diagnosis: use the rider's own
+  // words to pick a card, or say we couldn't see it and hand them the playbook. Canned demo only
+  // when there is no model key at all.
   const fallback = saidCard
-    ? { problem: saidCard.title, part: canned.LOOK.part, fixable: true, card: playbook.publicCard(saidCard), steps: saidCard.steps, stages: saidCard.stages || [], prevent: saidCard.prevent || "" }
-    : canned.LOOK;
+    ? { problem: saidCard.title, part: "", fixable: true, card: playbook.publicCard(saidCard), steps: saidCard.steps, stages: saidCard.stages || [], prevent: saidCard.prevent || "" }
+    : sparkReady() ? { problem: "", part: "", fixable: false, unseen: true, card: null, steps: [], prevent: "" } : canned.LOOK;
   res.json(await live("look", async () => {
     if (!frame) throw new Error("no frame");
     const content = [{ type: "text", text: said ? `The rider said: "${said}"` : "What is wrong here?" }, imagePart(frame.buffer, frame.mimetype)];
@@ -162,7 +169,7 @@ app.post("/api/look", upload.fields([{ name: "clip", maxCount: 1 }, { name: "fra
     const steps = Array.isArray(d.steps) ? d.steps.map((s) => str(s, 200)).filter(Boolean).slice(0, 8) : [];
     if (!steps.length && base.fixable) throw new Error("no card and no steps");
     return { ...base, card: null, steps, prevent: str(d.prevent, 240) };
-  }, fallback, req.ip));
+  }, fallback, clientIp(req)));
 });
 
 // Meta SAM 3.1 outlines the part Muse Spark named, in every frame of the rider's clip.
@@ -172,14 +179,14 @@ app.post("/api/track", upload.single("clip"), async (req, res) => {
   const part = str(req.body?.part, 40) || "bicycle wheel";
   if (!samReady()) return res.json({ ...canned.track(part), source: "canned" });
   const none = { part, fps: SAM_FPS, frames: [] };
-  if (!allowModel(req.ip)) return res.json({ ...none, source: "limit" });
+  if (!allowModel(clientIp(req))) return res.json({ ...none, source: "limit" });
   const t0 = Date.now();
   try {
     const signal = AbortSignal.timeout(30000);
     let concept = part, out = await samTrack(req.file.buffer, concept, { signal });
     // "rear tail light" can miss where "light" hits: one retry with the head noun.
     const head = part.split(/\s+/).pop();
-    if (!out.found && head !== part && allowModel(req.ip)) out = await samTrack(req.file.buffer, (concept = head), { signal });
+    if (!out.found && head !== part && allowModel(clientIp(req))) out = await samTrack(req.file.buffer, (concept = head), { signal });
     console.log(`track: sam-3.1 ${Date.now() - t0}ms, "${concept}" in ${out.found}/${out.frames.length} frames`);
     res.json({ part, concept, ...out, ms: Date.now() - t0, source: "sam-3.1" });
   } catch (e) {
@@ -217,8 +224,8 @@ app.post("/api/closecall", (req, res) => {
     return res.status(400).json({ error: "no location" });
   }
   const now = Date.now();
-  if (now - (lastReport.get(req.ip) || 0) < 20000) return res.status(429).json({ error: "already logged" });
-  lastReport.set(req.ip, now);
+  if (now - (lastReport.get(clientIp(req)) || 0) < 20000) return res.status(429).json({ error: "already logged" });
+  lastReport.set(clientIp(req), now);
   res.json(closeCalls.add(lat, lng));
 });
 

@@ -344,6 +344,7 @@ function resetFix() {
   const c = $("overlay");
   c.getContext("2d").clearRect(0, 0, c.width, c.height);
   $("partTag").hidden = true;
+  $("pickCard").hidden = true;
   $("problem").textContent = "";
   $("stepSource").textContent = "";
   $("steps").hidden = true;
@@ -384,6 +385,16 @@ $("scan").addEventListener("click", async () => {
     btn.textContent = "Looking...";
     const filename = `clip.${extFor(clip.type)}`;
     const look = await postForm("/api/look", [["clip", clip, filename], ["frame", frame, "frame.jpg"], ["said", state.lastText]]);
+    // No steps: the AI couldn't look right now, or couldn't see a bike part. Never guess; let them
+    // aim again or pick their problem from the saved playbook.
+    if (!look.steps?.length) {
+      const msg = look.unseen || !look.problem ? "I couldn't see it right now. Try again, or pick your problem from the playbook." : look.problem;
+      $("problem").textContent = msg;
+      $("camMsg").textContent = "";
+      $("pickCard").hidden = false;
+      speak(msg);
+      return;
+    }
     state.look = look;
     state.step = 0;
     $("problem").textContent = look.problem;
@@ -394,9 +405,14 @@ $("scan").addEventListener("click", async () => {
       $("stepSource").textContent = "AI steps, not verified. Stop if anything feels unsafe.";
     }
     speak(look.problem);
-    $("camMsg").textContent = `Finding the ${look.part}...`;
-    const masks = await postForm("/api/track", [["clip", clip, filename], ["part", look.part]]);
-    playMasks(masks, clip);
+    // The outline needs the part the model saw; with steps from the rider's words only, skip it.
+    if (look.part) {
+      $("camMsg").textContent = `Finding the ${look.part}...`;
+      const masks = await postForm("/api/track", [["clip", clip, filename], ["part", look.part]]);
+      playMasks(masks, clip);
+    } else {
+      $("camMsg").textContent = "Steps from what you told me.";
+    }
     showStep(false);
     btn.hidden = true;
   } catch {
@@ -559,6 +575,15 @@ async function loadNearby(tries = 0) {
   try {
     const { places, source } = await postJSON("/api/nearby", { location: state.location, lane: state.lane || "ride" });
     const cards = places.map(placeCard);
+    // Without a location (or if the map lookup failed) these are general ideas, not real places: say so.
+    if (source === "canned" || source === "fallback") {
+      const note = document.createElement("p");
+      note.className = "hint";
+      note.textContent = state.location
+        ? "Couldn't reach the map right now. General ideas, each opens a map search:"
+        : "Turn on location to see real places open right now. Meanwhile, general ideas (each opens a map search):";
+      cards.unshift(note);
+    }
     if (source === "pending") {
       // General ideas now; the real list replaces them when the map lookup finishes.
       const note = document.createElement("p");

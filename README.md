@@ -65,8 +65,7 @@ harasses you, how to report dangerous roads in Apple Valley, desert heat and win
 
 ## Free and light
 
-No paid services. Places come from OpenStreetMap (Overpass), cached per area so a rider gets an answer in
-under 12 seconds and instantly after that. Voice replies use the phone's own speech engine. Map tiles are
+Free for the rider. The Meta Model API runs on the hackathon credit behind a hard $140 ceiling in code (`server/spend.js`). Places come from OpenStreetMap (Overpass), cached per area: the first lookup in a new area can take up to a minute (the app shows general ideas, labeled, and fills in real places when they arrive); after that it's instant. Voice replies use the phone's own speech engine. Map tiles are
 OpenStreetMap. Keys stay on the server, outside the repo.
 
 ## Run it

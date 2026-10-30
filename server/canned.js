@@ -40,8 +40,8 @@ export function track(part = LOOK.part) {
 
 export function nearby() {
   return [
-    { name: "24-hour store", why: "Open all night. Tubes, pumps, a bright lot.", open: "Open 24 hours", query: "24 hour store" },
-    { name: "Gas station", why: "Lit, staffed, and most have an air pump.", open: "Usually open late", query: "gas station" },
-    { name: "Bus stop with a bike rack", why: "Ride the rest of the way with the bike on the front.", open: "Check the last bus time", query: "bus stop" },
+    { name: "A 24-hour store", why: "Open all night. Tubes, pumps, a bright lot.", open: "Map search", query: "24 hour store" },
+    { name: "A gas station", why: "Lit, staffed, and most have an air pump.", open: "Map search", query: "gas station" },
+    { name: "A bus stop with a bike rack", why: "Ride the rest of the way with the bike on the front. Check the last bus time.", open: "Map search", query: "bus stop" },
   ];
 }

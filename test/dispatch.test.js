@@ -19,6 +19,12 @@ const EMERGENCIES = [
   "the battery is smoking",
   "my battery is swelling up",
   "flames coming out of the charger",
+  "I think I broke my wrist",
+  "I broke my collarbone",
+  "my leg is broken",
+  "someone shot at me",
+  "I got shot",
+  "a guy pulled a gun on me",
 ];
 
 const NOT_EMERGENCIES = [
@@ -30,6 +36,12 @@ const NOT_EMERGENCIES = [
   "I'm burning out, so tired",
   "a truck keeps slowing down next to me",
   "I'm lost and it's dark",
+  "I broke my chain",
+  "I broke my back wheel",
+  "I broke my derailleur hanger",
+  "my spoke broke",
+  "a car shot past me",
+  "a truck shot by way too close",
 ];
 
 test("every emergency phrase goes to Call 911", () => {
