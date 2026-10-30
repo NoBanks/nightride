@@ -26,7 +26,7 @@ written during the hackathon building period, starting Oct 27 2026 12:00 AM ET. 
 
 | Feature | How | Meta model |
 |---|---|---|
-| **Talk** | Hold to talk; audio is converted to WAV and transcribed. | Muse Spark Open (audio) |
+| **Talk** | Hold to talk; audio is converted to WAV and transcribed in about two seconds. A model's refusal is never shown as the rider's words; silence gets a mic hint. | Muse Voice Transcribe (Meta Model API), Muse Spark Open as backup |
 | **Dispatch** | One card: FIX IT, RIDE, SAFE PLACE, or EMERGENCY, spoken aloud. | Muse Spark Open |
 | **Fix it** | Camera frame of the problem; the model names it and picks a verified playbook card. | Muse Spark Open (vision) |
 | **Part outline** | The part Muse Spark named ("rear tire") is outlined in amber in every frame of the rider's clip, then replayed on screen. No made-up outline: if SAM finds nothing, none is drawn. | SAM 3.1 (Meta Model API) |
@@ -34,8 +34,8 @@ written during the hackathon building period, starting Oct 27 2026 12:00 AM ET. 
 | **Tell my people** | Message with battery and a live map link, sent from the rider's own phone. | none |
 | **Close call** | One tap logs where a driver came too close. Reports stack into hotspots on a night map; the city can download them as CSV. | none |
 
-Hearing, sorting and seeing use **Muse Spark Open** (open weights, `meta-models/muse-spark-open-1026`) served on Baseten.
-The part outline uses **SAM 3.1** (`sam-3.1`) on the Meta Model API: the clip is converted to H.264 MP4, sent with the
+Sorting and seeing (and backup hearing) use **Muse Spark Open** (open weights, `meta-models/muse-spark-open-1026`) served on Baseten.
+Hearing uses **Muse Voice Transcribe** (muse-voice-transcribe-1.0, Meta Model API). The part outline uses **SAM 3.1** (`sam-3.1`) on the Meta Model API: the clip is converted to H.264 MP4, sent with the
 part name as the concept prompt, and the streamed masks are decoded with Meta's `@meta-sam/parser`.
 
 ## The verified playbook
@@ -87,6 +87,7 @@ Put keys in `~/.nightride/.env` (see `.env.example`). Without a key every route 
 - `server/index.js` routes; the model key never reaches the browser
 - `server/dispatch.js` lane sorting and the emergency guard
 - `server/spark.js` Muse Spark Open client (Baseten, OpenAI-compatible)
+- `server/voice.js` hearing: Muse Voice Transcribe, refusal and silence checks
 - `server/sam.js` SAM 3.1 part outline (Meta Model API, Responses stream, `@meta-sam/parser`)
 - `server/playbook.js` + `playbook/*.json` the verified cards
 - `server/places.js` open-now places from OpenStreetMap

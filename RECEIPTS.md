@@ -17,7 +17,8 @@ npm run test:judge  # a headless phone browser walks every feature in the demo v
 | Battery smoke or fire: "Move away from the battery. Call 911." | `test/dispatch.test.js`: *battery fires get the move-away line*; live: *"my battery is smoking"* | `server/dispatch.js` (`FIRE`) |
 | Everyday trouble is not treated as an emergency | `test/dispatch.test.js`: *everyday trouble is not an emergency* | `server/dispatch.js` |
 | Call 911 never calls anyone by itself | read the markup: a `tel:911` link opens the phone's dialer; the rider presses call | `public/index.html` (`#emergency`) |
-| Muse Spark Open (Meta open weights) hears the rider | live: *hear: voice -> Muse Spark Open transcript* (`source: "muse-spark-open"`) | `server/spark.js` (`sparkTranscribe`, model `meta-models/muse-spark-open-1026` on Baseten); `server/audio.js` (WebM/MP4 to WAV) |
+| Meta Muse Voice Transcribe hears the rider first; Muse Spark Open (open weights) is the backup ear | live: *hear: Meta Muse Voice Transcribe hears the rider first*, *hear: Muse Spark Open is the backup ear* | `server/voice.js` (`voiceTranscribe`), `server/spark.js` (`sparkTranscribe`), `server/index.js` `/api/transcribe`; `server/audio.js` (WebM/MP4 to WAV) |
+| A model's refusal ("I can't transcribe audio") is never shown as what the rider said; silence gets a mic hint | `test/voice.test.js`: *a model's refusal is never passed on*, *what riders actually say is kept*, *loudness tells a silent mic from real speech*; live: *silence gets a mic hint* | `server/voice.js` (`isRefusal`, `wavStats`) |
 | Muse Spark Open sorts the situation into fix / ride / safe | live: three *sort:* checks (fix, ride, safe) | `server/prompts.js` (`DISPATCH`), `server/index.js` `/api/dispatch` |
 | Muse Spark Open looks at a photo and picks a verified card; steps come from the card, not the model | captured in the demo's Under the Hood panel | `server/prompts.js` (`lookWithPlaybook`), `server/index.js` `/api/look` |
 | SAM 3.1 outlines the part Muse Spark named, in every frame of the rider's clip | live: *outline: Meta SAM 3.1 tracks the part in every frame* (`source: "sam-3.1"`, a WebM clip like Android records); `test/sam.test.js`: *SAM mask paths are placed at the mask's box*, *an Android WebM clip becomes an H.264 MP4 SAM accepts* | `server/sam.js` (`toMp4`, `samTrack`, `pathToRings`), `server/index.js` `/api/track`, `public/app.js` (`playMasks`) |
@@ -57,7 +58,7 @@ PASS | 11. no signal (page and service worker both offline): app opens, 911 rule
 PASS | 12. playbook: all 64 cards readable
 ```
 
-**Unit, `npm test`: 24 passed, 0 failed** (the list below plus the stage and spend-cap tests)
+**Unit, `npm test`: 27 passed, 0 failed** (the list below plus the stage, spend-cap and hearing tests)
 
 ```
 ✔ every emergency phrase goes to Call 911
@@ -79,14 +80,16 @@ PASS | 12. playbook: all 64 cards readable
 ✔ an Android WebM clip becomes an H.264 MP4 SAM accepts
 ```
 
-**Live end-to-end, `npm run test:live` against https://nightride.nohumannearby.com: 14 passed, 0 failed**
+**Live end-to-end, `npm run test:live` against https://nightride.nohumannearby.com: 16 passed, 0 failed**
 
 ```
 PASS | site loads over HTTPS
 PASS | health: live AI mode
 PASS | offline files served (service worker, guard, matcher)
 PASS | playbook: 64 fact-checked cards                 | 64 cards, all sourced + checked
-PASS | hear: voice -> Muse Spark Open transcript        | "My back tire just went flat, and I am about four miles from home."
+PASS | hear: Meta Muse Voice Transcribe hears the rider first | "My back tire just went flat and I am about four miles from home." (2.1 s)
+PASS | hear: Muse Spark Open (open weights) is the backup ear   | (4.6 s)
+PASS | hear: silence gets a mic hint, never a made-up transcript
 PASS | outline: Meta SAM 3.1 tracks the part in every frame | wheel outlined in 25/25 frames, SAM 3523 ms
 PASS | sort: "my back tire just went flat" -> fix        | card: repair-flat-rear-tube
 PASS | sort: "my e-bike cut out ..." -> ride             | card: ebike-cutout-roadside
