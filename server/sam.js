@@ -6,9 +6,11 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import ffmpegPath from "ffmpeg-static";
 import { parseVideoStream, recordsOfKind, decodeMaskToSVGPath } from "@meta-sam/parser";
+import { reserve, samVideoCost } from "./spend.js";
 
 const API = "https://api.meta.ai/v1/responses";
 export const SAM_FPS = 10; // ~25 frames for a 2.5 s clip; SAM bills a 50-frame minimum either way
+const MAX_SECONDS = 4; // longer uploads are cut, so every call stays under the 50-frame minimum: $0.01
 const MAX_POINTS = 120; // per ring, plenty for an outline and small on the wire
 
 export const samReady = () => Boolean(process.env.MODEL_API_KEY) && process.env.SAM !== "off";
@@ -20,7 +22,7 @@ export async function toMp4(input) {
   try {
     await writeFile(src, input);
     await new Promise((resolve, reject) => {
-      const ff = spawn(ffmpegPath, ["-hide_banner", "-loglevel", "error", "-i", src, "-an",
+      const ff = spawn(ffmpegPath, ["-hide_banner", "-loglevel", "error", "-i", src, "-t", String(MAX_SECONDS), "-an",
         "-vf", `fps=${SAM_FPS},scale='min(480,iw)':-2`, "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p",
         "-movflags", "+faststart", "-y", out], { windowsHide: true });
       const err = [];
@@ -35,7 +37,8 @@ export async function toMp4(input) {
 }
 
 // Server-sent events from the Responses API, as the event objects the parser expects.
-async function* sse(body) {
+// onDone gets the final response, which carries what Meta billed.
+async function* sse(body, onDone = () => {}) {
   const decoder = new TextDecoder();
   let buf = "";
   for await (const chunk of body) {
@@ -45,7 +48,10 @@ async function* sse(body) {
       const block = buf.slice(0, cut);
       buf = buf.slice(cut + 2);
       const data = block.split("\n").filter((l) => l.startsWith("data:")).map((l) => l.slice(5).trim()).join("");
-      if (data && data !== "[DONE]") yield JSON.parse(data);
+      if (!data || data === "[DONE]") continue;
+      const event = JSON.parse(data);
+      if (event.type === "response.completed") onDone(event.response);
+      yield event;
     }
   }
 }
@@ -70,6 +76,9 @@ export function pathToRings(path, left, top, width, height) {
 // one entry per clip frame; frames where SAM found nothing have no rings.
 export async function samTrack(clip, part, { signal } = {}) {
   const mp4 = await toMp4(clip);
+  // The spend ceiling: no reservation, no call.
+  const settle = reserve(samVideoCost(MAX_SECONDS * SAM_FPS), `sam-3.1 "${part}"`);
+  if (!settle) throw new Error("Meta spend cap reached");
   const r = await fetch(API, {
     method: "POST",
     signal,
@@ -85,7 +94,7 @@ export async function samTrack(clip, part, { signal } = {}) {
     }),
   });
   if (!r.ok) throw new Error(`sam-3.1 ${r.status}: ${(await r.text()).slice(0, 200)}`);
-  const result = await parseVideoStream(sse(r.body)).finalResult;
+  const result = await parseVideoStream(sse(r.body, (resp) => settle(samVideoCost(resp?.usage?.video_frames_processed ?? 0)))).finalResult;
   if (result.outcome.status !== "completed") throw new Error(`sam-3.1 ${result.outcome.status}`);
 
   // Every box token repeats the frame size SAM worked in.

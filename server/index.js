@@ -10,6 +10,7 @@ import * as prompts from "./prompts.js";
 import { sparkReady, sparkJSON, sparkTranscribe, imagePart } from "./spark.js";
 import { toWav } from "./audio.js";
 import { samReady, samTrack, SAM_FPS } from "./sam.js";
+import { spend } from "./spend.js";
 import * as closeCalls from "./closecalls.js";
 import { placesNear, rank } from "./places.js";
 import * as playbook from "./playbook.js";
@@ -70,6 +71,7 @@ app.get("/api/health", (_req, res) => res.json({
   ok: true,
   mode: sparkReady() ? "live" : "canned",
   outline: samReady() ? "sam-3.1" : "canned",
+  metaSpend: spend(), // the ceiling the server enforces before every Meta call
 }));
 
 app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
