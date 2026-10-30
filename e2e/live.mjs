@@ -29,10 +29,25 @@ await check("playbook: 64 fact-checked cards", async () => {
   return "64 cards, all sourced + checked";
 });
 const wav = readFileSync(new URL("./fixtures/ask_flat.wav", import.meta.url));
-await check("hear: voice -> Muse Spark Open transcript", async () => {
+const hear = async (engine) => {
   const fd = new FormData(); fd.append("audio", new Blob([wav], { type: "audio/wav" }), "talk.wav");
-  const r = await fetch(BASE + "/api/transcribe", { method: "POST", body: fd }); const j = await r.json();
-  expect(j.source === "muse-spark-open" && /tire/i.test(j.text), `${j.source}: ${j.text}`); return `"${j.text}"`;
+  return (await fetch(BASE + "/api/transcribe" + (engine ? `?engine=${engine}` : ""), { method: "POST", body: fd })).json();
+};
+await check("hear: Meta Muse Voice Transcribe hears the rider first", async () => {
+  const j = await hear();
+  expect(j.source === "muse-voice-transcribe" && /tire/i.test(j.text), `${j.source}: ${j.text}`); return `"${j.text}" (${j.ms} ms)`;
+});
+await check("hear: Muse Spark Open (open weights) is the backup ear", async () => {
+  const j = await hear("spark");
+  expect(j.source === "muse-spark-open" && /tire/i.test(j.text), `${j.source}: ${j.text}`); return `"${j.text}" (${j.ms} ms)`;
+});
+await check("hear: silence gets a mic hint, never a made-up transcript", async () => {
+  const silent = Buffer.alloc(44 + 32000); silent.write("RIFF", 0); silent.writeUInt32LE(36 + 32000, 4); silent.write("WAVEfmt ", 8);
+  silent.writeUInt32LE(16, 16); silent.writeUInt16LE(1, 20); silent.writeUInt16LE(1, 22); silent.writeUInt32LE(16000, 24);
+  silent.writeUInt32LE(32000, 28); silent.writeUInt16LE(2, 32); silent.writeUInt16LE(16, 34); silent.write("data", 36); silent.writeUInt32LE(32000, 40);
+  const fd = new FormData(); fd.append("audio", new Blob([silent], { type: "audio/wav" }), "talk.wav");
+  const j = await (await fetch(BASE + "/api/transcribe", { method: "POST", body: fd })).json();
+  expect(j.text === "" && j.reason === "silent", JSON.stringify(j)); return "reason: silent";
 });
 // A 2.5 s WebM, the format Android Chrome records; the server converts it for SAM.
 const clip = readFileSync(new URL("./fixtures/wheels.webm", import.meta.url));

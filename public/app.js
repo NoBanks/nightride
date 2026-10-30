@@ -174,7 +174,13 @@ async function onTalkStop() {
   $("transcript").textContent = "...";
   $("dispatchCard").hidden = true;
   try {
-    const { text } = await postForm("/api/transcribe", [["audio", blob, `talk.${extFor(type)}`]]);
+    const { text, reason } = await postForm("/api/transcribe", [["audio", blob, `talk.${extFor(type)}`]]);
+    if (reason === "silent") {
+      // The phone sent silence: usually a muted mic or a Bluetooth headset holding the mic.
+      $("transcript").textContent = "I got silence from your mic. If headphones are connected, disconnect them or talk into them, then hold and try again. Or type it.";
+      document.querySelector(".type-instead").open = true;
+      return;
+    }
     if (!text) throw new Error("no speech");
     await handleText(text);
   } catch {

@@ -11,6 +11,7 @@ import { sparkReady, sparkJSON, sparkTranscribe, imagePart } from "./spark.js";
 import { toWav } from "./audio.js";
 import { samReady, samTrack, SAM_FPS } from "./sam.js";
 import { spend } from "./spend.js";
+import { voiceReady, voiceTranscribe, isRefusal, wavStats } from "./voice.js";
 import * as closeCalls from "./closecalls.js";
 import { placesNear, rank } from "./places.js";
 import * as playbook from "./playbook.js";
@@ -74,13 +75,50 @@ app.get("/api/health", (_req, res) => res.json({
   metaSpend: spend(), // the ceiling the server enforces before every Meta call
 }));
 
+// Two Meta ears. Muse Voice Transcribe (built for speech, ~2.5 s) hears first; Muse Spark Open
+// (open weights) backs it up. A model's refusal ("I can't transcribe...") is never passed on as if
+// the rider said it. ?engine=spark or ?engine=voice tests one ear on its own.
+async function hearWithVoice(wav, seconds) {
+  const t1 = Date.now();
+  try {
+    const text = str(await voiceTranscribe(wav, seconds, { signal: AbortSignal.timeout(20000) }), 1000);
+    console.log(`transcribe: muse-voice-transcribe ${Date.now() - t1}ms, ${seconds}s, ${text ? "heard" : "empty"}`);
+    return text;
+  } catch (e) {
+    console.warn(`transcribe: muse-voice-transcribe failed: ${e.message}`);
+    return "";
+  }
+}
+async function hearWithSpark(wav, seconds, peakDb) {
+  const t0 = Date.now();
+  let heard = "";
+  try { heard = str(await sparkTranscribe(wav), 1000); } catch (e) { heard = `error: ${e.message}`; }
+  const ok = heard && !heard.startsWith("error:") && !isRefusal(heard);
+  console.log(`transcribe: muse-spark-open ${Date.now() - t0}ms, ${seconds}s, peak ${peakDb} dB, ${ok ? "heard" : `missed (${heard.slice(0, 60) || "empty"})`}`);
+  return ok ? heard : "";
+}
+
 app.post("/api/transcribe", upload.single("audio"), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: "no audio" });
-  res.json(await live("transcribe", async () => {
-    const text = str(await sparkTranscribe(await toWav(req.file.buffer)), 1000);
-    if (!text) throw new Error("no speech");
-    return { text };
-  }, sparkReady() ? { text: "" } : { text: canned.TRANSCRIPT }, req.ip));
+  if (!sparkReady() && !voiceReady()) return res.json({ text: canned.TRANSCRIPT, source: "canned" });
+  const wav = await toWav(req.file.buffer);
+  const { seconds, peakDb } = wavStats(wav);
+  const t0 = Date.now();
+  // Below about -50 dB the mic sent silence (muted, or a Bluetooth headset holding the mic).
+  if (peakDb < -50) {
+    console.warn(`transcribe: silent audio (${seconds}s, peak ${peakDb} dB)`);
+    return res.json({ text: "", reason: "silent", source: "none" });
+  }
+  if (!allowModel(req.ip)) return res.json({ text: "", reason: "limit", source: "limit" });
+  const ears = [
+    voiceReady() && req.query.engine !== "spark" && ["muse-voice-transcribe", () => hearWithVoice(wav, seconds)],
+    sparkReady() && req.query.engine !== "voice" && ["muse-spark-open", () => hearWithSpark(wav, seconds, peakDb)],
+  ].filter(Boolean);
+  for (const [source, hear] of ears) {
+    const text = await hear();
+    if (text) return res.json({ text, source, ms: Date.now() - t0 });
+  }
+  res.json({ text: "", reason: "unclear", source: "fallback" });
 });
 
 app.post("/api/dispatch", async (req, res) => {
@@ -91,7 +129,7 @@ app.post("/api/dispatch", async (req, res) => {
   const time = new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
   const context = `Rider says: "${str(text, 1000)}"\nLocal time: ${time}.${Number.isFinite(battery) ? ` Phone battery: ${Math.round(battery * 100)}%.` : ""}`;
   const d = await live("dispatch", async () => {
-    const d = await sparkJSON(prompts.DISPATCH, context, { maxTokens: 1500 });
+    const d = await sparkJSON(prompts.DISPATCH, context, { maxTokens: 3000 });
     return { lane: LANES.has(d.lane) ? d.lane : "ride", say: str(d.say, 240) || "I hear you. Here's what's open near you.", why: str(d.why, 120) };
   }, cannedDispatch(text), req.ip);
   // Matching a verified card costs no tokens: plain keywords against the rider's words.

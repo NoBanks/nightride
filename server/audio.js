@@ -4,7 +4,7 @@ import ffmpegPath from "ffmpeg-static";
 
 export function toWav(input) {
   return new Promise((resolve, reject) => {
-    const ff = spawn(ffmpegPath, ["-hide_banner", "-loglevel", "error", "-i", "pipe:0", "-ac", "1", "-ar", "16000", "-f", "wav", "pipe:1"]);
+    const ff = spawn(ffmpegPath, ["-hide_banner", "-loglevel", "error", "-i", "pipe:0", "-ac", "1", "-ar", "16000", "-c:a", "pcm_s16le", "-map_metadata", "-1", "-f", "wav", "pipe:1"], { windowsHide: true });
     const out = [], err = [];
     ff.stdout.on("data", (d) => out.push(d));
     ff.stderr.on("data", (d) => err.push(d));
