@@ -810,6 +810,8 @@ async function loadMap() {
     return;
   }
   const { calls } = await (await fetch("/api/closecalls")).json();
+  // A fresh link every time, so the city always downloads today's reports, never a cached copy.
+  document.querySelector("#map a[download]").href = `/api/closecalls.csv?at=${Date.now()}`;
   if (!ccMap) {
     ccMap = L.map("ccMap", { zoomControl: false });
     // Free OpenStreetMap tiles, darkened in CSS for night eyes.

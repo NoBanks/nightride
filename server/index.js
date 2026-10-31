@@ -31,6 +31,8 @@ app.set("trust proxy", "loopback");
 // so each visitor gets their own model allowance instead of everyone sharing one.
 const clientIp = (req) => (/^(::1|127\.|::ffff:127\.)/.test(req.socket.remoteAddress || "") && req.get("cf-connecting-ip")) || req.ip;
 app.use(express.json({ limit: "1mb" }));
+// Live data must never be cached by the CDN in front of us (Cloudflare caches .csv by default).
+app.use("/api", (_req, res, next) => { res.set("Cache-Control", "no-store"); next(); });
 app.use(express.static(fileURLToPath(new URL("../public", import.meta.url))));
 // The phone runs the same emergency guard and card matching when there's no signal.
 app.use("/shared", express.static(fileURLToPath(new URL("../shared", import.meta.url))));
