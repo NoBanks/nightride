@@ -226,7 +226,30 @@ app.post("/api/closecall", (req, res) => {
   const now = Date.now();
   if (now - (lastReport.get(clientIp(req)) || 0) < 20000) return res.status(429).json({ error: "already logged" });
   lastReport.set(clientIp(req), now);
-  res.json(closeCalls.add(lat, lng));
+  const call = closeCalls.add(lat, lng);
+  reporters.set(call.id, { ip: clientIp(req), at: now });
+  res.json(call);
+});
+
+// Only the device that logged a report can move or undo it, and only for 30 minutes.
+// Kept in memory on purpose: no accounts, nothing about the rider is stored with the report.
+const reporters = new Map(); // id -> { ip, at }
+const ownsReport = (req) => {
+  const r = reporters.get(req.params.id);
+  return r && r.ip === clientIp(req) && Date.now() - r.at < 30 * 60 * 1000;
+};
+
+app.post("/api/closecall/:id/move", (req, res) => {
+  const { lat, lng } = req.body || {};
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) return res.status(400).json({ error: "no location" });
+  if (!ownsReport(req)) return res.status(403).json({ error: "only the rider who logged it, within 30 minutes" });
+  res.json(closeCalls.move(req.params.id, lat, lng));
+});
+
+app.post("/api/closecall/:id/undo", (req, res) => {
+  if (!ownsReport(req)) return res.status(403).json({ error: "only the rider who logged it, within 30 minutes" });
+  reporters.delete(req.params.id);
+  res.json({ removed: closeCalls.remove(req.params.id) });
 });
 
 app.post("/api/closecall/:id/tag", (req, res) => {
@@ -235,6 +258,68 @@ app.post("/api/closecall/:id/tag", (req, res) => {
   res.json(call);
 });
 
+// "Navajo Rd & Rancherias Rd" -> a spot on the map, so a rider can log a close call where it
+// happened. OpenStreetMap's Nominatim (free, no key): one identified request at a time, cached,
+// biased toward where the rider is. Nominatim can't search an intersection, so for "A & B" we
+// fetch both streets' lines and take the point where they meet.
+const geoCache = new Map();
+let geoBusy = Promise.resolve();
+function nominatim(q, extra) {
+  const run = geoBusy.then(async () => {
+    const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}${extra}`, {
+      headers: { "User-Agent": "NIGHTRIDE/0.1 (github.com/NoBanks/nightride)" }, signal: AbortSignal.timeout(10000),
+    });
+    await new Promise((ok) => setTimeout(ok, 1100)); // Nominatim's limit: one request per second
+    if (!r.ok) throw new Error(`nominatim ${r.status}`);
+    return r.json();
+  });
+  geoBusy = run.catch(() => {});
+  return run;
+}
+const linePoints = (results) => results.flatMap((p) => {
+  const g = p.geojson || {};
+  const lines = g.type === "LineString" ? [g.coordinates] : g.type === "MultiLineString" ? g.coordinates : [];
+  return lines.flat().map(([lng, lat]) => ({ lat, lng }));
+});
+const meters = (a, b) => Math.hypot((a.lat - b.lat) * 111320, (a.lng - b.lng) * 111320 * Math.cos((a.lat * Math.PI) / 180));
+
+app.get("/api/geocode", async (req, res) => {
+  const q = str(req.query.q, 120);
+  if (!q) return res.status(400).json({ error: "no query" });
+  const lat = Number(req.query.lat), lng = Number(req.query.lng);
+  const box = Number.isFinite(lat) && Number.isFinite(lng) ? `&viewbox=${lng - 0.3},${lat + 0.3},${lng + 0.3},${lat - 0.3}` : "";
+  const key = `${q.toLowerCase()}|${box}`;
+  if (geoCache.has(key)) return res.json({ places: geoCache.get(key) });
+  try {
+    let places = [];
+    const parts = q.split(/\s*(?:&|\band\b|@|\/)\s*/i).filter(Boolean);
+    if (parts.length === 2) {
+      // "Navajo Rd & Rancherias Rd, Apple Valley": the town after the last comma applies to both.
+      const [s2, ...town] = parts[1].split(",");
+      const where = town.join(",").trim();
+      const s1 = parts[0].split(",")[0].trim();
+      const withTown = (s) => (where ? `${s}, ${where}` : s);
+      const extra = `&limit=10&polygon_geojson=1${box}${box ? "&bounded=1" : ""}`;
+      const a = linePoints(await nominatim(withTown(s1), extra));
+      const b = linePoints(await nominatim(withTown(s2.trim()), extra));
+      let best = null;
+      for (const p of a) for (const q2 of b) { const d = meters(p, q2); if (!best || d < best.d) best = { d, p, lat: (p.lat + q2.lat) / 2, lng: (p.lng + q2.lng) / 2 }; }
+      const label = `${s1} & ${s2.trim()}${where ? `, ${where}` : ""}`;
+      if (best && best.d < 80) places = [{ name: label, lat: best.lat, lng: best.lng }];
+      // Map data is patchy: if the two never meet in it, go to the spot on the first street closest
+      // to the second, and let the rider tap the exact place.
+      else if (best) places = [{ name: `${s1}, near ${s2.trim()} (map data couldn't find where they meet)`, lat: best.p.lat, lng: best.p.lng, approximate: true }];
+    }
+    if (!places.length) {
+      places = (await nominatim(q, `&limit=5${box}`)).map((p) => ({ name: p.display_name, lat: +p.lat, lng: +p.lon }));
+    }
+    geoCache.set(key, places);
+    res.json({ places });
+  } catch (e) {
+    console.warn(`geocode: ${e.message}`);
+    res.json({ places: [] });
+  }
+});
 app.get("/api/closecalls", (_req, res) => res.json({ calls: closeCalls.all(), tags: closeCalls.TAGS }));
 
 app.get("/api/closecalls.csv", (_req, res) => {

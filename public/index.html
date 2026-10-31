@@ -85,6 +85,15 @@
     <section id="map" class="screen">
       <button class="back" data-go="home">Back</button>
       <h2>Close calls</h2>
+      <div id="pickBar" class="pickbar" hidden>
+        <form id="pickSearch" class="row">
+          <input id="pickQuery" type="text" placeholder="Street or intersection" autocomplete="off">
+          <button class="btn small" type="submit">Find</button>
+        </form>
+        <p id="pickHint" class="hint"></p>
+        <button id="pickSave" class="btn wide" disabled>Log it here</button>
+        <button id="pickCancel" class="link">Cancel</button>
+      </div>
       <p id="mapSummary" class="hint"></p>
       <div id="ccMap" class="ccmap"></div>
       <a class="btn ghost wide center" href="/api/closecalls.csv" download>Download for the city (CSV)</a>
@@ -168,8 +177,17 @@
 
   </main>
 
-  <!-- After a close call is logged: optional one-tap detail, then it gets out of the way. -->
+  <!-- Close call: nothing is saved until the rider says where; then an optional one-tap detail. -->
   <div id="ccSheet" class="ccsheet" hidden>
+    <div id="ccWhereStep">
+      <p class="lane">CLOSE CALL</p>
+      <p class="cclaw">Where did it happen? Saved to about a block. No name, no account.</p>
+      <button id="ccHere" class="btn wide">Right here</button>
+      <button id="ccElsewhere" class="btn ghost wide">Somewhere else: pick it on the map</button>
+      <p id="ccWhereNote" class="hint"></p>
+      <button id="ccCancel" class="link">Cancel</button>
+    </div>
+    <div id="ccTagStep" hidden>
     <p id="ccLogged" class="lane">CLOSE CALL LOGGED</p>
     <p class="cclaw">Passing a bike with less than 3 feet is illegal in California (VC 21760). Got a plate? Sheriff non-emergency: <a href="tel:+17609565001">(760) 956-5001</a>. Threatened? Call 911.</p>
     <p class="hint">What happened? (optional)</p>
@@ -180,6 +198,8 @@
       <button class="btn" data-tag="almost hit">Almost hit me</button>
     </div>
     <button id="ccSkip" class="btn ghost wide">Skip</button>
+    <button id="ccUndo" class="link">Undo: remove this report</button>
+    </div>
   </div>
 
   <!-- Emergency: full screen, one action. NIGHTRIDE never calls anyone itself. -->

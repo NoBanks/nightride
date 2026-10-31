@@ -21,6 +21,7 @@ function go(name) {
   if (name === "fix") startCamera(); else stopCamera();
   if (name === "nearby") loadNearby();
   if (name === "share") prepareShare();
+  if (name !== "map" && state.picking) stopPicking();
   if (name === "map") loadMap().catch(() => { $("mapSummary").textContent = "Couldn't load the map. Check your signal."; });
   window.scrollTo(0, 0);
 }
@@ -704,33 +705,40 @@ function currentLocation(timeout = 8000) {
   });
 }
 
+// Close calls are anonymous, so nothing is saved until the rider says where it happened:
+// right here (GPS, rounded to about a block) or a spot they pick on the map. Tapping at home
+// must never put their home on a public map.
 let ccId = null, ccTimer = 0;
-const openCcSheet = () => { $("ccSheet").hidden = false; clearTimeout(ccTimer); ccTimer = setTimeout(closeCcSheet, 12000); };
+const ccStep = (step) => { $("ccWhereStep").hidden = step !== "where"; $("ccTagStep").hidden = step !== "tag"; };
+const openCcSheet = (step) => { ccStep(step); $("ccSheet").hidden = false; clearTimeout(ccTimer); if (step === "tag") ccTimer = setTimeout(closeCcSheet, 20000); };
 const closeCcSheet = () => { $("ccSheet").hidden = true; clearTimeout(ccTimer); };
 
-$("closeCall").addEventListener("click", async () => {
-  const btn = $("closeCall");
-  if (btn.disabled) return;
-  btn.disabled = true;
-  btn.textContent = "LOGGING...";
+async function logCloseCall(spot, where) {
   try {
-    const call = await postJSON("/api/closecall", await currentLocation());
+    const call = await postJSON("/api/closecall", spot);
     ccId = call.id;
     navigator.vibrate?.(80);
-    btn.classList.add("done");
-    btn.textContent = "LOGGED";
     speak("Close call logged.");
-    openCcSheet();
+    $("ccLogged").textContent = `CLOSE CALL LOGGED ${where}`;
+    openCcSheet("tag");
   } catch (e) {
-    btn.textContent = /429/.test(String(e.message)) ? "ALREADY LOGGED" : "TURN ON LOCATION";
-  } finally {
-    setTimeout(() => {
-      btn.disabled = false;
-      btn.classList.remove("done");
-      btn.textContent = "CLOSE CALL";
-    }, 4000);
+    $("ccWhereNote").textContent = /429/.test(String(e.message)) ? "Already logged one a moment ago." : "Couldn't log it. Check your signal.";
+    openCcSheet("where");
   }
+}
+
+$("closeCall").addEventListener("click", () => {
+  $("ccWhereNote").textContent = "";
+  openCcSheet("where");
 });
+$("ccHere").addEventListener("click", async () => {
+  $("ccWhereNote").textContent = "Finding where you are...";
+  let spot;
+  try { spot = await currentLocation(); } catch { $("ccWhereNote").textContent = "Location is off. Pick the spot on the map instead."; return; }
+  await logCloseCall(spot, "HERE");
+});
+$("ccElsewhere").addEventListener("click", () => { closeCcSheet(); startPicking(); });
+$("ccCancel").addEventListener("click", closeCcSheet);
 
 $("ccSheet").addEventListener("click", async (e) => {
   const b = e.target.closest("[data-tag]");
@@ -739,6 +747,61 @@ $("ccSheet").addEventListener("click", async (e) => {
   try { await postJSON(`/api/closecall/${ccId}/tag`, { tag: b.dataset.tag }); } catch {}
 });
 $("ccSkip").addEventListener("click", closeCcSheet);
+$("ccUndo").addEventListener("click", async () => {
+  if (!ccId) return closeCcSheet();
+  try { await postJSON(`/api/closecall/${ccId}/undo`, {}); ccId = null; $("ccLogged").textContent = "REMOVED"; } catch {}
+  setTimeout(closeCcSheet, 900);
+  if ($("map").classList.contains("active")) loadMap().catch(() => {});
+});
+
+// Pick the spot on the map: search a street or intersection to jump there, tap the spot, log it.
+let pickMarker = null, pickSpot = null;
+function startPicking() {
+  state.picking = true;
+  pickSpot = null;
+  $("pickBar").hidden = false;
+  $("pickSave").disabled = true;
+  $("pickHint").textContent = "Tap the map where it happened.";
+  go("map");
+}
+function stopPicking() {
+  state.picking = false;
+  $("pickBar").hidden = true;
+  if (pickMarker) { pickMarker.remove(); pickMarker = null; }
+}
+function placePick(lat, lng) {
+  pickSpot = { lat, lng };
+  if (pickMarker) pickMarker.setLatLng([lat, lng]);
+  else pickMarker = L.circleMarker([lat, lng], { radius: 12, color: "#fff", weight: 3, fillColor: "#ffb000", fillOpacity: 0.9 }).addTo(ccMap);
+  $("pickSave").disabled = false;
+  $("pickHint").textContent = "Got it. Move it by tapping again, or log it.";
+}
+$("pickSearch").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const q = $("pickQuery").value.trim();
+  if (!q || !ccMap) return;
+  $("pickHint").textContent = "Searching...";
+  try {
+    const near = state.location || ccMap.getCenter();
+    const r = await fetch(`/api/geocode?q=${encodeURIComponent(q)}&lat=${near.lat}&lng=${near.lng}`);
+    const { places } = await r.json();
+    if (!places?.length) { $("pickHint").textContent = "Couldn't find that. Try a cross street, like Navajo Rd & Rancherias Rd."; return; }
+    ccMap.setView([places[0].lat, places[0].lng], places[0].approximate ? 16 : 17);
+    $("pickHint").textContent = places[0].approximate
+      ? `${places[0].name.split(" (")[0]}. Map data is patchy here: find the corner and tap the exact spot.`
+      : `${places[0].name.split(",").slice(0, 2).join(",")}. Now tap the exact spot.`;
+  } catch {
+    $("pickHint").textContent = "Search needs a signal. You can still tap the map.";
+  }
+});
+$("pickSave").addEventListener("click", async () => {
+  if (!pickSpot) return;
+  const spot = pickSpot;
+  stopPicking();
+  await logCloseCall(spot, "THERE");
+  loadMap().catch(() => {});
+});
+$("pickCancel").addEventListener("click", stopPicking);
 
 let ccMap = null, ccLayer = null;
 async function loadMap() {
@@ -755,6 +818,7 @@ async function loadMap() {
       attribution: "&copy; OpenStreetMap contributors",
     }).addTo(ccMap);
     ccLayer = L.layerGroup().addTo(ccMap);
+    ccMap.on("click", (e) => { if (state.picking) placePick(e.latlng.lat, e.latlng.lng); });
   }
   ccLayer.clearLayers();
 

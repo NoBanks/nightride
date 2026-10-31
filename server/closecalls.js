@@ -33,6 +33,24 @@ export function setTag(id, tag) {
   return call;
 }
 
+// The rider tapped somewhere other than where it happened (at home, at work): put it on the real spot.
+export function move(id, lat, lng) {
+  const call = calls.find((c) => c.id === id);
+  if (!call) return null;
+  call.lat = round(lat);
+  call.lng = round(lng);
+  save();
+  return call;
+}
+
+export function remove(id) {
+  const i = calls.findIndex((c) => c.id === id);
+  if (i < 0) return false;
+  calls.splice(i, 1);
+  save();
+  return true;
+}
+
 export const all = () => calls;
 
 // For a city traffic office: one row per report.

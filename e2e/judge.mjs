@@ -46,6 +46,7 @@ const text = (id) => ev(`document.getElementById(${JSON.stringify(id)})?.textCon
 const click = (sel) => ev(`(() => { const e = document.querySelector(${JSON.stringify(sel)}); if (!e) return false; e.click(); return true; })()`);
 const home = async () => { await ev(`document.getElementById('emergency').hidden = true`); await click(".screen.active .back"); await sleep(300); };
 const shot = async (name) => writeFileSync(new URL(`${name}.png`, OUT), Buffer.from((await send("Page.captureScreenshot", { format: "png" })).result.data, "base64"));
+const go_map = async () => { if (!(await ev(`document.getElementById('map').classList.contains('active')`))) { await home(); await click('.links [data-go=map]'); } await until(`document.getElementById('mapSummary').textContent.length > 0`, 20000); };
 const typeSend = async (t) => {
   await ev(`(() => { document.querySelector('.type-instead').open = true; document.getElementById('typeText').value = ${JSON.stringify(t)}; document.getElementById('typeForm').requestSubmit(); })()`);
 };
@@ -188,29 +189,54 @@ try {
     return places.slice(0, 3).map((p) => `${p.name} (${p.open.split(" · ")[0]})`).join(", ");
   });
 
-  await check(`8. close call: ${WRITE ? "tap, tag, the law line, the map, the city CSV" : "the map and the city CSV (read-only on the live site)"}`, async () => {
+  await check(`8. close call: ${WRITE ? "nothing saved until you choose; pick the spot by searching a street, tag it, see the dot, undo" : "nothing saved until you choose where, then the map and the city CSV (read-only)"}`, async () => {
     await home();
-    let note = "";
-    if (WRITE) {
-      await click("#closeCall");
-      await until(`!document.getElementById('ccSheet').hidden`, 15000);
-      const law = await ev(`document.querySelector('.cclaw').textContent`);
+    const count = async () => (await ev(`fetch('/api/closecalls').then((r) => r.json()).then((j) => j.calls.length)`));
+    const before = await count();
+    await click("#closeCall");
+    await until(`!document.getElementById('ccSheet').hidden && !document.getElementById('ccWhereStep').hidden`, 5000);
+    await shot("08_where");
+    expect((await count()) === before, "a report was saved before the rider chose where");
+    let note = "asks where first, nothing saved; ";
+    if (!WRITE) {
+      await click("#ccCancel");
+    } else {
+      await click("#ccElsewhere");
+      await until(`!document.getElementById('pickBar').hidden && document.getElementById('map').classList.contains('active')`, 10000);
+      await until(`!!document.querySelector('#ccMap .leaflet-tile-pane')`, 15000);
+      await ev(`(() => { document.getElementById('pickQuery').value = 'Navajo Rd & Rancherias Rd, Apple Valley'; document.getElementById('pickSearch').requestSubmit(); })()`);
+      await until(`/tap the exact spot|Couldn't find/.test(document.getElementById('pickHint').textContent)`, 20000);
+      const found = await text("pickHint");
+      expect(/tap the exact spot/.test(found), `search: ${found}`);
+      const r = await ev(`(() => { const b = document.getElementById('ccMap').getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; })()`);
+      await send("Input.dispatchMouseEvent", { type: "mousePressed", x: r.x, y: r.y, button: "left", clickCount: 1 });
+      await send("Input.dispatchMouseEvent", { type: "mouseReleased", x: r.x, y: r.y, button: "left", clickCount: 1 });
+      await until(`!document.getElementById('pickSave').disabled`, 5000);
+      await shot("08_pick");
+      await click("#pickSave");
+      await until(`!document.getElementById('ccSheet').hidden && !document.getElementById('ccTagStep').hidden`, 15000);
+      const law = await ev(`document.querySelector('#ccTagStep .cclaw').textContent`);
       expect(/VC 21760/.test(law) && /3 feet/.test(law), `law line: ${law}`);
+      expect((await count()) === before + 1, "the picked spot was not saved");
       await shot("08_logged");
-      await click('[data-tag="too close"]');
-      note = "logged + tagged; ";
+      await click('[data-tag="ran off road"]');
+      await until(`document.querySelectorAll('#ccMap path.leaflet-interactive').length > 0`, 15000);
+      const dots = await ev(`document.querySelectorAll('#ccMap path.leaflet-interactive').length`);
+      // Undo from the same device removes it.
+      await click("#closeCall"); await click("#ccCancel");
+      await ev(`document.getElementById('ccSheet').hidden = false; document.getElementById('ccWhereStep').hidden = true; document.getElementById('ccTagStep').hidden = false;`);
+      await click("#ccUndo"); await sleep(1500);
+      expect((await count()) === before, "undo did not remove it");
+      note += `found "${found.split(".")[0]}", logged there, tagged, ${dots} dot(s), undo removed it; `;
     }
-    await click(".links [data-go=map]");
-    await until(`document.getElementById('mapSummary').textContent.length > 0`, 20000);
+    await click(".links [data-go=map]").catch(() => {});
+    await go_map();
     const summary = await text("mapSummary");
-    const dots = await ev(`document.querySelectorAll('#ccMap path.leaflet-interactive').length`);
     const csv = await ev(`fetch(document.querySelector('#map a[download]').href).then((r) => r.text())`);
-    await sleep(1500); await shot("08_map");
+    await sleep(1000); await shot("08_map");
     expect(csv.startsWith("reported_at_utc"), "CSV header missing");
-    if (WRITE) expect(dots > 0 && /logged/.test(summary), `${summary}, ${dots} dots`);
-    return `${note}${summary} (${dots} dots on the map, CSV ok)`;
+    return `${note}${summary.slice(0, 60)} (CSV ok)`;
   });
-
   for (const [said, line] of [["a car hit me", "Call 911 now."], ["the battery is smoking", "Move away from the battery. Call 911."]]) {
     await check(`9. "${said}" goes straight to full-screen Call 911`, async () => {
       await home();

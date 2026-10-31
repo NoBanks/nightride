@@ -163,6 +163,11 @@ textarea { width: 100%; resize: vertical; }
   border-top: 2px solid var(--amber); border-radius: 18px 18px 0 0;
 }
 .ccsheet[hidden] { display: none; }
+.ccsheet > div { display: grid; gap: 10px; }
+.ccsheet > div[hidden] { display: none; }
+.pickbar { display: grid; gap: 8px; padding: 12px; border: 2px solid var(--amber); border-radius: 14px; background: #1d1600; }
+.pickbar[hidden] { display: none; }
+.pickbar .btn:disabled { opacity: 0.45; }
 .cclaw { margin: 0; color: var(--text); font-size: 15px; }
 .cclaw a { color: var(--amber); }
 .cctags { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
