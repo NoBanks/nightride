@@ -78,6 +78,8 @@ npm run test:live  # end-to-end against the live site
 npm run test:judge # walks every demo feature in a headless phone browser (fake mic + camera)
 ```
 
+Requires Node 22 or newer. `npm run test:judge` needs Chrome; on Mac or Linux set `CHROME_PATH` to the Chrome binary (the default is the Windows path), and set `NIGHTRIDE_URL=http://localhost:8787` to test your local copy. Running as root (containers) also needs `--no-sandbox` passed to Chrome. With no keys, the judge walk shows DEMO DATA, and its camera outline, places and map steps need the live site. A one-line ".env not found" notice at startup is harmless.
+
 Put keys in `~/.nightride/.env` (see `.env.example`). Without a key every route answers from canned data.
 `SPARK=off` keeps the key loaded but saves credit while building. Camera and mic need HTTPS on a phone.
 
